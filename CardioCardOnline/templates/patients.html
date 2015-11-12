@@ -1,0 +1,24 @@
+Пользователь: {{ current_doc }}
+
+<div class="table-responsive">
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>ФИО</th>
+                <th>Дата рожд.</th>
+                <th>Госпитализ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%  for item in patients %}
+            <tr>
+                <td>{{ item.num_history }}</td>
+                <td>{{ item.lastname }}</td>
+                <td>{{ item.dob|date:"d.m.Y" }}</td>
+                <td>{{ item.receipt|date:"d.m.Y" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
