@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid">
+    <p>
+        <a href="/laboratory/list/{{ order.id_history }}">К списку анализов</a>
+    </p>
+    <p><em>Пациент:</em> </p>
+    <p><em>Отделение:</em> {{ order.depart }}</p>
+    <p><em>Врач:</em> {{ order.doctor }} </p>
+    <p><em>Назначен:</em> {{ order.date_assign|date:"d.m.Y H:d" }}</p>
+    <p><em>Принят м/с:</em> {{ order.nurse_date_execute|date:"d.m.Y H:d" }}</p>
+    <p><em>Выполнен:</em> {{ order.date_execute|date:"d.m.Y H:d" }}</p>
+
+
+    <p class="bg-primary">Данные анализа</p>
+        <table class="table table-condensed">
+            <thead>
+                <th>Параметр</th>
+                <th>Значение</th>
+                <th>Норма</th>
+            </thead>
+        <tbody>
+        {%  for item in result %}
+            <tr>
+                <td>{{ item.param_name }}</td>
+                <td>{% if item.ad_value %}{{ item.ad_value }} {% if item.measure %}{{ item.measure }} {% endif %} {% endif %} </td>
+                <td>{% if item.norm_value %}{{ item.norm_value }}{% endif %}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    <p>
+        <a href="/laboratory/list/{{ order.id_history }}">К списку анализов</a>
+    </p>
+</div>
+
+{% endblock %}

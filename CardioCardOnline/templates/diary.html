@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid">
+    <p>
+        <a href="/diary/list/{{ diary.id_history }}">К списку дневников</a>
+    </p>
+    <p><em>Пациент:</em> {{ patient }} [{{ num }}]</p>
+    <p><em>Дата:</em> {{ diary.reg_date|date:"d.m.Y H:d" }}</p>
+    <p><em>Врач:</em> {{ diary.doctor }} </p>
+    <p><em>Отделение:</em> {{ diary.depart_name }}</p>
+    <p class="bg-primary">Запись осмотра</p>
+    <p>
+        {{ diary.blob_text }}
+    </p>
+    <p>
+        <a href="/diary/list/{{ diary.id_history }}">К списку дневников</a>
+    </p>
+</div>
+
+{% endblock %}

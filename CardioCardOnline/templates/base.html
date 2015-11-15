@@ -1,5 +1,4 @@
 ﻿{% load staticfiles %}
-{% load baklab_extras %}
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -7,10 +6,9 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" >
     <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" >
-
 
     <script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
@@ -18,99 +16,25 @@
     <script src="{% static 'js/dt_picker.js' %}" ></script>
     <script src="{% static 'js/tab.js' %}"></script>
 
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'favicon.ico' %}" />
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <title>CardioCard Online - {{ title }}</title>
 </head>
-
-{% block title %}
-{%endblock%}
 
 <body>
 
-<script>
-$(document).ready(function(){
-        var callAjax = function(){
-            $.get( "/getrows/", function( data ) {
-                $('#count_order').text(data);
-            });
-        }
-        setInterval(callAjax,5000);
-      });
-</script>
-
-
-{% url 'index' as index %}
-{% url 'price_list' as price_list %}
-{% url 'new_test' as new_test %}
-{% url 'active_orders' as active_orders %}
-{% url 'ready_orders' as ready_orders %}
-{% url 'report_test_analytic' as report_analytic %}
-{% url 'report_statistic_result' as report_result %}
+<a href="\">
+    <img src="{% static 'images/logo.png'%}" class="center-block">
+</a>
 
 
 <div class="container">
-<!-- Fixed navbar -->
-    <div class="row">
-
-        <nav class="navbar navbar-fixed-top navbar-default" role="navigation">
-
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="glyphicon glyphicon-chevron-down"></span>
-                    МЕНЮ
-              </button>
-                <a class="navbar-brand" href="/">Bacillus</a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="collapse">
-                <ul class="nav navbar-nav">
-                    <li {% if request.get_full_path == new_test %} class="active" {% endif %} ><a href="/newtest">Новая</a></li>
-                    <li {% if request.get_full_path == active_orders %} class="active" {% endif %}><a href="/activeorder">В работе</a></li>
-                    <li {% if request.get_full_path == ready_orders %} class="active" {% endif %}><a href="/readyorders">Выполненные<span class="badge" id="count_order"></span></a></li>
-                    <li {% if request.get_full_path == report or request.get_full_path == report_analytic or request.get_full_path == report_result %} class="active" {% endif %} class="dropdown"><a href="#" data-toggle="dropdown">Отчёты<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/reports/by_analysis">Выполненные анализы за период</a></li>
-                            <li><a href="/reports/by_result">Статистика результатов</a></li>
-                        </ul>
-                    </li>
-                    <li {% if request.get_full_path == price_list %} class="active" {% endif %}><a href="/pricelist">Услуги</a></li>
-                </ul>
-
-                <ul class="nav navbar-nav navbar-left">
-                {% if user.is_authenticated %}
-                      <li>
-                          <form class="navbar-form" action='/search/' method='post' role="search">{% csrf_token %}
-                              <input type="text" name="patient" class="form-control" placeholder="Поиск заявки" >
-                          </form>
-                      </li>
-                {% endif %}
-                </ul>
-
-                <ul class="nav navbar-nav navbar-right">
-                {% if user.is_authenticated %}
-                    <li class="dropdown"><a href="#" data-toggle="dropdown"><span class="glyphicon glyphicon-user" style="color:#ff7400;"></span> {{ user.username }}<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/profile">Профиль</a></li>
-                            <li><a href="/logout">{{ user.username }} (Выход)</a></li>
-                        </ul>
-                    </li>
-                {% else %}
-                    <li>
-                        <a href="/login">Войти</a>
-                    </li>
-                {% endif %}
-                </ul>
-
-            </div><!--/.nav-collapse -->
-        </nav>
-    </div>
-    <!-- Begin page content -->
-
     {% block body %}
     {% endblock %}
 
 </div>
+
+
 <div id="footer">
     <div class="container">
         <p class="text-muted">Казахстан, г. Павлодар, Д.Филюшин, 2015 г.</p>
