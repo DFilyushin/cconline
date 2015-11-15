@@ -15,9 +15,22 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf import settings
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'cconline.views.index',  name='index'),#index page
     url(r'^patients/my/', 'cconline.views.get_my_patient', name='my_patient'),
+    url(r'^patient/(?P<idpatient>\d+)/$', 'cconline.views.get_patient', name='get_patient'),
+    url(r'^diary/list/(?P<idpatient>\d+)/$', 'cconline.views.get_diary_list', name='list_diary'),
+    url(r'^diary/(?P<id>\d+)/$', 'cconline.views.get_diary', name='get_diary'),
+#    url(r'^examens/list/(?P<idpatient>\d+)/$', 'cconline.views.get_my_patient', name='my_patient'),
+    url(r'^laboratory/list/(?P<idpatient>\d+)/$', 'cconline.views.get_lab_list', name='list_lab'),
+    url(r'^labs/(?P<id>\d+)/$', 'cconline.views.get_laboratory', name='get_lab'),
+#    url(r'^medication/list/(?P<idpatient>\d+)/$', 'cconline.views.get_my_patient', name='my_patient'),
+#    url(r'^proffview/list/(?P<idpatient>\d+)/$', 'cconline.views.get_my_patient', name='my_patient'),
+#    url(r'^nurse/list/(?P<idpatient>\d+)/$', 'cconline.views.get_my_patient', name='my_patient'),
 ]
+if settings.DEBUG == True:
+    urlpatterns += staticfiles_urlpatterns()
