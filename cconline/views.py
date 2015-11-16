@@ -8,6 +8,9 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
+from models import ActiveDepart, ListExamens
+from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
+from models import TemperatureData, RiskDownData
 
 
 def index(request):
@@ -17,18 +20,20 @@ def index(request):
     return render_to_response('index.html',
         {
             'current_doc': current_doctor,
+            'title': 'Главная страница',
         },
         context_instance=RequestContext(request))
 
 
 def get_my_patient(request):
-    iddoctor = 5038
+    iddoctor = 5010
     current_doc = 'Ельмеева Т.Н.'
     patients = ListHistory.objects.filter(id_doctor=iddoctor).filter(discharge__isnull=True)
     return render_to_response('patients.html',
         {
             'current_doc': current_doc,
             'patients': patients,
+            'title': 'Мои пациенты',
         })
 
 def get_patient(request, idpatient):
@@ -88,4 +93,81 @@ def get_laboratory(request, id):
                               {
                                   'order': lab,
                                   'result': lab_result,
+                              })
+
+def get_active_departs(request):
+    departs = ActiveDepart.objects.all()
+    return render_to_response('departs.html',
+                              {
+                                  'departs': departs,
+                              })
+
+
+def patients_by_depart(request, iddepart):
+    iddoctor = 5010
+    current_doc = 'Ельмеева Т.Н.'
+    patients = ListHistory.objects.filter(id_depart=iddepart).filter(discharge__isnull=True)
+    return render_to_response('patients.html',
+        {
+            'current_doc': current_doc,
+            'patients': patients,
+        })
+
+
+def get_examen_list(request, idpatient):
+    examens = ListExamens.objects.filter(id_history=idpatient).order_by('-date_plan')
+    history = ListHistory.objects.filter(id=idpatient)
+    patient = history[0].lastname
+    numhistory = history[0].num_history
+    return render_to_response('list_examens.html',
+                              {
+                                  'examens': examens,
+                                  'patient': patient,
+                                  'num': numhistory,
+                                  'idpatient': idpatient,
+                              })
+
+def get_examen(request, id):
+    examen = ListExamens.objects.get(pk=id)
+    return render_to_response('examen.html',
+                              {
+                                  'examen': examen,
+                              })
+
+
+def get_nurse_list(request, idpatient):
+    history = ListHistory.objects.filter(id=idpatient)
+    patient = history[0].lastname
+    numhistory = history[0].num_history
+    temp_list = TemperatureList.objects.filter(id_history=idpatient)
+    view_list = NurseViewList.objects.filter(id_history=idpatient)
+    pain_list = PainStatusList.objects.filter(id_history=idpatient)
+    down_list = RiskDownList.objects.filter(id_history=idpatient)
+    return render_to_response('nurse.html',
+                              {
+                                  'temp_list': temp_list,
+                                  'view_list': view_list,
+                                  'pain_list': pain_list,
+                                  'down_list': down_list,
+                                  'patient': patient,
+                                  'num': numhistory,
+                                  'idpatient': idpatient,
+                              })
+
+
+def get_tempearature_data(request, id):
+    view = TemperatureList.objects.get(pk=id)
+    values = TemperatureData.objects.filter(id_ctrl_nurse=id)
+    return render_to_response('temp_list.html',
+                       {
+                           'view': view,
+                           'values': values,
+                       })
+
+
+def get_risk_down(request, id):
+    view = RiskDownData.objects.get(pk=id)
+    return render_to_response('risk_down.html',
+                              {
+                                  'view': view,
                               })

@@ -10,11 +10,10 @@
     <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" >
 
-    <script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery/jquery-ui.js' %}"></script>
-    <script src="{% static 'js/dt_picker.js' %}" ></script>
-    <script src="{% static 'js/tab.js' %}"></script>
+
+    {% block jscript %}
+
+    {% endblock %}
 
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
@@ -27,18 +26,10 @@
     <img src="{% static 'images/logo.png'%}" class="center-block">
 </a>
 
-
 <div class="container">
     {% block body %}
     {% endblock %}
 
-</div>
-
-
-<div id="footer">
-    <div class="container">
-        <p class="text-muted">Казахстан, г. Павлодар, Д.Филюшин, 2015 г.</p>
-    </div>
 </div>
 
 </body>

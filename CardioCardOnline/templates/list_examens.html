@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block body %}
+<a href="/patient/{{ idpatient }}"> Пациент: {{ patient }} [ {{ num }} ]</a>
+
+<div class="table-responsive">
+    <table class="table table-hover table-responsive table-condensed">
+        <thead>
+            <tr>
+                <th>Назначено</th>
+                <th>Врач</th>
+                <th>Обследование</th>
+                <th>Отделение</th>
+                <th>М/с</th>
+                <th>Выполнен</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {%  for item in examens %}
+            <tr>
+                <td>{% if item.date_execute %}<a href="/examen/{{ item.id }}"> {% endif %} {{ item.date_plan|date:"d.m.Y H:d" }} {% if item.date_execute %}</a>{% endif %}</td>
+                <td>{{ item.doctor }}</td>
+                <td>{{ item.name_exam }}</td>
+                <td>{{ item.depart }}</td>
+                <td>{{ item.date_nurse|date:"d.m.Y H:d" }}</td>
+                <td>{{ item.date_execute|date:"d.m.Y H:d" }}</td>
+                <td>
+                    {% if item.date_execute %}
+                    <a href="/examen/{{ item.id }}" class="btn btn-primary" role="button">Открыть</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+
+{% endblock %}

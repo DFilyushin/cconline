@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid">
+    <p>
+        <a href="/nurse/list/{{ view.id_history }}">К списку температурных листов</a>
+    </p>
+    <p><em>Пациент:</em> {{ view.patient }} [{{ view.num_card }}]</p>
+    <p><em>Дата:</em> {{ view.date_view|date:"d.m.Y H:d" }}</p>
+    <p><em>Врач:</em> {{ view.nurse }} </p>
+    <p><em>Отделение:</em> {{ view.depart }}</p>
+    <table class="table table-hover table-responsive table-condensed">
+        <thead>
+            <tr>
+                <th>Параметр</th>
+                <th>Значение</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%  for item in values %}
+            <tr>
+                <td>{{ item.param_name }}</td>
+                <td>{{ item.value1 }}  {% if item.value2 > 0 %} {{ item.value2 }} {% endif %} {% if item.unit %} {{ item.unit }} {% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>
+        <a href="/nurse/list/{{ view.id_history }}">К списку температурных листов</a>
+    </p>
+</div>
+
+{% endblock %}

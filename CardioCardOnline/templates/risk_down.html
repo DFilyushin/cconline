@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container-fluid">
+    <p>
+        <a href="/diary/list/{{ diary.id_history }}">К списку сестринских осмотров</a>
+    </p>
+    <p><em>Пациент:</em> {{ view.patient }} [{{ view.num_history }}]</p>
+    <p><em>Дата:</em> {{ view.date_view|date:"d.m.Y H:d" }}</p>
+    <p><em>М/с:</em> {{ view.nurse }} </p>
+    <p><em>Отделение:</em> {{ view.depart }}</p>
+    <p class="bg-primary">Запись осмотра</p>
+    <form>
+        <div class="checkbox">
+            <label>
+              <input type="checkbox" {% if view.is_down_three_month == 1 %} checked {% endif %} disabled> Падал ли в последние 3 месяца
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+              <input type="checkbox" {% if view.is_assoc_desease == 1 %} checked {% endif %} disabled> Есть ли сопутствующие заболевания
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+              <input type="checkbox" {% if view.is_take_medicament == 1 %} checked {% endif %} disabled>Принимает ли пациент лекарственные препараты
+            </label>
+        </div>
+    <div class="form-group">
+      <label for="disabledSelect">Ходит самостоятельно:</label>
+      <select id="disabledSelect" class="form-control">
+          <option {% if view.type_gait == 0 %} selected {% endif %}>Ходит сам или строгий постельный режим</option>
+          <option {% if view.type_gait == 1 %} selected {% endif %}>Использует костыли, ходунки, трость</option>
+          <option {% if view.type_gait == 2 %} selected {% endif %}>При хотьбе опирается о мебель или стены для поддержки</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="disabledSelect">Походка:</label>
+      <select id="disabledSelect" class="form-control">
+          <option {% if view.type_walk == 0 %} selected {% endif %}>Нормальная/ходит свободно</option>
+          <option {% if view.type_walk == 1 %} selected {% endif %}>Слегка несвободная(останавливается)</option>
+          <option {% if view.type_walk == 2 %} selected {% endif %}>Нарушения(не может встать, ходить)</option>
+      </select>
+    </div>
+    <div class="form-group">
+    <label class="control-label">Психическое состояние</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{% if view.is_norm_psi == 0 %} Нормальное {% else %} Подозрительное {% endif %}</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Предпринятые меры:</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{% if view.what_make %}{{ view.what_make }} {% endif %}</p>
+        </div>
+    </div>
+    </form>
+    <p>
+        <a href="/diary/list/{{ diary.id_history }}">К списку сестринских осмотров</a>
+    </p>
+</div>
+
+{% endblock %}

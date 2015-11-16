@@ -59,6 +59,7 @@ ROOTDIR = os.path.abspath(os.path.dirname(__file__))
 
 TEMPLATE_DIRS = (
     r'D:\PROGRAMMING\BPROJECT\cconline\CardioCardOnline\templates',
+    r'D:\PROJECT\CardioCardOnline\CardioCardOnline\templates',
     ROOTDIR + 'CardioCardOnline\templates',
 )
 

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block jscript %}
+    <script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery/jquery-ui.js' %}"></script>
+    <script src="{% static 'js/dt_picker.js' %}" ></script>
+    <script src="{% static 'js/tab.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<p>
+    <a href="/patient/{{ idpatient }}"> Пациент: {{ patient }} [ {{ num }} ]</a>
+</p>
+
+<ul class="nav nav-tabs" id="myTabEvents">
+    <li class="active"><a class="tabnav" data-toggle="tab" href="#evTempList"><span class="glyphicon glyphicon-dashboard"></span>Температурный лист</a></li>
+    <li><a class="tabnav" data-toggle="tab" href="#evNurseView"><span class="glyphicon glyphicon-user"></span>Осмотры</a></li>
+    <li><a class="tabnav" data-toggle="tab" href="#evRiskDown"><span class="glyphicon glyphicon-tasks"></span>Риск падения</a></li>
+    <li><a class="tabnav" data-toggle="tab" href="#evPainStatus"><span class="glyphicon glyphicon-fire"></span>Оценка боли</a></li>
+</ul>
+
+
+<div class="tab-content" id="myTabContent">
+    <div id="evTempList" class="tab-pane fade in active">
+        <table class="table table-hover table-responsive table-condensed">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Мед.сестра</th>
+                    <th>Отделение</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%  for item in temp_list %}
+                <tr>
+                    <td><a href="/temp_list/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:d" }}</a></td>
+                    <td>{{ item.nurse }}</td>
+                    <td>{{ item.depart }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="evNurseView" class="tab-pane fade">
+        <table class="table table-hover table-responsive table-condensed">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Мед.сестра</th>
+                    <th>Отделение</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%  for item in view_list %}
+                <tr>
+                    <td><a href="/nurse_view/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:d" }}</a></td>
+                    <td>{{ item.nurse }}</td>
+                    <td>{{ item.depart }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+    <div id="evRiskDown" class="tab-pane fade">
+        <table class="table table-hover table-responsive table-condensed">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Мед.сестра</th>
+                    <th>Отделение</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%  for item in down_list %}
+                <tr>
+                    <td><a href="/risk_down/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:d" }}</a></td>
+                    <td>{{ item.nurse }}</td>
+                    <td>{{ item.depart }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+    <div id="evPainStatus" class="tab-pane fade">
+        <table class="table table-hover table-responsive table-condensed">
+            <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>Мед.сестра</th>
+                    <th>Отделение</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%  for item in pain_list %}
+                <tr>
+                    <td><a href="/pain_status/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:d" }}</a></td>
+                    <td>{{ item.nurse }}</td>
+                    <td>{{ item.depart }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+
+
+{% endblock %}
