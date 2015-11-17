@@ -8,9 +8,9 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
-from models import ActiveDepart, ListExamens
+from models import ActiveDepart, ListExamens, History
 from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
-from models import TemperatureData, RiskDownData
+from models import TemperatureData, RiskDownData, PainStatus
 
 
 def index(request):
@@ -35,6 +35,15 @@ def get_my_patient(request):
             'patients': patients,
             'title': 'Мои пациенты',
         })
+
+
+def get_patient_info(request, id):
+    patient = History.objects.get(pk=id)
+    render_to_response('patient_info.html',
+                       {
+                           'patient': patient,
+                       })
+
 
 def get_patient(request, idpatient):
     patient = ListHistory.objects.filter(id=idpatient)[0].lastname
@@ -168,6 +177,14 @@ def get_tempearature_data(request, id):
 def get_risk_down(request, id):
     view = RiskDownData.objects.get(pk=id)
     return render_to_response('risk_down.html',
+                              {
+                                  'view': view,
+                              })
+
+
+def get_pain_status(request, id):
+    view = PainStatus.objects.get(pk=id)
+    return render_to_response('pain_status.html',
                               {
                                   'view': view,
                               })

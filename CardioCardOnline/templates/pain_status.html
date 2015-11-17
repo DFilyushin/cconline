@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+    <p>
+        <a href="/nurse/list/{{ view.id_history }}">К списку сестринских осмотров</a>
+    </p>
+    <p><em>Пациент:</em> {{ view.patient }} [{{ view.num_history }}]</p>
+    <p><em>Дата:</em> {{ view.date_view|date:"d.m.Y H:d" }}</p>
+    <p><em>М/с:</em> {{ view.nurse }} </p>
+    <p><em>Отделение:</em> {{ view.depart }}</p>
+
+    <p class="bg-primary">Запись осмотра</p>
+<form class="form-horizontal" role="form">
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Балл по шкале</label>
+        <div class="col-sm-10">
+            <p class="form-control-static">{{ view.pain_value }}</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+    <label class="col-sm-2 control-label">Характер боли</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{{ view.type_pain_str }} </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Место где болит:</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{% if view.pain_place %}{{ view.pain_place }} {% else %} не указано {% endif %}</p>
+        </div>
+    </div>
+
+    <div class="form-group">
+    <label class="col-sm-2 control-label">Оказана помощь</label>
+        <div class="col-sm-10">
+          <p class="form-control-static">{{ view.type_care }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+          <div class="checkbox">
+                <label>
+                  <input type="checkbox" {% if view.is_allergy == 1 %} checked {% endif %} disabled> Аллергия
+                </label>
+            </div>
+      </div>
+      <div class="col-md-4">
+            <div class="checkbox">
+                <label>
+                  <input type="checkbox" {% if view.is_adaptation == 1 %} checked {% endif %} disabled> Привыкание
+                </label>
+            </div>
+      </div>
+      <div class="col-md-4">
+            <div class="checkbox">
+                <label>
+                  <input type="checkbox" {% if view.is_puke == 1 %} checked {% endif %} disabled>Тошнота/рвота
+                </label>
+            </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+            <div class="checkbox">
+                <label>
+                  <input type="checkbox" {% if view.is_pain_inside == 1 %} checked {% endif %} disabled>Боли в желудке
+                </label>
+            </div>
+      </div>
+      <div class="col-md-4">
+            <div class="checkbox">
+                <label>
+                  <input type="checkbox" {% if view.is_latch == 1 %} checked {% endif %} disabled>Запор
+                </label>
+            </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    </form>
+
+    <p>
+        <a href="/nurse/list/{{ view.id_history }}">К списку сестринских осмотров</a>
+    </p>
+
+
+{% endblock %}

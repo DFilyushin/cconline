@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block body %}
+Пациент: {{ patient }} [ {{ num }} ]
+
+<p><em>Диагноз предварительные</em>: {{ patient.preliminary_diag }}</p>
+<p><em>Диагноз клинический</em>: {{ patient.preliminary_diag }}</p>
+
+{% endblock %}
