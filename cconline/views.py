@@ -8,7 +8,7 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
-from models import ActiveDepart, ListExamens, History
+from models import ActiveDepart, ListExamens, History, PatientInfo
 from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
 from models import TemperatureData, RiskDownData, PainStatus
 
@@ -37,11 +37,21 @@ def get_my_patient(request):
         })
 
 
-def get_patient_info(request, id):
-    patient = History.objects.get(pk=id)
-    render_to_response('patient_info.html',
+def get_patient_info(request, idpatient):
+    patient = History.objects.get(pk=idpatient)
+    return render_to_response('patient_info.html',
                        {
                            'patient': patient,
+                       })
+
+
+def get_patient_first_view(request, idpatient):
+    patient = History.objects.get(pk=idpatient)
+    first_view = PatientInfo.objects.filter(id_history=idpatient).filter(id_view=0)
+    return render_to_response('patient_firstview.html',
+                       {
+                           'patient': patient,
+                           'first_view': first_view,
                        })
 
 

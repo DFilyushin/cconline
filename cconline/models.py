@@ -386,3 +386,16 @@ class PainStatus(models.Model):
         managed=False
         db_table = 'VW_PAIN_STATUS'
 
+
+class PatientInfo(models.Model):
+    id = models.IntegerField(primary_key=True)
+    id_history = models.IntegerField()
+    id_param = models.IntegerField()
+    id_view = models.IntegerField(db_column='ID_DOCTORVIEW')
+    param_name = models.CharField(max_length=255, db_column='NAME')
+    text = models.TextField(db_column='VAL_TEXT')
+
+    class Meta:
+        managed=False
+        db_table='VW_DATA_BLOB'
+

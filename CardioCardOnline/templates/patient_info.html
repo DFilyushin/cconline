@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 
 {% block body %}
-Пациент: {{ patient }} [ {{ num }} ]
+
+
+<p><a href="/patient/{{ patient.id }}">Пациент: {{ patient.lastname }} [ {{ patient.num_history }} ]</a></p>
 
 <p><em>Диагноз предварительные</em>: {{ patient.preliminary_diag }}</p>
-<p><em>Диагноз клинический</em>: {{ patient.preliminary_diag }}</p>
+<p><em>Диагноз клинический</em>: {{ patient.clinic_diag }}</p>
+<p><em>Диагноз заключительный</em>: {{ patient. }}</p>
 
 {% endblock %}
