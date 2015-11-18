@@ -34,6 +34,7 @@ def get_my_patient(request):
             'current_doc': current_doc,
             'patients': patients,
             'title': 'Мои пациенты',
+            'current_place':'Мои пациенты',
         })
 
 
@@ -66,7 +67,8 @@ def get_patient(request, idpatient):
         })
 
 def get_diary_list(request, idpatient):
-    diarys = ListDiary.objects.filter(id_history=idpatient)
+
+    diarys = ListDiary.objects.filter(id_history=idpatient).order_by('-reg_date')
     history = ListHistory.objects.filter(id=idpatient)
     patient = history[0].lastname
     numhistory = history[0].num_history
@@ -126,10 +128,12 @@ def patients_by_depart(request, iddepart):
     iddoctor = 5010
     current_doc = 'Ельмеева Т.Н.'
     patients = ListHistory.objects.filter(id_depart=iddepart).filter(discharge__isnull=True)
+    depart = Departments.objects.get(pk=iddepart)
     return render_to_response('patients.html',
         {
             'current_doc': current_doc,
             'patients': patients,
+            'current_place': depart.name,
         })
 
 

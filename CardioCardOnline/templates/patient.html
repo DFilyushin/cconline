@@ -1,21 +1,19 @@
 {% extends "base.html" %}
 
 {% block body %}
-Пациент: {{ patient }} [ {{ num }} ]
+<h2 class="center-block">№{{ num }} {{ patient }}</h2>
 
 <div class="row">
-    <ul>
-        <li><a href="/patient/first_view/{{ id }}">Первичный осмотр</a></li>
-        <li><a href="/patient/getinfo/{{ id }}">Расширенная информация</a></li>
-        <li><a href="/diary/list/{{ id }}"> Дневники пациента</a></li>
-        <li><a href="/examens/list/{{ id }}">Обследования</a></li>
-        <li><a href="/laboratory/list/{{ id }}">Лаборатория</a></li>
-        <li><a href="/medication/list/{{ id }}">Назначения</a></li>
-        <li><a href="/proffview/list/{{ id }}">Проф. осмотры</a></li>
-        <li><a href="/nurse/list/{{ id }}">Сестринские осмотры</a></li>
-        <li><a href="/nurse/list/{{ id }}">Операции</a></li>
+        <p><a href="/patient/first_view/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button" >Первичный осмотр</a></p>
+        <p><a href="/patient/getinfo/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button">Расширенная информация</a></p>
+        <p><a href="/diary/list/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button"> Дневники пациента</a></p>
+        <p><a href="/examens/list/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button">Обследования</a></p>
+        <p><a href="/laboratory/list/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button">Лаборатория</a></p>
+        <p><a href="/medication/list/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button">Назначения</a></p>
+        <p><a href="/proffview/list/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button">Проф. осмотры</a></p>
+        <p><a href="/nurse/list/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button">Сестринские осмотры</a></p>
+        <p><a href="/nurse/list/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button">Операции</a></p>
 
-    </ul>
 </div>
 
 {% endblock %}

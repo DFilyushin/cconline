@@ -1,29 +1,21 @@
 {% extends "base.html" %}
 
 {% block body %}
-Пользователь: {{ current_doc }}
+    <div class="center-block">
+<h2>{{ current_place }}</h2>
+</div>
 
-<div class="table-responsive">
-    <table class="table table-hover table-responsive">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>ФИО</th>
-                <th>Дата рожд.</th>
-                <th>Госпитализ</th>
-            </tr>
-        </thead>
+    <table class="table table-hover">
         <tbody>
             {%  for item in patients %}
             <tr>
                 <td><a href="/patient/{{ item.id }}"> {{ item.num_history }}</a></td>
-                <td>{{ item.lastname }}</td>
-                <td>{{ item.dob|date:"d.m.Y" }}</td>
-                <td>{{ item.receipt|date:"d.m.Y" }}</td>
+                <td><a href="/patient/{{ item.id }}">{{ item.lastname }}</a></td>
+                <td><a href="/patient/{{ item.id }}">{{ item.receipt|date:"d.m.Y" }}</a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-</div>
+
 
 {% endblock %}
