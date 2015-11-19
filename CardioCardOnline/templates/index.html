@@ -4,19 +4,25 @@
     <p>
         <em>Пользователь:</em> {{ current_doc }}
     </p>
-
+    <div class="col-lg-12">
     <p>
         <a href="/patients/my" class="btn btn-primary btn-lg active center-block" role="button">Мои пациенты</a>
     </p>
+        </div>
+    <div class="col-lg-12">
     <p>
         <a href="/patients/by_depart" class="btn btn-primary btn-lg active center-block" role="button">По отделениям</a>
     </p>
-    <div class="row">
-        <form class="form-inline" role="form">
-          <div class="col-xs-8">
-            <input type="email" class="form-control" id="exampleInputEmail3" placeholder="ФИО или № истории">
-          </div>
-          <button type="submit" class="btn btn-primary col-xs-3">Найти</button>
+    </div>
+
+    <div class="col-lg-12">
+        <form action="." role="form">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="ФИО или № истории">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary" type="button">Поиск</button>
+                </span>
+            </div>
         </form>
     </div>
 {% endblock %}
