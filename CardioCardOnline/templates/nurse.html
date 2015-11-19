@@ -10,9 +10,8 @@
 {% endblock %}
 
 {% block body %}
-<p>
-    <a href="/patient/{{ idpatient }}"> Пациент: {{ patient }} [ {{ num }} ]</a>
-</p>
+
+<h2><a href="/patient/{{ idpatient }}">№{{ num }} {{ patient }}</a></h2>
 
 <ul class="nav nav-tabs" id="myTabEvents">
     <li class="active"><a class="tabnav" data-toggle="tab" href="#evTempList"><span class="glyphicon glyphicon-dashboard"></span>Температурный лист</a></li>

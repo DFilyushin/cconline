@@ -399,3 +399,31 @@ class PatientInfo(models.Model):
         managed=False
         db_table='VW_DATA_BLOB'
 
+
+class ListSurgery(models.Model):
+    id = models.IntegerField(primary_key=True)
+    id_history = models.IntegerField()
+    num_history =models.CharField(max_length=25)
+    patient = models.CharField(max_length=3068, db_column='FIO')
+    num_protokol = models.CharField(max_length=25)
+    surgery_date = models.DateField(db_column='OPER_START')
+    surgery_type = models.CharField(max_length=24, db_column='TYPE_OPER_NAME')
+    surgery_name = models.CharField(max_length=4308, db_column='OPER_NAME')
+    surgery_extreme = models.SmallIntegerField(db_column='EXTREME_TYPE')
+    conclusion = models.TextField(db_column='CONCLUSION')
+    type_operation = models.IntegerField(db_column='TYPE_OPER')
+
+    class Meta:
+        managed=False
+        db_table='VW_SURGERY'
+
+
+class SurgeryAdv(models.Model):
+    id = models.IntegerField(primary_key=True)
+    id_surgery = models.IntegerField(db_column='ID_SURGERY')
+    id_type = models.IntegerField(db_column='ID_ATTRIBUT')
+    text_value = models.TextField(db_column='STR_VALUE')
+
+    class Meta:
+        managed=False
+        db_table='SURGERY_ATTRVAL'

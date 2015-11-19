@@ -3,7 +3,7 @@
 
 {% block body %}
 
-    <p><a href="/patient/{{ patient.id }}">Пациент: {{ patient.firstname }} [ {{ patient.num_history }} ]</a></p>
+    <h2><a href="/patient/{{ patient.id }}">№{{ patient.num_history }} {{ patient.lastname }}</a></h2>
     <p><strong>Госпитализирован</strong>: {{ patient.receipt|date:"d.m.Y H:d" }}</p>
     <p><strong>Выписан</strong>: {% if patient.discharge %} {{ patient.discharge|date:"d.m.Y H:d" }} {% else %} находится на лечении {% endif %}</p>
 

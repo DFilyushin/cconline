@@ -1,21 +1,26 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render
-
-# Create your views here.
 import django
 from django.http import HttpResponse, Http404
+from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
 from models import ActiveDepart, ListExamens, History, PatientInfo
 from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
 from models import TemperatureData, RiskDownData, PainStatus
+from models import ListSurgery, SurgeryAdv
+from django.db.models import Q
+from django.utils.safestring import mark_safe
 
 
 def index(request):
-    departs = Departments.objects.all().order_by('name')
-    current_doctor = 'Ельмеева Т.Н.'
+    """
+    Главная страница
+    :param request:
+    :return:
+    """
+    current_doctor = 'Бекмуратов Ж.А.'
 
     return render_to_response('index.html',
         {
@@ -25,16 +30,39 @@ def index(request):
         context_instance=RequestContext(request))
 
 
+def search(request):
+    """
+    Результаты поиска по номеру истории, ФИО пациента
+    :param request:
+    :return: Список найденных историй болезни
+    """
+    if request.method == "POST":
+        find_string = request.POST['patient']
+        patients = ListHistory.objects.filter(Q(num_history__startswith=find_string) | Q(lastname__iexact=find_string)).order_by('receipt')
+        where_find = mark_safe(u"Результаты поиска по <em>" + find_string + "</em>")
+        return render_to_response('patients.html',
+                                  {
+                                      'patients': patients,
+                                      'title': 'Поиск',
+                                      'current_place': where_find,
+                                  })
+
+
 def get_my_patient(request):
+    """
+    Мои пациенты
+    :param request:
+    :return: Список найденных историй по выбранному врачу
+    """
     iddoctor = 5010
-    current_doc = 'Ельмеева Т.Н.'
+    current_doc = 'Бекмуратов Ж.А.'
     patients = ListHistory.objects.filter(id_doctor=iddoctor).filter(discharge__isnull=True)
     return render_to_response('patients.html',
         {
             'current_doc': current_doc,
             'patients': patients,
             'title': 'Мои пациенты',
-            'current_place':'Мои пациенты',
+            'current_place': u'Мои пациенты',
         })
 
 
@@ -66,6 +94,7 @@ def get_patient(request, idpatient):
             'num': numhistory,
         })
 
+
 def get_diary_list(request, idpatient):
 
     diarys = ListDiary.objects.filter(id_history=idpatient).order_by('-reg_date')
@@ -79,6 +108,7 @@ def get_diary_list(request, idpatient):
                                   'num': numhistory,
                                   'idpatient': idpatient,
                               })
+
 
 def get_diary(request, id):
     diary = ListDiary.objects.get(pk=id)
@@ -107,6 +137,7 @@ def get_lab_list(request, idpatient):
                                   'idpatient': idpatient,
                               })
 
+
 def get_laboratory(request, id):
     lab = ListAnalysis.objects.get(pk=id)
     lab_result = LaboratoryData.objects.filter(id_assigned_anal=id).order_by('sort_pos')
@@ -115,6 +146,7 @@ def get_laboratory(request, id):
                                   'order': lab,
                                   'result': lab_result,
                               })
+
 
 def get_active_departs(request):
     departs = ActiveDepart.objects.all()
@@ -149,6 +181,7 @@ def get_examen_list(request, idpatient):
                                   'num': numhistory,
                                   'idpatient': idpatient,
                               })
+
 
 def get_examen(request, id):
     examen = ListExamens.objects.get(pk=id)
@@ -201,4 +234,31 @@ def get_pain_status(request, id):
     return render_to_response('pain_status.html',
                               {
                                   'view': view,
+                              })
+
+
+def get_list_surgery(request, idpatient):
+    history = ListHistory.objects.filter(id=idpatient)
+    patient = history[0].lastname
+    numhistory = history[0].num_history
+    surgery = ListSurgery.objects.filter(id_history=idpatient).order_by('surgery_date')
+    return render_to_response('list_surgery.html',
+                              {
+                                  'surgery': surgery,
+                                  'idpatient': idpatient,
+                                  'num': numhistory,
+                                  'patient': patient,
+                              })
+
+
+def get_operation(request, id):
+    operation = ListSurgery.objects.get(pk=id)
+    adv_info = ''
+    if (operation.type_operation == 1):
+        advanced = SurgeryAdv.objects.filter(id_surgery=id).filter(id_type=9)
+        adv_info = advanced[0].text_value
+    return render_to_response('operation.html',
+                              {
+                                  'operation': operation,
+                                  'adv_info': adv_info,
                               })

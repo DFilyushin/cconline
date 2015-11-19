@@ -16,9 +16,9 @@
     </div>
 
     <div class="col-lg-12">
-        <form action="." role="form">
+        <form action="/search/" method="post" role="form">{% csrf_token %}
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="ФИО или № истории">
+                <input type="text" class="form-control" name="patient" placeholder="ФИО или № истории">
                 <span class="input-group-btn">
                     <button type="submit" class="btn btn-primary" type="button">Поиск</button>
                 </span>
