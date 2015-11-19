@@ -1,23 +1,26 @@
 {% extends "base.html" %}
 
 {% block body %}
-<p>
-    <em>Пользователь:</em> {{ current_doc }}
-</p>
+    <p>
+        <em>Пользователь:</em> {{ current_doc }}
+    </p>
 
-<form class="form-inline">
-  <div class="form-group">
-    <label class="sr-only" for="exampleInputEmail3">Найти пациента</label>
-    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Поиск пациента по ФИО, № истории">
-  </div>
-  <button type="submit" class="btn btn-default">Найти</button>
-</form>
-
+    <div class="row">
     <p>
         <a href="/patients/my" class="btn btn-primary btn-lg active center-block" role="button">Мои пациенты</a>
     </p>
+        </div>
+    <div class="row">
     <p>
         <a href="/patients/by_depart" class="btn btn-primary btn-lg active center-block" role="button">По отделениям</a>
     </p>
-
+    </div>
+    <div class="row">
+        <form class="form-row" role="form">
+          <div class="col-sm-9">
+            <input type="email" class="form-control col-sm-2" id="exampleInputEmail3" placeholder="ФИО или № истории">
+          </div>
+          <button type="submit" class="btn btn-default">Найти</button>
+        </form>
+    </div>
 {% endblock %}
