@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    #url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'cconline.views.index',  name='index'),#index page
     url(r'^search/', 'cconline.views.search', name='search'),#search by num history or firstname patient
     url(r'^patients/my/', 'cconline.views.get_my_patient', name='my_patient'),#my patients
