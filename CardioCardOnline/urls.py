@@ -1,11 +1,12 @@
 from django.conf.urls import include, url
-from django.contrib import admin
+#from django.contrib import admin
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     #url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'cconline.views.index',  name='index'),#index page
+    url(r'^login/', 'cconline.views.login',  name='login'),#index page
     url(r'^search/', 'cconline.views.search', name='search'),#search by num history or firstname patient
     url(r'^patients/my/', 'cconline.views.get_my_patient', name='my_patient'),#my patients
     url(r'^patients/departs/(?P<iddepart>\d+)/$', 'cconline.views.patients_by_depart', name='departs_patient'),

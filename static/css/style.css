@@ -1,3 +1,11 @@
+body {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #ffffff;
+  background: url("../images/bg.jpg");
+  background-attachment:fixed;
+}
+
 .bs-example{
     position:relative;
     padding:45px 15px 15px;

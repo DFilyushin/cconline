@@ -48,6 +48,9 @@ def search(request):
                                   })
 
 
+def login(request):
+    return RequestContext('login.html')
+
 def get_my_patient(request):
     """
     Мои пациенты
