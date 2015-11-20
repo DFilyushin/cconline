@@ -49,7 +49,11 @@ def search(request):
 
 
 def login(request):
-    return RequestContext('login.html')
+    return render_to_response('login.html',
+                              {
+
+                              },
+                              context_instance = RequestContext(request))
 
 def get_my_patient(request):
     """
