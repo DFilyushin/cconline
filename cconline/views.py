@@ -9,7 +9,7 @@ from models import Departments, ListHistory, ListDiary, ListAnalysis, Laboratory
 from models import ActiveDepart, ListExamens, History, PatientInfo
 from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
 from models import TemperatureData, RiskDownData, PainStatus
-from models import ListSurgery, SurgeryAdv
+from models import ListSurgery, SurgeryAdv, ListProffView
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 
@@ -255,6 +255,45 @@ def get_list_surgery(request, idpatient):
                                   'idpatient': idpatient,
                                   'num': numhistory,
                                   'patient': patient,
+                              })
+
+
+def get_list_proffview(request, idpatient):
+    """
+    Список осмотров профильными специалистами
+    :param request:
+    :param idpatient:
+    :return:
+    """
+    history = ListHistory.objects.filter(id=idpatient)
+    patient = history[0].lastname
+    numhistory = history[0].num_history
+    dataset = ListProffView.objects.filter(id_history=idpatient)
+    return render_to_response('list_prof_view.html',
+                              {
+                                  'proflist': dataset,
+                                  'idpatient': idpatient,
+                                  'num': numhistory,
+                                  'patient': patient,
+                              })
+
+
+def get_proview(request, id):
+    """
+
+    :param request:
+    :param id:
+    :return:
+    """
+    proview = ListProffView.objects.get(pk=id)
+    pages = PatientInfo.objects.filter(id_history=proview.id_history).filter(id_view=id)
+    return render_to_response('proview.html',
+                              {
+                                  'proview': proview,
+                                  'pages': pages,
+                                  'idpatient': proview.id_history,
+                                  'num': proview.num_history,
+                                  'patient': proview.patient,
                               })
 
 

@@ -26,9 +26,9 @@ urlpatterns = [
     url(r'^operations/(?P<idpatient>\d+)/$', 'cconline.views.get_list_surgery', name='list_surgery'),
     url(r'^operation/(?P<id>\d+)/$', 'cconline.views.get_operation', name='operation'),
     url(r'^nurse/list/(?P<idpatient>\d+)/$', 'cconline.views.get_nurse_list', name='list_nurse'),
-
-#    url(r'^medication/list/(?P<idpatient>\d+)/$', 'cconline.views.get_my_patient', name='my_patient'),
-#    url(r'^proffview/list/(?P<idpatient>\d+)/$', 'cconline.views.get_my_patient', name='my_patient'),
+    #url(r'^medication/list/(?P<idpatient>\d+)/$', 'cconline.views.get_my_patient', name='my_patient'),
+    url(r'^proview/list/(?P<idpatient>\d+)/$', 'cconline.views.get_list_proffview', name='proview'),
+    url(r'^proview/(?P<id>\d+)/$', 'cconline.views.get_proview', name='proview'),
 
 ]
 if settings.DEBUG == True:

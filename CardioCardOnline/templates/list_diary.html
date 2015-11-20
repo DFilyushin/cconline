@@ -11,7 +11,7 @@
         <tbody>
             {%  for item in diarys %}
             <tr>
-                <td><a href="/diary/{{ item.id }}"> {{ item.reg_date|date:"d.m.Y H:d" }}</a></td>
+                <td><a href="/diary/{{ item.id }}">{{ item.reg_date|date:"d.m.Y H:d" }}</a></td>
                 <td><a href="/diary/{{ item.id }}">{{ item.doctor }}</a></td>
                 <td><a href="/diary/{{ item.id }}">{{ item.depart_name }}</a></td>
             </tr>

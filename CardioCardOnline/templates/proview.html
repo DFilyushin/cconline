@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load cconline_extras %}
+
+{% block body %}
+
+    <h2><a href="/proview/list/{{ idpatient }}">№{{ num }} {{ patient }}</a></h2>
+    <p><strong>Специализация</strong>: {{ proview.specname }}</p>
+    <p><strong>Врач</strong>: {{ proview.doctor }}</p>
+    <p><strong>Дата осмотра</strong>: {{ proview.viewdate}} </p>
+
+    {% for item in pages %}
+        <p><strong>{{ item.param_name }}</strong>: {{ item.text }}</p>
+    {% endfor %}
+
+    <p><strong>Заключение</strong>: {{ proview.conclusion|ccrlf }}</p>
+    <p><a href="/proview/list/{{ idpatient }}">К списку осмотров</a></p>
+
+{% endblock %}

@@ -427,3 +427,19 @@ class SurgeryAdv(models.Model):
     class Meta:
         managed=False
         db_table='SURGERY_ATTRVAL'
+
+
+class ListProffView(models.Model):
+    id = models.IntegerField(primary_key=True)
+    id_history = models.IntegerField()
+    specname = models.CharField(max_length=255, db_column='SPECIALIZATION')
+    num_history = models.CharField(max_length=25)
+    patient = models.CharField(max_length=3068)
+    assigndate = models.DateTimeField(db_column='DATE_ASSIGN')
+    viewdate = models.DateTimeField(db_column='DATE_VIEW')
+    doctor = models.CharField(max_length=255, db_column='DOCTOR')
+    conclusion = models.TextField(db_column='CONCLUSION')
+
+    class Meta:
+        managed=False
+        db_table='VW_PROF_DOCTOR_VIEW'
