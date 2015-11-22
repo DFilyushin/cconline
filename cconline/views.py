@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
-from models import ActiveDepart, ListExamens, History, PatientInfo
+from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication
 from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
 from models import TemperatureData, RiskDownData, PainStatus
 from models import ListSurgery, SurgeryAdv, ListProffView
@@ -307,4 +307,18 @@ def get_operation(request, id):
                               {
                                   'operation': operation,
                                   'adv_info': adv_info,
+                              })
+
+
+def get_list_medication(request, idpatient):
+    history = ListHistory.objects.filter(id=idpatient)
+    patient = history[0].lastname
+    numhistory = history[0].num_history
+    dataset = HistoryMedication.objects.filter(id_history=idpatient)
+    return render_to_response('list_medication.html',
+                              {
+                                  'dataset': dataset,
+                                  'num': numhistory,
+                                  'patient': patient,
+                                  'idpatient': idpatient,
                               })

@@ -441,5 +441,16 @@ class ListProffView(models.Model):
     conclusion = models.TextField(db_column='CONCLUSION')
 
     class Meta:
-        managed=False
-        db_table='VW_PROF_DOCTOR_VIEW'
+        managed = False
+        db_table = 'VW_PROF_DOCTOR_VIEW'
+
+
+class HistoryMedication(models.Model):
+    id = models.IntegerField(primary_key=True, db_column='id_key_record')
+    id_history = models.IntegerField()
+    medic_name = models.CharField(max_length=1020, db_column='medic_name')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_HISTORY_MEDICATION'
+        ordering = ['medic_name']
