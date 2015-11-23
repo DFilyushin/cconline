@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+
+{% block title %} <title>Внутренняя ошибка сервера</title> {% endblock %}
+
+
+{% block body %}
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <div class="text-center">
+    <img src="{% static 'img/bugerror.png' %}">
+    <h2 align ="center">Ой, мы что-то сделали не так</h2>
+    <p><a href="/">Вернуться на главную страницу</a></p>
+    </div>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+
+{% endblock %}
+
+
+{% block title %}{% trans 'Server error (500)' %}{% endblock %}
+
+{% block content %}
+<h1>{% trans 'Server Error <em>(500)</em>' %}</h1>
+<p>{% trans "There's been an error. It's been reported to the site administrators via email and should be fixed shortly. Thanks for your patience." %}</p>
+
+{% endblock %}

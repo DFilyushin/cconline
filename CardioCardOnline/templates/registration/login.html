@@ -1,0 +1,40 @@
+{% extends "admin/admin_base.html" %}
+{% load staticfiles %}
+
+{% block extrastyle %}{% endblock %}
+
+{% block title %}Вход на сайт{% endblock %}
+
+{% block content %}
+<div class="container">
+
+{% if form.errors and not form.non_field_errors and not form.this_is_the_login_form.errors %}
+<p class="errornote">
+{% if form.errors.items|length == 1 %}"Please correct the error below."{% else %}"Please correct the errors below."{% endif %}
+</p>
+{% endif %}
+
+
+    <H1 class="text-center">КардиоКарта <br>Онлайн</H1>
+
+
+    <form class="form-signin" role="form" action='.' method='post'>
+        {% csrf_token %}
+        <input type="text" class="form-control" placeholder="Логин" name="username" id="username" required autofocus>
+        <input type="password" class="form-control" placeholder="Пароль" name="password" id="password" required>
+        <div class="checkbox">
+        <label>
+            <input type="checkbox" name="remember_me" value="1"> Запомнить
+        </label>
+            </div>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>
+        <input type="hidden" name="this_is_the_login_form" value="1" />
+        <input type="hidden" name="next" value="{{ next|escape }}" />
+    </form>
+
+    <script type="text/javascript">
+        document.getElementById('username').focus()
+    </script>
+</div> <!-- /container -->
+{% endblock %}

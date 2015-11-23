@@ -454,3 +454,44 @@ class HistoryMedication(models.Model):
         managed = False
         db_table = 'VW_HISTORY_MEDICATION'
         ordering = ['medic_name']
+
+
+class Medication(models.Model):
+    id = models.IntegerField(primary_key=True)
+    id_history = models.IntegerField()
+    id_key = models.IntegerField(db_column='ID_KEY_RECORD')
+    id_department = models.IntegerField()
+    appl_form = models.CharField(max_length=255, db_column='APPL_FORM_NAME')
+    form = models.CharField(max_length=10)
+    composit = models.CharField(max_length=512, db_column='DRUG_COMPOSIT')
+    doctor = models.CharField(max_length=255)
+    speed_inj = models.CharField(max_length=50, db_column='SPEED_IN')
+    count_drug = models.FloatField(db_column='CNT_DRUG')
+    dose = models.CharField(max_length=255, db_column='DOSE')
+    appoint = models.DateTimeField(db_column='START_APPOINTMENT')
+    eat_time = models.DateTimeField(db_column='DATETIME_EAT')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_ASSIGNED_MEDICATION'
+        ordering = ['appoint']
+
+
+class SysUsers(models.Model):
+    user_login = models.CharField(primary_key=True, max_length=25)
+    id_doctor = models.IntegerField()
+    user_fullname = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'SYS_USERS'
+
+
+class UserGroups(models.Model):
+    id = models.CharField(primary_key=True, max_length=255)
+    sys_login = models.CharField(max_length=80)
+    sys_group = models.CharField(max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'VW_USER_IN_GROUP'

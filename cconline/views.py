@@ -9,9 +9,33 @@ from models import Departments, ListHistory, ListDiary, ListAnalysis, Laboratory
 from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication
 from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
 from models import TemperatureData, RiskDownData, PainStatus
-from models import ListSurgery, SurgeryAdv, ListProffView
+from models import ListSurgery, SurgeryAdv, ListProffView, Medication
+from models import SysUsers, UserGroups
 from django.db.models import Q
 from django.utils.safestring import mark_safe
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import login, logout
+
+
+def card_login(request, *args, **kwargs):
+    if request.method == 'POST':
+        if not request.POST.get('remember_me', None):
+            request.session.set_expiry(0)
+        else:
+            request.session.set_expiry(604800)
+    return login(request, *args, **kwargs)
+
+
+def get_current_doctor(request):
+    current_user = request.user.username.upper()
+    card_user = SysUsers.objects.get(pk=current_user)
+    return card_user.user_fullname
+
+
+def get_user_groups(request):
+    current_user = request.user.username.upper()
+    list_group = UserGroups.objects.filter(sys_login=current_user)
+    return [item.sys_group for item in list_group]
 
 
 def index(request):
@@ -20,11 +44,9 @@ def index(request):
     :param request:
     :return:
     """
-    current_doctor = 'Бекмуратов Ж.А.'
-
     return render_to_response('index.html',
         {
-            'current_doc': current_doctor,
+            'current_doc': get_current_doctor(request),
             'title': 'Главная страница',
         },
         context_instance=RequestContext(request))
@@ -45,24 +67,21 @@ def search(request):
                                       'patients': patients,
                                       'title': 'Поиск',
                                       'current_place': where_find,
+                                      'current_doc': get_current_doctor(request),
                                   })
 
 
-def login(request):
-    return render_to_response('login.html',
-                              {
-
-                              },
-                              context_instance = RequestContext(request))
-
+@login_required(login_url='/login')
 def get_my_patient(request):
     """
     Мои пациенты
     :param request:
     :return: Список найденных историй по выбранному врачу
     """
-    iddoctor = 5010
-    current_doc = 'Бекмуратов Ж.А.'
+    current_user = request.user.username.upper()
+    card_user = SysUsers.objects.get(pk=current_user)
+    iddoctor = card_user.id_doctor
+    current_doc = card_user.user_fullname
     patients = ListHistory.objects.filter(id_doctor=iddoctor).filter(discharge__isnull=True)
     return render_to_response('patients.html',
         {
@@ -99,11 +118,18 @@ def get_patient(request, idpatient):
             'patient': patient,
             'id': idpatient,
             'num': numhistory,
+            'current_doc': get_current_doctor(request),
+            'list_group': get_user_groups(request),
         })
 
 
 def get_diary_list(request, idpatient):
-
+    """
+    Список дневников пациента
+    :param request:
+    :param idpatient: Код пациента
+    :return: Список дневников
+    """
     diarys = ListDiary.objects.filter(id_history=idpatient).order_by('-reg_date')
     history = ListHistory.objects.filter(id=idpatient)
     patient = history[0].lastname
@@ -164,15 +190,19 @@ def get_active_departs(request):
 
 
 def patients_by_depart(request, iddepart):
-    iddoctor = 5010
-    current_doc = 'Ельмеева Т.Н.'
+    """
+    Список пациентов по отделениям
+    :param request:
+    :param iddepart:
+    :return:
+    """
     patients = ListHistory.objects.filter(id_depart=iddepart).filter(discharge__isnull=True)
     depart = Departments.objects.get(pk=iddepart)
     return render_to_response('patients.html',
         {
-            'current_doc': current_doc,
             'patients': patients,
             'current_place': depart.name,
+            'current_doc': get_current_doctor(request),
         })
 
 
@@ -321,4 +351,22 @@ def get_list_medication(request, idpatient):
                                   'num': numhistory,
                                   'patient': patient,
                                   'idpatient': idpatient,
+                              })
+
+
+def get_medication(request, id):
+    medication = HistoryMedication.objects.get(pk=id)
+
+    # get history information
+    history = ListHistory.objects.get(pk=medication.id_history)
+    patient = history.lastname
+    numhistory = history.num_history
+    dataset = Medication.objects.filter(id_key=id)
+    return render_to_response('medication.html',
+                              {
+                                  'dataset': dataset,
+                                  'num': numhistory,
+                                  'patient': patient,
+                                  'idpatient': medication.id_history,
+                                  'medicname': medication.medic_name,
                               })

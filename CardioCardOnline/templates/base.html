@@ -31,6 +31,23 @@
     {% endblock %}
 </div>
 
+<div id="footer">
+    <div class="container">
+        <div class="col-md-6">
+            <div class="pull-left">
+                <p class="text-muted">©КардиоКарта Онлайн, 2015 г.</p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="pull-right">
+                {% if current_doc %}
+                    <p class="text-muted">Пользователь: {{ current_doc }} <a href="/logout">[Выход]</a></p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 
 </html>
