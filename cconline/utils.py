@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.http import HttpResponse, Http404
 from django.contrib.auth.hashers import make_password
 import random
