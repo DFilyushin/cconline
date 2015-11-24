@@ -1,7 +1,7 @@
-{% extends "base.html" %}
+{% extends "cconline/base.html" %}
 
 {% block body %}
-<h2><a href="/patient/{{ idpatient }}">№{{ num}} {{ patient }}</a></h2>
+<h2><a href="/patient/{{ history.id }}">№{{ history.num_history }} {{ history.lastname }}</a></h2>
 <div class="center-block">
     <h3>Дневники</h3>
 </div>

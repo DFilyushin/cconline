@@ -1,0 +1,8 @@
+{% extends "cconline/base.html" %}
+
+{% block body %}
+    {{ REQ_META|pprint  }}
+    {% for k in REQ_META %}
+         {{ k }}  <br />
+    {% endfor %}
+{% endblock %}

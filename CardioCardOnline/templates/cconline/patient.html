@@ -1,11 +1,10 @@
-{% extends "base.html" %}
+{% extends "cconline/base.html" %}
 
 {% block body %}
 <h2 class="center-block">№{{ num }} {{ patient }}</h2>
 
 <div class="table-responsive">
     <p><a href="/patient/first_view/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button" >Первичный осмотр</a></p>
-    <p><a href="/patient/getinfo/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button">Расширенная информация</a></p>
     {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group %}
         <p><a href="/diary/list/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button"> Дневники пациента</a></p>
         <p><a href="/examens/list/{{ id }}" class="btn btn-primary btn-lg active center-block" role="button">Обследования</a></p>

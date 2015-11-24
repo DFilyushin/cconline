@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^proview/(?P<id>\d+)/$', 'cconline.views.get_proview', name='proview'),
 
     url(r'^getpass/$', 'cconline.utils.getpass', name='get_password'),
+    url(r'^test/$', 'cconline.utils.gethttp'),
 ]
 if settings.DEBUG == True:
     urlpatterns += staticfiles_urlpatterns()
