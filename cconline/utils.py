@@ -18,7 +18,9 @@ def getpass(request):
 
 
 def gethttp(request):
+    remote_address = request.META['REMOTE_ADDR']
+    is_local_net = ('192.168.100' in remote_address) or ('127.0.0.1' in remote_address)
     template = get_template('cconline/test.html')
-    page_data = { 'REQ_META': request.META}
+    page_data = { 'REQ_META': request.META, 'is_local_net': is_local_net, }
     context = template.render(Context(page_data))
     return HttpResponse(context)
