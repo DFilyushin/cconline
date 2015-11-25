@@ -1,0 +1,57 @@
+﻿{% extends "cconline/base.html" %}
+{% load staticfiles %}
+
+{% block jscript %}
+    <script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery/jquery-ui.js' %}"></script>
+    <script src="{% static 'js/dt_picker.js' %}" ></script>
+    <script src="{% static 'js/tab.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<!-- Begin page content -->
+<h3>Назначение обследования</h3>
+<div class="container">
+      <form class="form-horizontal" action="/examen/add/" method='post'>{% csrf_token %}
+
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="dateview">ФИО пациента*:</label>
+          <div class="col-xs-9">
+            <input type="text" class="form-control" name="fio" id="dateview" name="dateview" placeholder="Укажите ФИО пациента" value="{{ history.lastname }}" autofocus required >
+          </div>
+        </div>
+
+        <br />
+        <div class="clearfix"></div>
+
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="chosital">Обследование:</label>
+          <div class="col-xs-9">
+            <select class="form-control" name="hospital" id="chosital" >
+                {% for item in exam_list %}
+                    <option value="{{ item.id }}">{{ item.name }}</option>
+                {% endfor %}
+            </select>
+          </div>
+        </div>
+
+
+
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="dDateGet">Дата проведения:</label>
+          <div class="col-xs-2">
+            <input type="text" class="form-control datepicker" name="dateview" id="dDateGet" placeholder="Дата забора" value="{% now "Y-m-d" %}" pattern="^\d{4}-\d{2}-\d{2}$"  title="Дата ГГГГ-ММ-ДД">
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-xs-offset-9">
+            <button type="submit" class="btn btn-warning">Сохранить</button>
+            <a class="btn btn-danger" href="/activeorder">Отменить</a>
+          </div>
+        </div>
+      </form>
+</div>
+{% endblock %}

@@ -2,7 +2,6 @@
 
 import django
 from django.http import HttpResponse, Http404
-from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
@@ -10,11 +9,13 @@ from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedic
 from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
 from models import TemperatureData, RiskDownData, PainStatus
 from models import ListSurgery, SurgeryAdv, ListProffView, Medication
+from models import RefExamens
 from models import SysUsers, UserGroups
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login, logout
+from django.core.exceptions import PermissionDenied
 
 
 def card_login(request, *args, **kwargs):
@@ -48,11 +49,10 @@ def index(request):
     return render_to_response('cconline/index.html',
         {
             'current_doc': get_current_doctor(request),
-            'title': 'Главная страница',
         },
         context_instance=RequestContext(request))
 
-
+@login_required(login_url='/login')
 def search(request):
     """
     Результаты поиска по номеру истории, ФИО пациента
@@ -66,7 +66,6 @@ def search(request):
         return render_to_response('cconline/patients.html',
                                   {
                                       'patients': patients,
-                                      'title': 'Поиск',
                                       'current_place': where_find,
                                       'current_doc': get_current_doctor(request),
                                   })
@@ -88,19 +87,11 @@ def get_my_patient(request):
         {
             'current_doc': current_doc,
             'patients': patients,
-            'title': 'Мои пациенты',
             'current_place': u'Мои пациенты',
         })
 
 
-def get_patient_info(request, idpatient):
-    patient = History.objects.get(pk=idpatient)
-    return render_to_response('cconline/patient_info.html',
-                       {
-                           'patient': patient,
-                       })
-
-
+@login_required(login_url='/login')
 def get_patient_first_view(request, idpatient):
     patient = History.objects.get(pk=idpatient)
     first_view = PatientInfo.objects.filter(id_history=idpatient).filter(id_view=0)
@@ -108,9 +99,11 @@ def get_patient_first_view(request, idpatient):
                        {
                            'patient': patient,
                            'first_view': first_view,
+                           'current_doc': get_current_doctor(request),
                        })
 
 
+@login_required(login_url='/login')
 def get_patient(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -127,6 +120,7 @@ def get_patient(request, idpatient):
         })
 
 
+@login_required(login_url='/login')
 def get_diary_list(request, idpatient):
     """
     Список дневников пациента
@@ -143,9 +137,11 @@ def get_diary_list(request, idpatient):
                               {
                                   'diarys': diarys,
                                   'history': history,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_diary(request, id):
     try:
         diary = ListDiary.objects.get(pk=id)
@@ -156,9 +152,11 @@ def get_diary(request, id):
                               {
                                   'diary': diary,
                                   'history': history,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_lab_list(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -169,9 +167,11 @@ def get_lab_list(request, idpatient):
                               {
                                   'labs': labs,
                                   'history': history,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_laboratory(request, id):
     """
     Данные одного лабораторного анализа
@@ -188,17 +188,21 @@ def get_laboratory(request, id):
                               {
                                   'order': lab,
                                   'result': lab_result,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_active_departs(request):
     departs = ActiveDepart.objects.all()
     return render_to_response('cconline/departs.html',
                               {
                                   'departs': departs,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def patients_by_depart(request, iddepart):
     """
     Список пациентов по отделениям
@@ -217,9 +221,26 @@ def patients_by_depart(request, iddepart):
             'patients': patients,
             'current_place': depart.name,
             'current_doc': get_current_doctor(request),
+            'from_departs': True,
         })
 
 
+def add_new_exam(request, idpatient):
+    if request.method == 'GET':
+        #try:
+        history = ListHistory.objects.get(pk=idpatient)
+        #except ListHistory.DoesNotExist:
+        #    raise Http404
+        examens = RefExamens.objects.all()
+        return render_to_response('cconline/newexam.html', {
+            'history': history,
+            'exam_list': examens,
+            'id': idpatient,
+        },
+            context_instance=RequestContext(request))
+
+
+@login_required(login_url='/login')
 def get_examen_list(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -234,9 +255,11 @@ def get_examen_list(request, idpatient):
                                   'patient': patient,
                                   'num': numhistory,
                                   'idpatient': idpatient,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_examen(request, id):
     """
     Данные обследования
@@ -251,9 +274,11 @@ def get_examen(request, id):
     return render_to_response('cconline/examen.html',
                               {
                                   'examen': examen,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_nurse_list(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -274,9 +299,11 @@ def get_nurse_list(request, idpatient):
                                   'patient': patient,
                                   'num': numhistory,
                                   'idpatient': idpatient,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_tempearature_data(request, id):
     try:
         view = TemperatureList.objects.get(pk=id)
@@ -288,9 +315,11 @@ def get_tempearature_data(request, id):
                        {
                            'view': view,
                            'values': values,
+                           'current_doc': get_current_doctor(request),
                        })
 
 
+@login_required(login_url='/login')
 def get_risk_down(request, id):
     try:
         view = RiskDownData.objects.get(pk=id)
@@ -300,9 +329,11 @@ def get_risk_down(request, id):
     return render_to_response('cconline/risk_down.html',
                               {
                                   'view': view,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_pain_status(request, id):
     try:
         view = PainStatus.objects.get(pk=id)
@@ -312,9 +343,11 @@ def get_pain_status(request, id):
     return render_to_response('cconline/pain_status.html',
                               {
                                   'view': view,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_list_surgery(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -329,9 +362,11 @@ def get_list_surgery(request, idpatient):
                                   'idpatient': idpatient,
                                   'num': numhistory,
                                   'patient': patient,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_list_proffview(request, idpatient):
     """
     Список осмотров профильными специалистами
@@ -353,15 +388,17 @@ def get_list_proffview(request, idpatient):
                                   'idpatient': idpatient,
                                   'num': numhistory,
                                   'patient': patient,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_proview(request, id):
     """
-
+    Данные проф. осмотра пациента
     :param request:
-    :param id:
-    :return:
+    :param id:Код проф. осмотра
+    :return: Данные осмотра, с закладками
     """
     try:
         proview = ListProffView.objects.get(pk=id)
@@ -376,10 +413,22 @@ def get_proview(request, id):
                                   'idpatient': proview.id_history,
                                   'num': proview.num_history,
                                   'patient': proview.patient,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_operation(request, id):
+    """
+    Описание операции
+    :param request:
+    :param id: Код операции
+    :return: Данные операции
+    """
+    avail_groups = get_user_groups(request)
+    # докторам разрешен просмотр
+    if ('DOCTOR' not in avail_groups) and (request.user.username.upper() != 'SYSDBA'):
+        raise PermissionDenied
     try:
         operation = ListSurgery.objects.get(pk=id)
     except ListSurgery.DoesNotExist:
@@ -392,10 +441,18 @@ def get_operation(request, id):
                               {
                                   'operation': operation,
                                   'adv_info': adv_info,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_list_medication(request, idpatient):
+    """
+    Список назначенных медикаментов
+    :param request:
+    :param idpatient: Код пациента
+    :return: Список назначенных препаратов
+    """
     try:
         history = ListHistory.objects.get(pk=idpatient)
     except ListHistory.DoesNotExist:
@@ -409,10 +466,18 @@ def get_list_medication(request, idpatient):
                                   'num': numhistory,
                                   'patient': patient,
                                   'idpatient': idpatient,
+                                  'current_doc': get_current_doctor(request),
                               })
 
 
+@login_required(login_url='/login')
 def get_medication(request, id):
+    """
+    Назначение по дням/часам
+    :param request:
+    :param id: Код назначения
+    :return: Список назначений одного препарата
+    """
     try:
         medication = HistoryMedication.objects.get(pk=id)
     except HistoryMedication.DoesNotExist:
@@ -430,4 +495,5 @@ def get_medication(request, id):
                                   'patient': patient,
                                   'idpatient': medication.id_history,
                                   'medicname': medication.medic_name,
+                                  'current_doc': get_current_doctor(request),
                               })

@@ -1,0 +1,23 @@
+﻿{% extends "cconline/base.html" %}
+{% load staticfiles %}
+
+{% block title %} <title>Доступ запрещён</title> {% endblock %}
+
+{% block body %}
+
+<div class="row">
+
+    <div class="col-md-6 col-md-offset-3">
+      <div class="text-center">
+
+
+        <img src="{% static 'images/broken-link.png'%}" class="center-block">
+        <h2 align ="center">Вам запрещён доступ к данной странице</h2>
+        <p><a href="/">Главная страница</a></p>
+      </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

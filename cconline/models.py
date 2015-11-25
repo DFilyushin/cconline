@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+# Database model
 
 
 class Departments(models.Model):
@@ -11,144 +11,151 @@ class Departments(models.Model):
         managed = False
         db_table = 'departments'
 
+
 class ClassMkb(models.Model):
-    id = models.IntegerField(db_column='ID', primary_key=True) # Field name made lowercase.
-    parent_id = models.IntegerField(db_column='PARENT_ID', blank=True, null=True) # Field name made lowercase.
-    name = models.CharField(db_column='NAME', max_length=1020, blank=True) # Field name made lowercase.
-    code = models.CharField(db_column='CODE', max_length=200, blank=True) # Field name made lowercase.
+    id = models.IntegerField(db_column='ID', primary_key=True)
+    parent_id = models.IntegerField(db_column='PARENT_ID', blank=True, null=True)
+    name = models.CharField(db_column='NAME', max_length=1020, blank=True)
+    code = models.CharField(db_column='CODE', max_length=200, blank=True)
+
     class Meta:
         managed = False
         db_table = 'class_mkb'
 
 
 class RefSocial(models.Model):
-    id = models.IntegerField(db_column='ID', primary_key=True) # Field name made lowercase.
-    rdt_create = models.DateTimeField(db_column='RDT_CREATE', blank=True, null=True) # Field name made lowercase.
-    ru_create = models.CharField(db_column='RU_CREATE', max_length=320, blank=True) # Field name made lowercase.
-    last_user = models.CharField(db_column='LAST_USER', max_length=320, blank=True) # Field name made lowercase.
-    last_date = models.DateTimeField(db_column='LAST_DATE', blank=True, null=True) # Field name made lowercase.
-    name = models.CharField(db_column='NAME', unique=True, max_length=1020) # Field name made lowercase.
-    is_delete = models.SmallIntegerField(db_column='IS_DELETE', blank=True, null=True) # Field name made lowercase.
+    id = models.IntegerField(db_column='ID', primary_key=True)
+    rdt_create = models.DateTimeField(db_column='RDT_CREATE', blank=True, null=True)
+    ru_create = models.CharField(db_column='RU_CREATE', max_length=320, blank=True)
+    last_user = models.CharField(db_column='LAST_USER', max_length=320, blank=True)
+    last_date = models.DateTimeField(db_column='LAST_DATE', blank=True, null=True)
+    name = models.CharField(db_column='NAME', unique=True, max_length=1020)
+    is_delete = models.SmallIntegerField(db_column='IS_DELETE', blank=True, null=True)
+
     class Meta:
         managed = False
         db_table = 'ref_social'
 
 
 class RefNationality(models.Model):
-    id = models.IntegerField(db_column='ID', primary_key=True) # Field name made lowercase.
-    name_rus = models.CharField(db_column='NAME_RUS', unique=True, max_length=1020) # Field name made lowercase.
-    name_kaz = models.CharField(db_column='NAME_KAZ', max_length=1020) # Field name made lowercase.
-    is_delete = models.SmallIntegerField(db_column='IS_DELETE', blank=True, null=True) # Field name made lowercase.
-    rdt_create = models.DateTimeField(db_column='RDT_CREATE', blank=True, null=True) # Field name made lowercase.
-    ru_create = models.CharField(db_column='RU_CREATE', max_length=320, blank=True) # Field name made lowercase.
+    id = models.IntegerField(db_column='ID', primary_key=True)
+    name_rus = models.CharField(db_column='NAME_RUS', unique=True, max_length=1020)
+    name_kaz = models.CharField(db_column='NAME_KAZ', max_length=1020)
+    is_delete = models.SmallIntegerField(db_column='IS_DELETE', blank=True, null=True)
+    rdt_create = models.DateTimeField(db_column='RDT_CREATE', blank=True, null=True)
+    ru_create = models.CharField(db_column='RU_CREATE', max_length=320, blank=True)
+
     class Meta:
         managed = False
         db_table = 'ref_nationality'
 
 
 class RefBenefit(models.Model):
-    id = models.IntegerField(db_column='ID', primary_key=True) # Field name made lowercase.
-    ru_create = models.CharField(db_column='RU_CREATE', max_length=320, blank=True) # Field name made lowercase.
-    rdt_create = models.DateTimeField(db_column='RDT_CREATE', blank=True, null=True) # Field name made lowercase.
-    name = models.CharField(db_column='NAME', unique=True, max_length=1020) # Field name made lowercase.
-    is_delete = models.SmallIntegerField(db_column='IS_DELETE', blank=True, null=True) # Field name made lowercase.
+    id = models.IntegerField(db_column='ID', primary_key=True)
+    ru_create = models.CharField(db_column='RU_CREATE', max_length=320, blank=True)
+    rdt_create = models.DateTimeField(db_column='RDT_CREATE', blank=True, null=True)
+    name = models.CharField(db_column='NAME', unique=True, max_length=1020)
+    is_delete = models.SmallIntegerField(db_column='IS_DELETE', blank=True, null=True)
+
     class Meta:
         managed = False
         db_table = 'ref_benefit'
 
 
 class RefCity(models.Model):
-    id = models.IntegerField(db_column='ID', primary_key=True) # Field name made lowercase.
-    id_parent = models.IntegerField(db_column='ID_PARENT', blank=True, null=True) # Field name made lowercase.
-    k = models.IntegerField(db_column='K', blank=True, null=True) # Field name made lowercase.
-    name_rus = models.CharField(db_column='NAME_RUS', max_length=1020, blank=True) # Field name made lowercase.
-    is_delete = models.SmallIntegerField(db_column='IS_DELETE', blank=True, null=True) # Field name made lowercase.
-    is_city = models.SmallIntegerField(db_column='IS_CITY', blank=True, null=True) # Field name made lowercase.
+    id = models.IntegerField(db_column='ID', primary_key=True)
+    id_parent = models.IntegerField(db_column='ID_PARENT', blank=True, null=True)
+    k = models.IntegerField(db_column='K', blank=True, null=True)
+    name_rus = models.CharField(db_column='NAME_RUS', max_length=1020, blank=True)
+    is_delete = models.SmallIntegerField(db_column='IS_DELETE', blank=True, null=True)
+    is_city = models.SmallIntegerField(db_column='IS_CITY', blank=True, null=True)
+
     class Meta:
         managed = False
         db_table = 'ref_city'
 
 
 class History(models.Model):
-    id = models.IntegerField(db_column='ID', primary_key=True) # Field name made lowercase.
-    rdt_create = models.DateTimeField(db_column='RDT_CREATE', blank=True, null=True) # Field name made lowercase.
-    ru_create = models.CharField(db_column='RU_CREATE', max_length=320, blank=True) # Field name made lowercase.
-    last_date = models.DateTimeField(db_column='LAST_DATE', blank=True, null=True) # Field name made lowercase.
-    last_user = models.CharField(db_column='LAST_USER', max_length=320, blank=True) # Field name made lowercase.
-    lastname = models.CharField(db_column='LASTNAME', max_length=1020, blank=True) # Field name made lowercase.
-    firstname = models.CharField(db_column='FIRSTNAME', max_length=1020, blank=True) # Field name made lowercase.
-    middlename = models.CharField(db_column='MIDDLENAME', max_length=1020, blank=True) # Field name made lowercase.
-    dob = models.DateField(db_column='DOB', blank=True, null=True) # Field name made lowercase.
-    gender = models.SmallIntegerField(db_column='GENDER', blank=True, null=True) # Field name made lowercase.
-    iin = models.CharField(db_column='IIN', max_length=48, blank=True) # Field name made lowercase.
-    bar_code = models.CharField(db_column='BAR_CODE', max_length=48, blank=True) # Field name made lowercase.
-    live_address = models.CharField(db_column='LIVE_ADDRESS', max_length=1020, blank=True) # Field name made lowercase.
-    insurence_company = models.CharField(db_column='INSURENCE_COMPANY', max_length=1020, blank=True) # Field name made lowercase.
-    insurence_number = models.CharField(db_column='INSURENCE_NUMBER', max_length=100, blank=True) # Field name made lowercase.
-    med_reg_number = models.CharField(db_column='MED_REG_NUMBER', max_length=100, blank=True) # Field name made lowercase.
-    id_social = models.ForeignKey('RefSocial', db_column='ID_SOCIAL', blank=True, null=True) # Field name made lowercase.
-    id_nationality = models.ForeignKey('RefNationality', db_column='ID_NATIONALITY', blank=True, null=True) # Field name made lowercase.
-    id_benefit = models.ForeignKey('RefBenefit', db_column='ID_BENEFIT', blank=True, null=True) # Field name made lowercase.
-    id_city = models.ForeignKey('RefCity', db_column='ID_CITY', blank=True, null=True) # Field name made lowercase.
-    workplace = models.CharField(db_column='WORKPLACE', max_length=2048, blank=True) # Field name made lowercase.
-    study = models.CharField(db_column='STUDY', max_length=2048, blank=True) # Field name made lowercase.
-    num_history = models.CharField(db_column='NUM_HISTORY', max_length=100, blank=True) # Field name made lowercase.
-    receipt = models.DateTimeField(db_column='RECEIPT', blank=True, null=True) # Field name made lowercase.
-    extreme_type = models.SmallIntegerField(db_column='EXTREME_TYPE', blank=True, null=True) # Field name made lowercase.
-    id_type_hospitalize = models.IntegerField(db_column='ID_TYPE_HOSPITALIZE', blank=True, null=True) # Field name made lowercase.
-    id_depart = models.ForeignKey(Departments, db_column='ID_DEPART', blank=True, null=True) # Field name made lowercase.
-    id_doctor = models.IntegerField() # Field name made lowercase.
-    chamber = models.CharField(db_column='CHAMBER', max_length=1020, blank=True) # Field name made lowercase.
-    id_incoming_diag = models.ForeignKey(ClassMkb, db_column='ID_INCOMING_DIAG', blank=True, null=True, related_name='+') # Field name made lowercase.
-    incoming_diag = models.CharField(db_column='INCOMING_DIAG', max_length=4096, blank=True) # Field name made lowercase.
-    id_clinic_diag = models.ForeignKey(ClassMkb, db_column='ID_CLINIC_DIAG', blank=True, null=True, related_name='+') # Field name made lowercase.
-    id_lpu_diag = models.ForeignKey(ClassMkb, db_column='ID_LPU_DIAG', blank=True, null=True) # Field name made lowercase.
-    diag_lpu = models.CharField(db_column='DIAG_LPU', max_length=4096, blank=True) # Field name made lowercase.
-    id_related_diag = models.ForeignKey(ClassMkb, db_column='ID_RELATED_DIAG', blank=True, null=True, related_name='+') # Field name made lowercase.
-    related_diagnosis = models.CharField(db_column='RELATED_DIAGNOSIS', max_length=4096, blank=True) # Field name made lowercase.
-    id_main_diag = models.IntegerField(db_column='ID_MAIN_DIAG', blank=True, null=True) # Field name made lowercase.
-    id_compl_diag = models.IntegerField(db_column='ID_COMPL_DIAG', blank=True, null=True) # Field name made lowercase.
-    id_end_diag = models.IntegerField(db_column='ID_END_DIAG', blank=True, null=True) # Field name made lowercase.
-    id_from = models.IntegerField() # Field name made lowercase.
-    type_warior = models.IntegerField(db_column='TYPE_WARIOR', blank=True, null=True) # Field name made lowercase.
-    discharge = models.DateTimeField(db_column='DISCHARGE', blank=True, null=True) # Field name made lowercase.
-    id_cancer_treatment = models.IntegerField() # Field name made lowercase.
-    baby_massa = models.DecimalField(db_column='BABY_MASSA', max_digits=15, decimal_places=2, blank=True, null=True) # Field name made lowercase.
-    baby_length = models.DecimalField(db_column='BABY_LENGTH', max_digits=15, decimal_places=2, blank=True, null=True) # Field name made lowercase.
-    hosp_with_mother = models.SmallIntegerField(db_column='HOSP_WITH_MOTHER', blank=True, null=True) # Field name made lowercase.
-    hosp_hour_after_disease = models.IntegerField(db_column='HOSP_HOUR_AFTER_DISEASE', blank=True, null=True) # Field name made lowercase.
-    id_result = models.IntegerField() # Field name made lowercase.
-    id_treatment_effect = models.IntegerField(db_column='ID_TREATMENT_EFFECT', blank=True, null=True) # Field name made lowercase.
-    main_diag = models.CharField(db_column='MAIN_DIAG', max_length=4096, blank=True) # Field name made lowercase.
-    main_complication = models.CharField(db_column='MAIN_COMPLICATION', max_length=4096, blank=True) # Field name made lowercase.
-    send_to = models.CharField(db_column='SEND_TO', max_length=1020, blank=True) # Field name made lowercase.
-    date_set_diag = models.DateTimeField(db_column='DATE_SET_DIAG', blank=True, null=True) # Field name made lowercase.
-    is_delete = models.SmallIntegerField(db_column='IS_DELETE', blank=True, null=True) # Field name made lowercase.
-    id_lpu = models.IntegerField() # Field name made lowercase.
-    archive_send = models.DateField(db_column='ARCHIVE_SEND', blank=True, null=True) # Field name made lowercase.
-    is_signed = models.SmallIntegerField(db_column='IS_SIGNED', blank=True, null=True) # Field name made lowercase.
-    who_signed = models.CharField(db_column='WHO_SIGNED', max_length=320, blank=True) # Field name made lowercase.
-    id_bedregime = models.IntegerField() # Field name made lowercase.
-    clinic_diag = models.CharField(db_column='CLINIC_DIAG', max_length=4096, blank=True) # Field name made lowercase.
-    type_card = models.IntegerField(db_column='TYPE_CARD', blank=True, null=True) # Field name made lowercase.
-    viral_diseases = models.CharField(db_column='VIRAL_DISEASES', max_length=2048, blank=True) # Field name made lowercase.
-    chronic_diseases = models.CharField(db_column='CHRONIC_DISEASES', max_length=2048, blank=True) # Field name made lowercase.
-    preliminary_diag = models.CharField(db_column='PRELIMINARY_DIAG', max_length=4096, blank=True) # Field name made lowercase.
-    drug_intolerance = models.CharField(db_column='DRUG_INTOLERANCE', max_length=2048, blank=True) # Field name made lowercase.
-    id_typepay = models.IntegerField() # Field name made lowercase.
-    date_first_view = models.DateTimeField(db_column='DATE_FIRST_VIEW', blank=True, null=True) # Field name made lowercase.
-    id_finance = models.IntegerField() # Field name made lowercase.
-    id_ext_doctor_view = models.IntegerField(db_column='ID_EXT_DOCTOR_VIEW', blank=True, null=True) # Field name made lowercase.
-    date_first_view_ext = models.DateTimeField(db_column='DATE_FIRST_VIEW_EXT', blank=True, null=True) # Field name made lowercase.
-    id_initnurse = models.IntegerField(db_column='ID_INITNURSE', blank=True, null=True) # Field name made lowercase.
-    is_view = models.SmallIntegerField(db_column='IS_VIEW', blank=True, null=True) # Field name made lowercase.
-    go_cardiosurgery = models.DateTimeField(db_column='GO_CARDIOSURGERY', blank=True, null=True) # Field name made lowercase.
-    go_reahab = models.DateTimeField(db_column='GO_REAHAB', blank=True, null=True) # Field name made lowercase.
-    id_bedtype = models.IntegerField(db_column='ID_BEDTYPE', blank=True, null=True) # Field name made lowercase.
-    type_trauma = models.SmallIntegerField(db_column='TYPE_TRAUMA', blank=True, null=True) # Field name made lowercase.
-    id_patient_sender = models.IntegerField(db_column='ID_PATIENT_SENDER', blank=True, null=True) # Field name made lowercase.
-    type_hospit = models.SmallIntegerField(db_column='TYPE_HOSPIT', blank=True, null=True) # Field name made lowercase.
-    count_hospit_inyear = models.SmallIntegerField(db_column='COUNT_HOSPIT_INYEAR', blank=True, null=True) # Field name made lowercase.
+    id = models.IntegerField(db_column='ID', primary_key=True)
+    rdt_create = models.DateTimeField(db_column='RDT_CREATE', blank=True, null=True)
+    ru_create = models.CharField(db_column='RU_CREATE', max_length=320, blank=True)
+    last_date = models.DateTimeField(db_column='LAST_DATE', blank=True, null=True)
+    last_user = models.CharField(db_column='LAST_USER', max_length=320, blank=True)
+    lastname = models.CharField(db_column='LASTNAME', max_length=1020, blank=True)
+    firstname = models.CharField(db_column='FIRSTNAME', max_length=1020, blank=True)
+    middlename = models.CharField(db_column='MIDDLENAME', max_length=1020, blank=True)
+    dob = models.DateField(db_column='DOB', blank=True, null=True)
+    gender = models.SmallIntegerField(db_column='GENDER', blank=True, null=True)
+    iin = models.CharField(db_column='IIN', max_length=48, blank=True)
+    bar_code = models.CharField(db_column='BAR_CODE', max_length=48, blank=True)
+    live_address = models.CharField(db_column='LIVE_ADDRESS', max_length=1020, blank=True)
+    insurence_company = models.CharField(db_column='INSURENCE_COMPANY', max_length=1020, blank=True)
+    insurence_number = models.CharField(db_column='INSURENCE_NUMBER', max_length=100, blank=True)
+    med_reg_number = models.CharField(db_column='MED_REG_NUMBER', max_length=100, blank=True)
+    id_social = models.ForeignKey('RefSocial', db_column='ID_SOCIAL', blank=True, null=True)
+    id_nationality = models.ForeignKey('RefNationality', db_column='ID_NATIONALITY', blank=True, null=True)
+    id_benefit = models.ForeignKey('RefBenefit', db_column='ID_BENEFIT', blank=True, null=True)
+    id_city = models.ForeignKey('RefCity', db_column='ID_CITY', blank=True, null=True)
+    workplace = models.CharField(db_column='WORKPLACE', max_length=2048, blank=True)
+    study = models.CharField(db_column='STUDY', max_length=2048, blank=True)
+    num_history = models.CharField(db_column='NUM_HISTORY', max_length=100, blank=True)
+    receipt = models.DateTimeField(db_column='RECEIPT', blank=True, null=True)
+    extreme_type = models.SmallIntegerField(db_column='EXTREME_TYPE', blank=True, null=True)
+    id_type_hospitalize = models.IntegerField(db_column='ID_TYPE_HOSPITALIZE', blank=True, null=True)
+    id_depart = models.ForeignKey(Departments, db_column='ID_DEPART', blank=True, null=True)
+    id_doctor = models.IntegerField()
+    chamber = models.CharField(db_column='CHAMBER', max_length=1020, blank=True)
+    id_incoming_diag = models.ForeignKey(ClassMkb, blank=True, null=True, related_name='+')
+    incoming_diag = models.CharField(db_column='INCOMING_DIAG', max_length=4096, blank=True)
+    id_clinic_diag = models.ForeignKey(ClassMkb, db_column='ID_CLINIC_DIAG', blank=True, null=True, related_name='+')
+    id_lpu_diag = models.ForeignKey(ClassMkb, db_column='ID_LPU_DIAG', blank=True, null=True)
+    diag_lpu = models.CharField(db_column='DIAG_LPU', max_length=4096, blank=True)
+    id_related_diag = models.ForeignKey(ClassMkb, db_column='ID_RELATED_DIAG', blank=True, null=True, related_name='+')
+    related_diagnosis = models.CharField(db_column='RELATED_DIAGNOSIS', max_length=4096, blank=True)
+    id_main_diag = models.IntegerField(db_column='ID_MAIN_DIAG', blank=True, null=True)
+    id_compl_diag = models.IntegerField(db_column='ID_COMPL_DIAG', blank=True, null=True)
+    id_end_diag = models.IntegerField(db_column='ID_END_DIAG', blank=True, null=True)
+    id_from = models.IntegerField()
+    type_warior = models.IntegerField(db_column='TYPE_WARIOR', blank=True, null=True)
+    discharge = models.DateTimeField(db_column='DISCHARGE', blank=True, null=True) 
+    id_cancer_treatment = models.IntegerField()
+    baby_massa = models.DecimalField(db_column='BABY_MASSA', max_digits=15, decimal_places=2, blank=True, null=True)
+    baby_length = models.DecimalField(db_column='BABY_LENGTH', max_digits=15, decimal_places=2, blank=True, null=True)
+    hosp_with_mother = models.SmallIntegerField(db_column='HOSP_WITH_MOTHER', blank=True, null=True)
+    hosp_hour_after_disease = models.IntegerField(db_column='HOSP_HOUR_AFTER_DISEASE', blank=True, null=True)
+    id_result = models.IntegerField()
+    id_treatment_effect = models.IntegerField(db_column='ID_TREATMENT_EFFECT', blank=True, null=True)
+    main_diag = models.CharField(db_column='MAIN_DIAG', max_length=4096, blank=True)
+    main_complication = models.CharField(db_column='MAIN_COMPLICATION', max_length=4096, blank=True)
+    send_to = models.CharField(db_column='SEND_TO', max_length=1020, blank=True)
+    date_set_diag = models.DateTimeField(db_column='DATE_SET_DIAG', blank=True, null=True)
+    is_delete = models.SmallIntegerField(db_column='IS_DELETE', blank=True, null=True)
+    id_lpu = models.IntegerField()
+    archive_send = models.DateField(db_column='ARCHIVE_SEND', blank=True, null=True)
+    is_signed = models.SmallIntegerField(db_column='IS_SIGNED', blank=True, null=True)
+    who_signed = models.CharField(db_column='WHO_SIGNED', max_length=320, blank=True)
+    id_bedregime = models.IntegerField()
+    clinic_diag = models.CharField(db_column='CLINIC_DIAG', max_length=4096, blank=True)
+    type_card = models.IntegerField(db_column='TYPE_CARD', blank=True, null=True)
+    viral_diseases = models.CharField(db_column='VIRAL_DISEASES', max_length=2048, blank=True)
+    chronic_diseases = models.CharField(db_column='CHRONIC_DISEASES', max_length=2048, blank=True)
+    preliminary_diag = models.CharField(db_column='PRELIMINARY_DIAG', max_length=4096, blank=True)
+    drug_intolerance = models.CharField(db_column='DRUG_INTOLERANCE', max_length=2048, blank=True)
+    id_typepay = models.IntegerField()
+    date_first_view = models.DateTimeField(db_column='DATE_FIRST_VIEW', blank=True, null=True)
+    id_finance = models.IntegerField()
+    id_ext_doctor_view = models.IntegerField(db_column='ID_EXT_DOCTOR_VIEW', blank=True, null=True)
+    date_first_view_ext = models.DateTimeField(db_column='DATE_FIRST_VIEW_EXT', blank=True, null=True)
+    id_initnurse = models.IntegerField(db_column='ID_INITNURSE', blank=True, null=True)
+    is_view = models.SmallIntegerField(db_column='IS_VIEW', blank=True, null=True)
+    go_cardiosurgery = models.DateTimeField(db_column='GO_CARDIOSURGERY', blank=True, null=True)
+    go_reahab = models.DateTimeField(db_column='GO_REAHAB', blank=True, null=True)
+    id_bedtype = models.IntegerField(db_column='ID_BEDTYPE', blank=True, null=True)
+    type_trauma = models.SmallIntegerField(db_column='TYPE_TRAUMA', blank=True, null=True)
+    id_patient_sender = models.IntegerField(db_column='ID_PATIENT_SENDER', blank=True, null=True)
+    type_hospit = models.SmallIntegerField(db_column='TYPE_HOSPIT', blank=True, null=True)
+    count_hospit_inyear = models.SmallIntegerField(db_column='COUNT_HOSPIT_INYEAR', blank=True, null=True)
+
     class Meta:
         managed = False
         db_table = 'history'
@@ -187,20 +194,20 @@ class ListDiary(models.Model):
 
 
 class ListAnalysis(models.Model):
-    id = models.IntegerField(primary_key=True) # Field name made lowercase.
+    id = models.IntegerField(primary_key=True)
     id_history = models.IntegerField()
     id_doctor = models.IntegerField()
     id_labanalysis = models.CharField(max_length=10)
-    date_assign = models.DateTimeField(db_column='DATE_ASSIGN', blank=True, null=True) # Field name made lowercase.
-    date_plan = models.DateTimeField(db_column='DATE_PLAN', blank=True, null=True) # Field name made lowercase.
-    id_executer = models.IntegerField(db_column='ID_EXECUTER', blank=True, null=True) # Field name made lowercase.
-    date_execute = models.DateTimeField(db_column='DATE_EXECUTE', blank=True, null=True) # Field name made lowercase.
-    id_nurse_execute = models.IntegerField(db_column='ID_NURSE_EXECUTE', blank=True, null=True) # Field name made lowercase.
-    nurse_date_execute = models.DateTimeField(db_column='NURSE_DATE_EXECUTE', blank=True, null=True) # Field name made lowercase.
-    id_med_cancel = models.IntegerField(db_column='ID_MED_CANCEL', blank=True, null=True) # Field name made lowercase.
-    cancel_cause = models.CharField(db_column='CANCEL_CAUSE', max_length=1020, blank=True) # Field name made lowercase.
-    is_cito = models.SmallIntegerField(db_column='IS_CITO', blank=True, null=True) # Field name made lowercase.
-    lab_comment = models.CharField(db_column='LAB_COMMENT', max_length=4096, blank=True) # Field name made lowercase.
+    date_assign = models.DateTimeField(db_column='DATE_ASSIGN', blank=True, null=True)
+    date_plan = models.DateTimeField(db_column='DATE_PLAN', blank=True, null=True)
+    id_executer = models.IntegerField(db_column='ID_EXECUTER', blank=True, null=True)
+    date_execute = models.DateTimeField(db_column='DATE_EXECUTE', blank=True, null=True)
+    id_nurse_execute = models.IntegerField(db_column='ID_NURSE_EXECUTE', blank=True, null=True)
+    nurse_date_execute = models.DateTimeField(db_column='NURSE_DATE_EXECUTE', blank=True, null=True)
+    id_med_cancel = models.IntegerField(db_column='ID_MED_CANCEL', blank=True, null=True)
+    cancel_cause = models.CharField(db_column='CANCEL_CAUSE', max_length=1020, blank=True)
+    is_cito = models.SmallIntegerField(db_column='IS_CITO', blank=True, null=True)
+    lab_comment = models.CharField(db_column='LAB_COMMENT', max_length=4096, blank=True)
     name_labanalysis = models.CharField(db_column='NAME_LABANALYSIS', max_length=255)
     doctor = models.CharField(max_length=255)
     depart = models.CharField(db_column='DEPARTMENT', max_length=255)
@@ -383,7 +390,7 @@ class PainStatus(models.Model):
     type_care = models.CharField(max_length=255, db_column='TYPE_CARE')
 
     class Meta:
-        managed=False
+        managed = False
         db_table = 'VW_PAIN_STATUS'
 
 
@@ -396,14 +403,14 @@ class PatientInfo(models.Model):
     text = models.TextField(db_column='VAL_TEXT')
 
     class Meta:
-        managed=False
-        db_table='VW_DATA_BLOB'
+        managed = False
+        db_table = 'VW_DATA_BLOB'
 
 
 class ListSurgery(models.Model):
     id = models.IntegerField(primary_key=True)
     id_history = models.IntegerField()
-    num_history =models.CharField(max_length=25)
+    num_history = models.CharField(max_length=25)
     patient = models.CharField(max_length=3068, db_column='FIO')
     num_protokol = models.CharField(max_length=25)
     surgery_date = models.DateField(db_column='OPER_START')
@@ -414,8 +421,8 @@ class ListSurgery(models.Model):
     type_operation = models.IntegerField(db_column='TYPE_OPER')
 
     class Meta:
-        managed=False
-        db_table='VW_SURGERY'
+        managed = False
+        db_table = 'VW_SURGERY'
 
 
 class SurgeryAdv(models.Model):
@@ -425,8 +432,8 @@ class SurgeryAdv(models.Model):
     text_value = models.TextField(db_column='STR_VALUE')
 
     class Meta:
-        managed=False
-        db_table='SURGERY_ATTRVAL'
+        managed = False
+        db_table = 'SURGERY_ATTRVAL'
 
 
 class ListProffView(models.Model):
@@ -495,3 +502,12 @@ class UserGroups(models.Model):
     class Meta:
         managed = False
         db_table = 'VW_USER_IN_GROUP'
+
+
+class RefExamens(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=255, db_column='NAME_GROUP')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_REF_EXAM_GROUP'

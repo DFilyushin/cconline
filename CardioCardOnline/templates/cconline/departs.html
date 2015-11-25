@@ -3,7 +3,7 @@
 {% block body %}
 <div class="table-responsive">
     {%  for item in departs %}
-        <p><a href="/patients/departs/{{ item.id }}" class="btn btn-primary btn-lg active center-block" role="button"> {{ item.name }}</a></p>
+        <p><a href="/patients/departs/{{ item.id }}" class="btn btn-primary btn-lg center-block" role="button"> {{ item.name }}</a></p>
     {% endfor %}
 </div>
 

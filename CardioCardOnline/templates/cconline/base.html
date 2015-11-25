@@ -1,46 +1,41 @@
 ﻿{% load staticfiles %}
-
 <!DOCTYPE html>
 <html lang="ru">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" >
     <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" >
-
-
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}" />
     {% block jscript %}
 
     {% endblock %}
-
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}" />
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <title>CardioCard Online - {{ title }}</title>
+    <title>КардиоКарта Онлайн</title>
 </head>
 
 <body>
+    <a href="\">
+        <img src="{% static 'images/logo2.png'%}" class="center-block">
+    </a>
 
-<a href="\">
-    <img src="{% static 'images/logo2.png'%}" class="center-block">
-</a>
-
-<div class="container">
-    {% block body %}
-    {% endblock %}
-</div>
-
-<div id="footer">
     <div class="container">
-        <div class="col-md-12">
-                {% if current_doc %}
-                    <p class="text-muted">Пользователь: {{ current_doc }} <a href="/logout">[Выход]</a></p>
-                {% endif %}
+        {% block body %}
+
+        {% endblock %}
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <div class="col-md-12">
+                    {% if current_doc %}
+                        <p class="text-muted">Пользователь: {{ current_doc }} <a href="/logout">[Выход]</a></p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 </body>
 

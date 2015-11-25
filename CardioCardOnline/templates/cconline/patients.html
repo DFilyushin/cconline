@@ -3,6 +3,11 @@
 {% block body %}
     <div class="center-block">
         <h2>{{ current_place }} </h2>
+        {% if from_departs %}
+            <p>
+                <a href="/patients/by_depart">К списку отделений</a>
+            </p>
+        {% endif %}
     </div>
 
     <table class="table table-hover">

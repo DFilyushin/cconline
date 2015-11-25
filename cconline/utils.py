@@ -34,9 +34,30 @@ def gethttp(request):
 
 
 def page_not_found(request):
+    # обработчик Страница не найден
     response = render_to_response('404.html',
                                   {},
                                   context_instance = RequestContext(request)
                                   )
     response.status_code = 404
+    return response
+
+
+def permission_denied(request):
+    # обработчик Доступ запрещён
+    response = render_to_response('403.html',
+                                  {},
+                                  context_instance = RequestContext(request)
+                                  )
+    response.status_code = 403
+    return response
+
+
+def server_error(request):
+    # обработчик Ошибка сервера
+    response = render_to_response('500.html',
+                                  {},
+                                  context_instance = RequestContext(request)
+                                  )
+    response.status_code = 500
     return response
