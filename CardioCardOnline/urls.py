@@ -40,3 +40,5 @@ urlpatterns = [
 ]
 if settings.DEBUG == True:
     urlpatterns += staticfiles_urlpatterns()
+
+handler404 = 'cconline.utils.page_not_found'

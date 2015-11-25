@@ -1,4 +1,4 @@
-﻿{% extends "base.html" %}
+﻿{% extends "cconline/base.html" %}
 {% load staticfiles %}
 
 {% block title %} <title>Страница не найдена</title> {% endblock %}
@@ -10,16 +10,11 @@
     <div class="col-md-6 col-md-offset-3">
       <div class="text-center">
 
-        <img src="{% static 'img/red_bacteria.png' %}">
-        <h2 align ="center">Страница не найдена</h2>
 
+        <img src="{% static 'images/broken-link.png'%}" class="center-block">
+        <h2 align ="center">Страница не найдена</h2>
         <p>К сожалению, запрошенная Вами страница не найдена на сервере</p>
-          <ul>
-            <li>Возможно, Вы набрали неверный адрес или ссылка на сервере устарела</li>
-            <li>Возможно, Вы случайно переключили раскладку клавиатуры при наборе</li>
-            <li>Вы могли скопировать ссылку не до конца или перепутать две рядом стоящие буквы</li>
-          </ul>
-        <p>Но зато есть <a href="/">главная страница</a>, <a href="/activeorder">страница создания новой заявки</a>, а также <a href="/orders">просмотр выполненных заявок</a> </p>
+        <p><a href="/">Главная страница</a></p>
       </div>
     </div>
 

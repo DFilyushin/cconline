@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponse, Http404
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.contrib.auth.hashers import make_password
 import random
 from django.template.loader import get_template
@@ -29,3 +31,12 @@ def gethttp(request):
     page_data = { 'REQ_META': request.META, 'is_local_net': is_local_net, }
     context = template.render(Context(page_data))
     return HttpResponse(context)
+
+
+def page_not_found(request):
+    response = render_to_response('404.html',
+                                  {},
+                                  context_instance = RequestContext(request)
+                                  )
+    response.status_code = 404
+    return response
