@@ -11,47 +11,60 @@
 
 {% block body %}
 <!-- Begin page content -->
-<h3>Назначение обследования</h3>
+<h2>Назначение обследования</h2>
 <div class="container">
-      <form class="form-horizontal" action="/examen/add/" method='post'>{% csrf_token %}
-
-        <div class="form-group">
-          <label class="control-label col-xs-2" for="dateview">ФИО пациента*:</label>
-          <div class="col-xs-9">
-            <input type="text" class="form-control" name="fio" id="dateview" name="dateview" placeholder="Укажите ФИО пациента" value="{{ history.lastname }}" autofocus required >
+      <form class="form" action="/examen/add/" method='post'>{% csrf_token %}
+          <div class="form-group">
+          <label class="control-label" for="dateview">ФИО пациента:</label>
+              <input type="text" class="form-control" name="fio" id="dateview" name="dateview" placeholder="Укажите ФИО пациента" value="{{ history.lastname }}" autofocus disabled >
           </div>
-        </div>
 
-        <br />
-        <div class="clearfix"></div>
-
-        <div class="form-group">
-          <label class="control-label col-xs-2" for="chosital">Обследование:</label>
-          <div class="col-xs-9">
-            <select class="form-control" name="hospital" id="chosital" >
-                {% for item in exam_list %}
-                    <option value="{{ item.id }}">{{ item.name }}</option>
-                {% endfor %}
-            </select>
+          <div class="form-group">
+          <label class="control-label" for="chosital">Обследование:</label>
+              <select class="form-control" name="hospital" id="chosital" >
+                  {% for item in exam_list %}
+                      <option value="{{ item.id }}">{{ item.name }}</option>
+                  {% endfor %}
+              </select>
           </div>
-        </div>
 
+          <div class="form-group">
+          <label class="control-label" for="dDateGet">Дата проведения:</label>
+              <div class="row">
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="dateyear" id="dDateGet" value="{% now "Y" %}" placeholder="Год">
+                  </div>
+                  <div class="col-md-2">
 
-
-        <div class="form-group">
-          <label class="control-label col-xs-2" for="dDateGet">Дата проведения:</label>
-          <div class="col-xs-2">
-            <input type="text" class="form-control datepicker" name="dateview" id="dDateGet" placeholder="Дата забора" value="{% now "Y-m-d" %}" pattern="^\d{4}-\d{2}-\d{2}$"  title="Дата ГГГГ-ММ-ДД">
+                    <select class="form-control" name="datemonth">
+                        <option value="1">январь</option>
+                        <option value="2">февраль</option>
+                        <option value="3">март</option>
+                        <option value="4">апрель</option>
+                        <option value="5">май</option>
+                        <option value="6">июнь</option>
+                        <option value="7">июль</option>
+                        <option value="8">август</option>
+                        <option value="9">сентябрь</option>
+                        <option value="10">октябрь</option>
+                        <option value="11">ноябрь</option>
+                        <option value="12">декабрь</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="dateday" id="dDateGet" value="{% now "d" %}" placeholder="День" pattern="^\d{2}$">
+                  </div>
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="datehour" id="dDateGet" value="{% now "H" %}" placeholder="Часы" pattern="^\d{2}$">
+                  </div>
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="dateminute" id="dDateGet" value="{% now "i" %}" placeholder="Минуты" pattern="^\d{2}$">
+                  </div>
+              </div>
           </div>
-        </div>
 
 
-        <div class="form-group">
-          <div class="col-xs-offset-9">
-            <button type="submit" class="btn btn-warning">Сохранить</button>
-            <a class="btn btn-danger" href="/activeorder">Отменить</a>
-          </div>
-        </div>
+          <button type="submit" class="btn btn-default">Сохранить</button>
       </form>
 </div>
 {% endblock %}

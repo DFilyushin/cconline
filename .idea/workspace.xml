@@ -1,60 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="446d25ad-6d39-4c9f-8321-9bb5fd46a085" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/base.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/departs.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/diary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/examen.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/laboratory.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_diary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_examens.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_laboratory.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_medication.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_prof_view.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_surgery.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/login.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/medication.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/nurse.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/operation.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/pain_status.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/patient.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/patient_firstview.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/patient_info.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/patients.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/proview.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/risk_down.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/temp_list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/test.html" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/base.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/departs.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/diary.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/examen.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/laboratory.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/list_diary.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/list_examens.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/list_laboratory.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/list_medication.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/list_prof_view.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/list_surgery.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/login.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/medication.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/nurse.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/operation.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/pain_status.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/patient.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/patient_firstview.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/patient_info.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/patients.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/proview.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/risk_down.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/temp_list.html" afterPath="" />
+    <list default="true" id="446d25ad-6d39-4c9f-8321-9bb5fd46a085" name="Default" comment="проверка доступа с внешнего адреса">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CardioCardOnline/urls.py" afterPath="$PROJECT_DIR$/CardioCardOnline/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cconline/utils.py" afterPath="$PROJECT_DIR$/cconline/utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cconline/views.py" afterPath="$PROJECT_DIR$/cconline/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CardioCardOnline/settings.py" afterPath="$PROJECT_DIR$/CardioCardOnline/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/newexam.html" afterPath="$PROJECT_DIR$/CardioCardOnline/templates/cconline/newexam.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cconline/models.py" afterPath="$PROJECT_DIR$/cconline/models.py" />
     </list>
     <ignored path="CardioCardOnline.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -86,7 +37,7 @@
         <entry file="file://$PROJECT_DIR$/cconline/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+              <caret line="237" column="27" selection-start-line="237" selection-start-column="27" selection-end-line="237" selection-end-column="27" />
               <folding>
                 <element signature="e#25#38#0" expanded="true" />
               </folding>
@@ -94,54 +45,72 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list_laboratory.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_laboratory.html">
+      <file leaf-file-name="newexam.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/newexam.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="8.346154">
+              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-14.384615">
+              <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nurse.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/nurse.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-2.6153846">
-              <caret line="4" column="90" selection-start-line="4" selection-start-column="90" selection-end-line="4" selection-end-column="90" />
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="8" selection-end-column="52" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="diary.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/diary.html">
+      <file leaf-file-name="patients.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/patients.html">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-4.576923">
-              <caret line="7" column="75" selection-start-line="7" selection-start-column="75" selection-end-line="7" selection-end-column="75" />
+              <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="patient.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/patient.html">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cconline/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.9230769">
-              <caret line="6" column="136" selection-start-line="6" selection-start-column="136" selection-end-line="6" selection-end-column="136" />
+            <state vertical-scroll-proportion="0.096618354">
+              <caret line="107" column="5" selection-start-line="107" selection-start-column="5" selection-end-line="107" selection-end-column="5" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="list_diary.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_diary.html">
+      <file leaf-file-name="departs.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/departs.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.9615384">
-              <caret line="3" column="77" selection-start-line="3" selection-start-column="77" selection-end-line="3" selection-end-column="77" />
+            <state vertical-scroll-proportion="-3.2692308">
+              <caret line="5" column="83" selection-start-line="5" selection-start-column="83" selection-end-line="5" selection-end-column="83" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/cconline/utils.py">
+      <file leaf-file-name="list_examens.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_examens.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.77272725">
-              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#45#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-17.0">
+              <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -150,7 +119,7 @@
         <entry file="file://$PROJECT_DIR$/CardioCardOnline/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="79" selection-start-line="15" selection-start-column="79" selection-end-line="15" selection-end-column="79" />
+              <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -175,10 +144,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/CardioCardOnline/templates/nurse.html" />
-        <option value="$PROJECT_DIR$/CardioCardOnline/templates/list_surgery.html" />
-        <option value="$PROJECT_DIR$/cconline/templatetags/cconline_extras.py" />
-        <option value="$PROJECT_DIR$/CardioCardOnline/templates/operation.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/list_laboratory.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/patient_firstview.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/login.html" />
@@ -190,42 +155,46 @@
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/departs.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/list_medication.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/medication.html" />
-        <option value="$PROJECT_DIR$/CardioCardOnline/settings.py" />
         <option value="$PROJECT_DIR$/manage.py" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/admin/admin_base.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/registration/login.html" />
-        <option value="$PROJECT_DIR$/static/css/style.css" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/patients.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/base.html" />
-        <option value="$PROJECT_DIR$/cconline/models.py" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/patient.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/index.html" />
-        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/index.html" />
-        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/departs.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/examen.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/laboratory.html" />
-        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_examens.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_medication.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_prof_view.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_surgery.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/medication.html" />
-        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/nurse.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/operation.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/pain_status.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/patient_firstview.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/patient_info.html" />
-        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/patients.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/proview.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/risk_down.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/temp_list.html" />
-        <option value="$PROJECT_DIR$/CardioCardOnline/urls.py" />
-        <option value="$PROJECT_DIR$/cconline/utils.py" />
-        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/test.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_diary.html" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/diary.html" />
-        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/patient.html" />
-        <option value="$PROJECT_DIR$/cconline/views.py" />
         <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_laboratory.html" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/test.html" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/templates/404.html" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/templates/403.html" />
+        <option value="$PROJECT_DIR$/cconline/utils.py" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/base.html" />
+        <option value="$PROJECT_DIR$/static/css/style.css" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/patients.html" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/nurse.html" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/departs.html" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/index.html" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/patient.html" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/urls.py" />
+        <option value="$PROJECT_DIR$/cconline/views.py" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_examens.html" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/settings.py" />
+        <option value="$PROJECT_DIR$/CardioCardOnline/templates/cconline/newexam.html" />
+        <option value="$PROJECT_DIR$/cconline/models.py" />
       </list>
     </option>
   </component>
@@ -293,6 +262,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="static" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CardioCardOnline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CardioCardOnline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="cconline" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -326,6 +309,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CardioCardOnline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CardioCardOnline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CardioCardOnline" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="registration" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -735,7 +740,49 @@
       <option name="project" value="LOCAL" />
       <updated>1448284335481</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="перенос файлов&#10;вывод 404 ошибки&#10;обработка несуществующих записей">
+      <created>1448342516223</created>
+      <option name="number" value="00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1448342516223</updated>
+    </task>
+    <task id="LOCAL-00015" summary="проверка в тестовой странице">
+      <created>1448347321444</created>
+      <option name="number" value="00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1448347321444</updated>
+    </task>
+    <task id="LOCAL-00016" summary="подвал исправлен">
+      <created>1448347519831</created>
+      <option name="number" value="00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1448347519831</updated>
+    </task>
+    <task id="LOCAL-00017" summary="проверка доступа с внешнего адреса">
+      <created>1448348387752</created>
+      <option name="number" value="00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1448348387752</updated>
+    </task>
+    <task id="LOCAL-00018" summary="поддержка utf8">
+      <created>1448362816174</created>
+      <option name="number" value="00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1448362816174</updated>
+    </task>
+    <task id="LOCAL-00019" summary="* добавлена обработка 404 ошибки">
+      <created>1448438774633</created>
+      <option name="number" value="00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1448438774633</updated>
+    </task>
+    <task id="LOCAL-00020" summary="* добавлена форма обработчик ошибок&#10;* добавлены css&#10;* изменены кнопки, убрана активность">
+      <created>1448446068055</created>
+      <option name="number" value="00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1448446068055</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TodoView">
@@ -754,11 +801,11 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.190629" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24331927" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34317863" sideWeight="0.50513476" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.7777778" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22503516" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34317863" sideWeight="0.4948652" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18284106" sideWeight="0.49743262" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -819,7 +866,14 @@
     <MESSAGE value="* исправлена страница авторизации" />
     <MESSAGE value="изменен логотип под фоновое изображение" />
     <MESSAGE value="* в бд перенесена авторизация&#10;* включен логин как функция&#10;* изменена модель для доступа к данным по группам и пользователям" />
-    <option name="LAST_COMMIT_MESSAGE" value="* в бд перенесена авторизация&#10;* включен логин как функция&#10;* изменена модель для доступа к данным по группам и пользователям" />
+    <MESSAGE value="перенос файлов&#10;вывод 404 ошибки&#10;обработка несуществующих записей" />
+    <MESSAGE value="проверка в тестовой странице" />
+    <MESSAGE value="подвал исправлен" />
+    <MESSAGE value="проверка доступа с внешнего адреса" />
+    <MESSAGE value="поддержка utf8" />
+    <MESSAGE value="* добавлена обработка 404 ошибки" />
+    <MESSAGE value="* добавлена форма обработчик ошибок&#10;* добавлены css&#10;* изменены кнопки, убрана активность" />
+    <option name="LAST_COMMIT_MESSAGE" value="* добавлена форма обработчик ошибок&#10;* добавлены css&#10;* изменены кнопки, убрана активность" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -834,52 +888,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="81" selection-start-line="30" selection-start-column="81" selection-end-line="30" selection-end-column="81" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="42" column="4" selection-start-line="42" selection-start-column="4" selection-end-line="42" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cconline/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="450" column="14" selection-start-line="450" selection-start-column="4" selection-end-line="450" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cconline/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="312" column="23" selection-start-line="312" selection-start-column="4" selection-end-line="312" selection-end-column="23" />
-          <folding>
-            <element signature="e#25#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cconline/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -968,14 +976,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="103" column="29" selection-start-line="103" selection-start-column="29" selection-end-line="103" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/admin/admin_base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.115385">
@@ -1000,30 +1000,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cconline/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="491" column="9" selection-start-line="491" selection-start-column="4" selection-end-line="491" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/registration/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4428858">
-          <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/static/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59118235">
-          <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/Python27/Lib/site-packages/django/contrib/staticfiles/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.12952381">
@@ -1032,31 +1008,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/departs.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="21" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/examen.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="21" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/laboratory.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="21" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_examens.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
           <caret line="0" column="21" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
@@ -1128,14 +1080,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/patients.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="21" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/patient_info.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0">
@@ -1168,32 +1112,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/nurse.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="21" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="79" selection-start-line="15" selection-start-column="79" selection-end-line="15" selection-end-column="79" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.0">
-          <caret line="0" column="12" selection-start-line="0" selection-start-column="12" selection-end-line="0" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_diary.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.9615384">
@@ -1202,26 +1120,150 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/diary.html">
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/test.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.576923">
-          <caret line="7" column="75" selection-start-line="7" selection-start-column="75" selection-end-line="7" selection-end-column="75" />
+        <state vertical-scroll-proportion="0.13627255">
+          <caret line="4" column="19" selection-start-line="4" selection-start-column="19" selection-end-line="4" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/patient.html">
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/404.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.9230769">
-          <caret line="6" column="136" selection-start-line="6" selection-start-column="136" selection-end-line="6" selection-end-column="136" />
+        <state vertical-scroll-proportion="0.4428858">
+          <caret line="13" column="51" selection-start-line="13" selection-start-column="51" selection-end-line="13" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/403.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.58219177">
+          <caret line="15" column="42" selection-start-line="15" selection-start-column="42" selection-end-line="15" selection-end-column="42" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_laboratory.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.6153846">
+        <state vertical-scroll-proportion="0.13627255">
           <caret line="4" column="90" selection-start-line="4" selection-start-column="90" selection-end-line="4" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/diary.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23847695">
+          <caret line="7" column="75" selection-start-line="7" selection-start-column="75" selection-end-line="7" selection-end-column="75" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cconline/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="56" column="31" selection-start-line="56" selection-start-column="31" selection-end-line="56" selection-end-column="31" />
+          <folding>
+            <element signature="e#25#70#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/css/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.4615383">
+          <caret line="20" column="18" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/laboratory.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.0">
+          <caret line="0" column="21" selection-start-line="0" selection-start-column="21" selection-end-line="0" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/registration/login.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4428858">
+          <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/registration/password_change_done.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/patients.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.576923">
+          <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/departs.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.2692308">
+          <caret line="5" column="83" selection-start-line="5" selection-start-column="83" selection-end-line="5" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5675266">
+          <caret line="22" column="72" selection-start-line="22" selection-start-column="72" selection-end-line="22" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/patient.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4643399">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="24" column="35" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/list_examens.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.0">
+          <caret line="26" column="27" selection-start-line="26" selection-start-column="27" selection-end-line="26" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/nurse.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6153846">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="8" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7123519">
+          <caret line="93" column="6" selection-start-line="93" selection-start-column="0" selection-end-line="93" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -1229,28 +1271,34 @@
     <entry file="file://$PROJECT_DIR$/cconline/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="112" column="0" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+          <caret line="237" column="27" selection-start-line="237" selection-start-column="27" selection-end-line="237" selection-end-column="27" />
           <folding>
             <element signature="e#25#38#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/test.html">
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.10220441">
-          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+        <state vertical-scroll-proportion="-14.384615">
+          <caret line="22" column="27" selection-start-line="22" selection-start-column="27" selection-end-line="22" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/cconline/utils.py">
+    <entry file="file://$PROJECT_DIR$/CardioCardOnline/templates/cconline/newexam.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.77272725">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="8.346154">
+          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cconline/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.096618354">
+          <caret line="107" column="5" selection-start-line="107" selection-start-column="5" selection-end-line="107" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>

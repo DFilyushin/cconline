@@ -105,7 +105,7 @@ class History(models.Model):
     id_depart = models.ForeignKey(Departments, db_column='ID_DEPART', blank=True, null=True)
     id_doctor = models.IntegerField()
     chamber = models.CharField(db_column='CHAMBER', max_length=1020, blank=True)
-    id_incoming_diag = models.ForeignKey(ClassMkb, blank=True, null=True, related_name='+')
+    #id_incoming_diag = models.ForeignKey(ClassMkb, blank=True, null=True, related_name='+')
     incoming_diag = models.CharField(db_column='INCOMING_DIAG', max_length=4096, blank=True)
     id_clinic_diag = models.ForeignKey(ClassMkb, db_column='ID_CLINIC_DIAG', blank=True, null=True, related_name='+')
     id_lpu_diag = models.ForeignKey(ClassMkb, db_column='ID_LPU_DIAG', blank=True, null=True)
