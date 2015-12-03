@@ -1,0 +1,96 @@
+﻿{% extends "cconline/base.html" %}
+{% load staticfiles %}
+
+{% block jscript %}
+{% endblock %}
+
+{% block body %}
+<!-- Begin page content -->
+<h2>Продлить медикаментозное лечение</h2>
+<div class="container">
+      <form class="form" action="/prolong_med/" method='post'>{% csrf_token %}
+          <input type="hidden" name="id_medication" value="{{ id }}">
+          <div class="form-group">
+              <label class="control-label" for="dateview">ФИО пациента:</label>
+
+              <input type="text" class="form-control" name="patient" id="dateview" value="{{ patient }}" autofocus disabled >
+
+
+
+          <div class="row">
+              <div class="col-md-2">
+                  <label class="control-label" for="dateview">Препарат:</label>
+                  <input type="text" class="form-control" name="medicament" id="dateview" value="{{ dataset.medic_name }}" autofocus disabled >
+              </div>
+              <div class="col-md-2">
+                  <label class="control-label" for="dateview">Время приёма:</label>
+                  <input type="text" class="form-control" name="appoint" id="dateview" value="{{ dataset.appoint|date:"H:d" }}" autofocus disabled >
+              </div>
+          </div>
+          </div>
+
+
+          <div class="form-group">
+          <label class="control-label" for="dplanyear">Продлить назначение с:</label>
+              <div class="row">
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="planyear" id="dplanyear" value="{% now "Y" %}" placeholder="Год">
+                  </div>
+                  <div class="col-md-2">
+
+                    <select class="form-control" name="planmonth">
+                        <option {% if cur_month == 1  %} selected {% endif %} value="1">январь</option>
+                        <option {% if cur_month == 2  %} selected {% endif %} value="2">февраль</option>
+                        <option {% if cur_month == 3  %} selected {% endif %} value="3">март</option>
+                        <option {% if cur_month == 4  %} selected {% endif %} value="4">апрель</option>
+                        <option {% if cur_month == 5  %} selected {% endif %} value="5">май</option>
+                        <option {% if cur_month == 6  %} selected {% endif %} value="6">июнь</option>
+                        <option {% if cur_month == 7  %} selected {% endif %} value="7">июль</option>
+                        <option {% if cur_month == 8  %} selected {% endif %} value="8">август</option>
+                        <option {% if cur_month == 9  %} selected {% endif %} value="9">сентябрь</option>
+                        <option {% if cur_month == 10  %} selected {% endif %} value="10">октябрь</option>
+                        <option {% if cur_month == 11  %} selected {% endif %} value="11">ноябрь</option>
+                        <option {% if cur_month == 12  %} selected {% endif %} value="12">декабрь</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="planday" id="planday" value="{% now "d" %}" placeholder="День" pattern="[0-9]{1,2}">
+                  </div>
+              </div>
+          </div>
+
+          <div class="form-group">
+          <label class="control-label" for="dplanyear">Продлить назначение по:</label>
+              <div class="row">
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="planyear2" id="dplanyear" value="{% now "Y" %}" placeholder="Год">
+                  </div>
+                  <div class="col-md-2">
+
+                    <select class="form-control" name="planmonth2">
+                        <option {% if cur_month == 1  %} selected {% endif %} value="1">январь</option>
+                        <option {% if cur_month == 2  %} selected {% endif %} value="2">февраль</option>
+                        <option {% if cur_month == 3  %} selected {% endif %} value="3">март</option>
+                        <option {% if cur_month == 4  %} selected {% endif %} value="4">апрель</option>
+                        <option {% if cur_month == 5  %} selected {% endif %} value="5">май</option>
+                        <option {% if cur_month == 6  %} selected {% endif %} value="6">июнь</option>
+                        <option {% if cur_month == 7  %} selected {% endif %} value="7">июль</option>
+                        <option {% if cur_month == 8  %} selected {% endif %} value="8">август</option>
+                        <option {% if cur_month == 9  %} selected {% endif %} value="9">сентябрь</option>
+                        <option {% if cur_month == 10  %} selected {% endif %} value="10">октябрь</option>
+                        <option {% if cur_month == 11  %} selected {% endif %} value="11">ноябрь</option>
+                        <option {% if cur_month == 12  %} selected {% endif %} value="12">декабрь</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="planday2" id="planday2" value="{% now "d" %}" placeholder="День" pattern="[0-9]{1,2}">
+                  </div>
+              </div>
+          </div>
+
+
+          <button type="submit" class="btn btn-default">Продлить</button>
+          <a href="/medication/{{ dataset.id_key }}" class="btn btn-default" role="button">Вернуться</a>
+      </form>
+</div>
+{% endblock %}

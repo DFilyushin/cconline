@@ -9,6 +9,7 @@
     <p><em>Отделение:</em> {{ examen.depart }}</p>
     <p><em>Врач:</em> {{ examen.doctor }} </p>
     <p><em>Назначен:</em> {{ examen.date_assign|date:"d.m.Y H:d" }}</p>
+    <p><em>Назначен на:</em> {{ examen.date_plan|date:"d.m.Y H:d" }}</p>
     <p><em>Принят м/с:</em> {{ examen.date_nurse|date:"d.m.Y H:d" }}</p>
     <p><em>Выполнен:</em> {{ examen.date_execute|date:"d.m.Y H:d" }}</p>
 

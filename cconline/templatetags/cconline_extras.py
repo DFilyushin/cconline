@@ -4,6 +4,7 @@ import string
 import os
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
+from datetime import datetime
 
 register = template.Library()
 
@@ -22,6 +23,7 @@ def trim_str(string_value):
 @register.filter(needs_autoescape=False)
 def convertcrlf(string_value, autoescape=True):
     return mark_safe(string_value.replace("\n", "<br>"))
+
 
 register.filter('active_link', active_link)
 register.filter('trim_str', trim_str)

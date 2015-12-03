@@ -15,7 +15,6 @@ urlpatterns = [
     url(r'^patients/my/', 'cconline.views.get_my_patient', name='my_patient'),#my patients
     url(r'^patients/departs/(?P<iddepart>\d+)/$', 'cconline.views.patients_by_depart', name='departs_patient'),
     url(r'^patients/by_depart/', 'cconline.views.get_active_departs', name='active_departs'),
-    #url(r'^patient/getinfo/(?P<idpatient>\d+)/$', 'cconline.views.get_patient_info', name='patient_info'),
     url(r'^patient/first_view/(?P<idpatient>\d+)/$', 'cconline.views.get_patient_first_view', name='patient_info'),
     url(r'^patient/(?P<idpatient>\d+)/$', 'cconline.views.get_patient', name='get_patient'),
     url(r'^diary/list/(?P<idpatient>\d+)/$', 'cconline.views.get_diary_list', name='list_diary'),
@@ -35,9 +34,17 @@ urlpatterns = [
     url(r'^medication/(?P<id>\d+)/$', 'cconline.views.get_medication', name='medication'),
     url(r'^proview/list/(?P<idpatient>\d+)/$', 'cconline.views.get_list_proffview', name='proview'),
     url(r'^proview/(?P<id>\d+)/$', 'cconline.views.get_proview', name='proview'),
+    url(r'^prolong_medication/(?P<id>\d+)/$', 'cconline.views.prolong_medication', name='prolong_medication'),
 
+    #post request urls
+    url(r'^new_exam/', 'cconline.views.new_examen', name='save_exam'),
+    url(r'^prolong_med/', 'cconline.views.prolong_med', name='save_prolong'),
+
+
+
+    #utility for localnet
     url(r'^getpass/$', 'cconline.utils.getpass', name='get_password'),
-    url(r'^test/$', 'cconline.utils.gethttp'),
+    #url(r'^test/$', 'cconline.utils.gethttp'),
 ]
 if settings.DEBUG == True:
     urlpatterns += staticfiles_urlpatterns()

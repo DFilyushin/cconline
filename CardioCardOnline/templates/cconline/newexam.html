@@ -2,26 +2,23 @@
 {% load staticfiles %}
 
 {% block jscript %}
-    <script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery/jquery-ui.js' %}"></script>
-    <script src="{% static 'js/dt_picker.js' %}" ></script>
-    <script src="{% static 'js/tab.js' %}"></script>
+
 {% endblock %}
 
 {% block body %}
 <!-- Begin page content -->
 <h2>Назначение обследования</h2>
 <div class="container">
-      <form class="form" action="/examen/add/" method='post'>{% csrf_token %}
+      <form class="form" action="/new_exam/" method='post'>{% csrf_token %}
+          <input type="hidden" name="id_history" value="{{ id }}">
           <div class="form-group">
           <label class="control-label" for="dateview">ФИО пациента:</label>
-              <input type="text" class="form-control" name="fio" id="dateview" name="dateview" placeholder="Укажите ФИО пациента" value="{{ history.lastname }}" autofocus disabled >
+              <input type="text" class="form-control" name="fio" id="dateview" name="dateview"  value="{{ history.lastname }}" autofocus disabled >
           </div>
 
           <div class="form-group">
-          <label class="control-label" for="chosital">Обследование:</label>
-              <select class="form-control" name="hospital" id="chosital" >
+          <label class="control-label" for="examens">Обследование:</label>
+              <select class="form-control" name="examens" id="examens" >
                   {% for item in exam_list %}
                       <option value="{{ item.id }}">{{ item.name }}</option>
                   {% endfor %}
@@ -29,42 +26,43 @@
           </div>
 
           <div class="form-group">
-          <label class="control-label" for="dDateGet">Дата проведения:</label>
+          <label class="control-label" for="dplanyear">Дата проведения:</label>
               <div class="row">
                   <div class="col-md-2">
-                      <input type="text" class="form-control" name="dateyear" id="dDateGet" value="{% now "Y" %}" placeholder="Год">
+                      <input type="text" class="form-control" name="planyear" id="dplanyear" value="{% now "Y" %}" placeholder="Год">
                   </div>
                   <div class="col-md-2">
 
-                    <select class="form-control" name="datemonth">
-                        <option value="1">январь</option>
-                        <option value="2">февраль</option>
-                        <option value="3">март</option>
-                        <option value="4">апрель</option>
-                        <option value="5">май</option>
-                        <option value="6">июнь</option>
-                        <option value="7">июль</option>
-                        <option value="8">август</option>
-                        <option value="9">сентябрь</option>
-                        <option value="10">октябрь</option>
-                        <option value="11">ноябрь</option>
-                        <option value="12">декабрь</option>
+                    <select class="form-control" name="planmonth">
+                        <option {% if cur_month == 1  %} selected {% endif %} value="1">январь</option>
+                        <option {% if cur_month == 2  %} selected {% endif %} value="2">февраль</option>
+                        <option {% if cur_month == 3  %} selected {% endif %} value="3">март</option>
+                        <option {% if cur_month == 4  %} selected {% endif %} value="4">апрель</option>
+                        <option {% if cur_month == 5  %} selected {% endif %} value="5">май</option>
+                        <option {% if cur_month == 6  %} selected {% endif %} value="6">июнь</option>
+                        <option {% if cur_month == 7  %} selected {% endif %} value="7">июль</option>
+                        <option {% if cur_month == 8  %} selected {% endif %} value="8">август</option>
+                        <option {% if cur_month == 9  %} selected {% endif %} value="9">сентябрь</option>
+                        <option {% if cur_month == 10  %} selected {% endif %} value="10">октябрь</option>
+                        <option {% if cur_month == 11  %} selected {% endif %} value="11">ноябрь</option>
+                        <option {% if cur_month == 12  %} selected {% endif %} value="12">декабрь</option>
                     </select>
                   </div>
                   <div class="col-md-2">
-                      <input type="text" class="form-control" name="dateday" id="dDateGet" value="{% now "d" %}" placeholder="День" pattern="^\d{2}$">
+                      <input type="text" class="form-control" name="planday" id="planday" value="{% now "d" %}" placeholder="День" pattern="[0-9]{1,2}">
                   </div>
                   <div class="col-md-2">
-                      <input type="text" class="form-control" name="datehour" id="dDateGet" value="{% now "H" %}" placeholder="Часы" pattern="^\d{2}$">
+                      <input type="text" class="form-control" name="planhour" id="planhour" value="{% now "H" %}" placeholder="Часы" pattern="[0-9]{1,2}">
                   </div>
                   <div class="col-md-2">
-                      <input type="text" class="form-control" name="dateminute" id="dDateGet" value="{% now "i" %}" placeholder="Минуты" pattern="^\d{2}$">
+                      <input type="text" class="form-control" name="planmin" id="planmin" value="{% now "i" %}" placeholder="Минуты" pattern="[0-9]{1,2}">
                   </div>
               </div>
           </div>
 
 
-          <button type="submit" class="btn btn-default">Сохранить</button>
+          <button type="submit" class="btn btn-default">Назначить</button>
+          <a href="/examens/list/{{ id }}" class="btn btn-default" role="button">Вернуться</a>
       </form>
 </div>
 {% endblock %}

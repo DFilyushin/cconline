@@ -105,7 +105,6 @@ class History(models.Model):
     id_depart = models.ForeignKey(Departments, db_column='ID_DEPART', blank=True, null=True)
     id_doctor = models.IntegerField()
     chamber = models.CharField(db_column='CHAMBER', max_length=1020, blank=True)
-    #id_incoming_diag = models.ForeignKey(ClassMkb, blank=True, null=True, related_name='+')
     incoming_diag = models.CharField(db_column='INCOMING_DIAG', max_length=4096, blank=True)
     id_clinic_diag = models.ForeignKey(ClassMkb, db_column='ID_CLINIC_DIAG', blank=True, null=True, related_name='+')
     id_lpu_diag = models.ForeignKey(ClassMkb, db_column='ID_LPU_DIAG', blank=True, null=True)
@@ -477,6 +476,7 @@ class Medication(models.Model):
     dose = models.CharField(max_length=255, db_column='DOSE')
     appoint = models.DateTimeField(db_column='START_APPOINTMENT')
     eat_time = models.DateTimeField(db_column='DATETIME_EAT')
+    medic_name = models.CharField(max_length=255, db_column='MEDICAMENT_NAME')
 
     class Meta:
         managed = False
@@ -511,3 +511,18 @@ class RefExamens(models.Model):
     class Meta:
         managed = False
         db_table = 'VW_REF_EXAM_GROUP'
+
+
+class ExamenDataset(models.Model):
+    id = models.IntegerField(primary_key=True)
+    id_history = models.IntegerField(null=False)
+    id_doctor = models.IntegerField(null=False)
+    id_department = models.IntegerField(null=False)
+    id_group_examenation = models.IntegerField(null=False)
+    appointment_date = models.DateTimeField(null=False)
+    plan_date = models.DateTimeField(null=False)
+    id_typepay = models.IntegerField(null=False)
+
+    class Meta:
+        managed = False
+        db_table = 'ASSIGNED_EXAMENATION'

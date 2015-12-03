@@ -9,21 +9,30 @@ from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedic
 from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
 from models import TemperatureData, RiskDownData, PainStatus
 from models import ListSurgery, SurgeryAdv, ListProffView, Medication
-from models import RefExamens
+from models import RefExamens, ExamenDataset
 from models import SysUsers, UserGroups
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import login, logout
 from django.core.exceptions import PermissionDenied
+from datetime import datetime
+from django.db import connection
 
 
 def card_login(request, *args, **kwargs):
+    """
+    Авторизация, истечение срока сессии - 1 день
+    :param request:
+    :param args:
+    :param kwargs:
+    :return:
+    """
     if request.method == 'POST':
         if not request.POST.get('remember_me', None):
             request.session.set_expiry(0)
         else:
-            request.session.set_expiry(604800)
+            request.session.set_expiry(86400)
     return login(request, *args, **kwargs)
 
 
@@ -32,6 +41,11 @@ def get_current_doctor(request):
     card_user = SysUsers.objects.get(pk=current_user)
     return card_user.user_fullname
 
+
+def get_current_doctor_id(request):
+    current_user = request.user.username.upper()
+    card_user = SysUsers.objects.get(pk=current_user)
+    return card_user.id_doctor
 
 def get_user_groups(request):
     current_user = request.user.username.upper()
@@ -80,9 +94,9 @@ def get_my_patient(request):
     """
     current_user = request.user.username.upper()
     card_user = SysUsers.objects.get(pk=current_user)
-    iddoctor = card_user.id_doctor
+    id_doctor = card_user.id_doctor
     current_doc = card_user.user_fullname
-    patients = ListHistory.objects.filter(id_doctor=iddoctor).filter(discharge__isnull=True)
+    patients = ListHistory.objects.filter(id_doctor=id_doctor).filter(discharge__isnull=True)
     return render_to_response('cconline/patients.html',
         {
             'current_doc': current_doc,
@@ -225,22 +239,62 @@ def patients_by_depart(request, iddepart):
         })
 
 
+login_required(login_url='/login')
+def new_examen(request):
+    """
+    Добавить назначенное обследование
+    :param request:
+    :return:
+    """
+    if request.method != 'POST':
+        raise Http404
+    id_history = request.POST['id_history']
+    try:
+        history = ListHistory.objects.get(pk=id_history)
+    except ListHistory.DoesNotExist:
+        raise Http404
+    id_doctor = get_current_doctor_id(request)
+    id_department = history.id_depart
+    id_group_exam = request.POST['examens']
+    planyear = request.POST['planyear']
+    planmonth = request.POST['planmonth']
+    planday = request.POST['planday']
+    planhour = request.POST['planhour']
+    planmin = request.POST['planmin']
+    plandate = datetime(int(planyear), int(planmonth), int(planday), int(planhour), int(planmin), 0)
+    dataset = ExamenDataset()
+    dataset.id_history = id_history
+    dataset.id_doctor = id_doctor
+    dataset.id_department = id_department
+    dataset.id_group_examenation = id_group_exam
+    dataset.appointment_date = datetime.now()
+    dataset.plan_date = plandate
+    dataset.id_typepay = 0
+    dataset.save()
+    redirect_url = '/examens/list/' + id_history
+    return render_to_response('cconline/redirect.html', {
+        'message': u'Добавлено обследование' ,
+        'redirect_url': redirect_url,
+        'request': request,
+    },
+        context_instance=RequestContext(request)
+    )
+
+
+login_required(login_url='/login')
 def add_new_exam(request, idpatient):
-    if request.method == 'GET':
-        #try:
-        history = ListHistory.objects.get(pk=idpatient)
-        #except ListHistory.DoesNotExist:
-        #    raise Http404
-        examens = RefExamens.objects.all()
-        return render_to_response('cconline/newexam.html', {
-            'history': history,
-            'exam_list': examens,
-            'id': idpatient,
-        },
-            context_instance=RequestContext(request))
+    history = ListHistory.objects.get(pk=idpatient)
+    examens = RefExamens.objects.all()
+    return render_to_response('cconline/newexam.html', {
+        'history': history,
+        'exam_list': examens,
+        'id': idpatient,
+        'cur_month': datetime.today().month,
+    },
+    context_instance=RequestContext(request))
 
 
-@login_required(login_url='/login')
+login_required(login_url='/login')
 def get_examen_list(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -489,11 +543,88 @@ def get_medication(request, id):
     numhistory = history.num_history
     dataset = Medication.objects.filter(id_key=id)
     return render_to_response('cconline/medication.html',
-                              {
-                                  'dataset': dataset,
-                                  'num': numhistory,
-                                  'patient': patient,
-                                  'idpatient': medication.id_history,
-                                  'medicname': medication.medic_name,
-                                  'current_doc': get_current_doctor(request),
-                              })
+          {
+              'dataset': dataset,
+              'num': numhistory,
+              'patient': patient,
+              'idpatient': medication.id_history,
+              'medicname': medication.medic_name,
+              'current_doc': get_current_doctor(request),
+          })
+
+
+def prolong_medication(request, id):
+    """
+    Продлить назначение препарата
+    :param request:
+    :param id_medication: Код назначения
+    :return:
+    """
+    try:
+        medication = Medication.objects.get(pk=id)
+    except HistoryMedication.DoesNotExist:
+        raise Http404
+
+    # get history information
+    history = ListHistory.objects.get(pk=medication.id_history)
+    patient = history.lastname
+    numhistory = history.num_history
+
+    return render_to_response('cconline/prolong_medic.html', {
+          'dataset': medication,
+          'id': medication.id,
+          'num': numhistory,
+          'patient': patient,
+          'current_doc': get_current_doctor(request),
+          'cur_month': datetime.today().month,
+    },
+        context_instance=RequestContext(request)
+    )
+
+
+def prolong_med(request):
+    """
+    Продлить назначение препарата на период
+    :param request:
+    :return:
+    """
+    if request.method != 'POST':
+        raise Http404
+
+    id_medication = request.POST['id_medication']
+
+    try:
+        medication = Medication.objects.get(pk=id_medication)
+    except HistoryMedication.DoesNotExist:
+        raise Http404
+
+    year1 = request.POST['planyear']
+    month1 = request.POST['planmonth']
+    day1 = request.POST['planday']
+
+    year2 = request.POST['planyear2']
+    month2 = request.POST['planmonth2']
+    day2 = request.POST['planday2']
+
+    date1 = "%d-%d-%d" % (int(year1), int(month1), int(day1))
+    date2 = "%d-%d-%d" % (int(year2), int(month2), int(day2))
+
+    id_medication=0
+
+    sql = "EXECUTE PROCEDURE SP_COPY_ASSIGN_MEDIC (%s, '%s', '%s')" % (id_medication, date1, date2)
+    cursor = connection.cursor()
+
+    try:
+        cursor.execute(sql)
+        mess = u'Лечение продлено'
+    except:
+        mess = u'Ошибка продления лечения!'
+
+    redirect_url = '/medication/' + str(medication.id_key)
+    return render_to_response('cconline/redirect.html', {
+        'message': mess,
+        'redirect_url': redirect_url,
+        'request': request,
+    },
+        context_instance=RequestContext(request)
+    )

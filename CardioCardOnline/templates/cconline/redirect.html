@@ -1,0 +1,27 @@
+﻿{% extends "cconline/base.html" %}
+{% load staticfiles %}
+
+{% block jscript %}
+    <title>Пожалуйста подождите...</title>
+    <meta http-equiv="refresh" content="5; url={{ redirect_url }}">
+{%endblock%}
+
+{% block body %}
+<table height='100%' align='center'>
+    <tr>
+        <td valign='middle'>
+            <table width="100%" border="0" cellspacing="1" cellpadding="12" style="border: 1px black solid;">
+                <tr>
+                    <td width="100%" align="center" class="bg-danger">
+                        <div class="alert bg-danger">
+                        {{ message }}<br/><br/>
+                        пожалуйста подождите пока происходит перенаправление<br/><br/>
+                        (<a href='{{ redirect_url }}'>Либо нажмите здесь, если не желаете ждать</a>)
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+{% endblock %}
