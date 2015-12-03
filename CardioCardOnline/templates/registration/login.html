@@ -8,15 +8,11 @@
 {% block content %}
 <div class="container">
 
-{% if form.errors and not form.non_field_errors and not form.this_is_the_login_form.errors %}
-<p class="errornote">
-{% if form.errors.items|length == 1 %}"Please correct the error below."{% else %}"Please correct the errors below."{% endif %}
-</p>
-{% endif %}
-
-
     <H1 class="text-center">КардиоКарта <br>Онлайн</H1>
 
+    {% if form.errors %}
+        <p class="text-center text-danger">Неверно указан логин или пароль. Повторите ещё раз.</p>
+    {% endif %}
 
     <form class="form-signin" role="form" action='.' method='post'>
         {% csrf_token %}
