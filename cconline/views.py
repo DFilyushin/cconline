@@ -6,8 +6,6 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
 from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication
-from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
-from models import TemperatureData, RiskDownData, PainStatus
 from models import ListSurgery, SurgeryAdv, ListProffView, Medication
 from models import RefExamens, ExamenDataset
 from models import SysUsers, UserGroups
@@ -333,75 +331,6 @@ def get_examen(request, id):
 
 
 @login_required(login_url='/login')
-def get_nurse_list(request, idpatient):
-    try:
-        history = ListHistory.objects.get(pk=idpatient)
-    except ListHistory.DoesNotExist:
-        raise Http404
-    patient = history.lastname
-    numhistory = history.num_history
-    temp_list = TemperatureList.objects.filter(id_history=idpatient)
-    view_list = NurseViewList.objects.filter(id_history=idpatient)
-    pain_list = PainStatusList.objects.filter(id_history=idpatient)
-    down_list = RiskDownList.objects.filter(id_history=idpatient)
-    return render_to_response('cconline/nurse.html',
-                              {
-                                  'temp_list': temp_list,
-                                  'view_list': view_list,
-                                  'pain_list': pain_list,
-                                  'down_list': down_list,
-                                  'patient': patient,
-                                  'num': numhistory,
-                                  'idpatient': idpatient,
-                                  'current_doc': get_current_doctor(request),
-                              })
-
-
-@login_required(login_url='/login')
-def get_tempearature_data(request, id):
-    try:
-        view = TemperatureList.objects.get(pk=id)
-    except TemperatureList.DoesNotExist:
-        raise Http404
-
-    values = TemperatureData.objects.filter(id_ctrl_nurse=id)
-    return render_to_response('cconline/temp_list.html',
-                       {
-                           'view': view,
-                           'values': values,
-                           'current_doc': get_current_doctor(request),
-                       })
-
-
-@login_required(login_url='/login')
-def get_risk_down(request, id):
-    try:
-        view = RiskDownData.objects.get(pk=id)
-    except RiskDownData.DoesNotExist:
-        raise Http404
-
-    return render_to_response('cconline/risk_down.html',
-                              {
-                                  'view': view,
-                                  'current_doc': get_current_doctor(request),
-                              })
-
-
-@login_required(login_url='/login')
-def get_pain_status(request, id):
-    try:
-        view = PainStatus.objects.get(pk=id)
-    except PainStatus.DoesNotExist:
-        raise Http404
-
-    return render_to_response('cconline/pain_status.html',
-                              {
-                                  'view': view,
-                                  'current_doc': get_current_doctor(request),
-                              })
-
-
-@login_required(login_url='/login')
 def get_list_surgery(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -625,6 +554,6 @@ def prolong_med(request):
         'message': mess,
         'redirect_url': redirect_url,
         'request': request,
-    },
+        },
         context_instance=RequestContext(request)
     )

@@ -24,10 +24,6 @@ urlpatterns = [
     url(r'^examen/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_exam', name='add_exam'),
     url(r'^laboratory/list/(?P<idpatient>\d+)/$', 'cconline.views.get_lab_list', name='list_lab'),
     url(r'^labs/(?P<id>\d+)/$', 'cconline.views.get_laboratory', name='get_lab'),
-    url(r'^nurse/list/(?P<idpatient>\d+)/$', 'cconline.views.get_nurse_list', name='list_nurse'),
-    url(r'^temp_list/(?P<id>\d+)/$', 'cconline.views.get_tempearature_data', name='get_templist'),
-    url(r'^risk_down/(?P<id>\d+)/$', 'cconline.views.get_risk_down', name='get_risk_down'),
-    url(r'^pain_status/(?P<id>\d+)/$', 'cconline.views.get_pain_status', name='get_pain_status'),
     url(r'^operations/(?P<idpatient>\d+)/$', 'cconline.views.get_list_surgery', name='list_surgery'),
     url(r'^operation/(?P<id>\d+)/$', 'cconline.views.get_operation', name='operation'),
     url(r'^medication/list/(?P<idpatient>\d+)/$', 'cconline.views.get_list_medication', name='list_medication'),
@@ -36,10 +32,17 @@ urlpatterns = [
     url(r'^proview/(?P<id>\d+)/$', 'cconline.views.get_proview', name='proview'),
     url(r'^prolong_medication/(?P<id>\d+)/$', 'cconline.views.prolong_medication', name='prolong_medication'),
 
+
+    #nurse handler
+    url(r'^nurse/list/(?P<idpatient>\d+)/$', 'cconline.nurse.get_nurse_list', name='list_nurse'),
+    url(r'^temp_list/(?P<id>\d+)/$', 'cconline.nurse.get_tempearature_data', name='get_templist'),
+    url(r'^risk_down/(?P<id>\d+)/$', 'cconline.nurse.get_risk_down', name='get_risk_down'),
+    url(r'^pain_status/(?P<id>\d+)/$', 'cconline.nurse.get_pain_status', name='get_pain_status'),
+
+
     #post request urls
     url(r'^new_exam/', 'cconline.views.new_examen', name='save_exam'),
     url(r'^prolong_med/', 'cconline.views.prolong_med', name='save_prolong'),
-
 
 
     #utility for localnet
