@@ -526,3 +526,22 @@ class ExamenDataset(models.Model):
     class Meta:
         managed = False
         db_table = 'ASSIGNED_EXAMENATION'
+
+
+class ListOfAnalysis(models.Model):
+    id = models.CharField(max_length=10, primary_key=True)
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        managed =False
+        db_table = 'VW_MASTER_ANALYSIS'
+
+
+class ListAllAnalysis(models.Model):
+    id = models.CharField(max_length=10, primary_key=True)
+    id_parent = models.CharField(max_length=10)
+    name = models.CharField(max_length=255)
+
+    class Meta:
+        managed =False
+        db_table = 'VW_ALL_ANALYSIS'

@@ -7,7 +7,7 @@ from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
 from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication
 from models import ListSurgery, SurgeryAdv, ListProffView, Medication
-from models import RefExamens, ExamenDataset
+from models import RefExamens, ExamenDataset, ListOfAnalysis
 from models import SysUsers, UserGroups
 from django.db.models import Q
 from django.utils.safestring import mark_safe
@@ -557,3 +557,26 @@ def prolong_med(request):
         },
         context_instance=RequestContext(request)
     )
+
+
+def add_new_laboratory(request, idpatient):
+    history = ListHistory.objects.get(pk=idpatient)
+    dataset = ListOfAnalysis.objects.all()
+    return render_to_response('cconline/new_lab.html', {
+        'history': history,
+        'lab_list': dataset,
+        'id': idpatient,
+        'cur_month': datetime.today().month,
+    },
+    context_instance=RequestContext(request))
+
+
+def new_lab(request):
+    """
+    Сохранить добавление нового анализа
+    :param request:
+    :return: Страница перенаправления
+    """
+    if request.method != 'POST':
+        raise Http404
+

@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^examen/(?P<id>\d+)/$', 'cconline.views.get_examen', name='get_exam'),
     url(r'^examen/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_exam', name='add_exam'),
     url(r'^laboratory/list/(?P<idpatient>\d+)/$', 'cconline.views.get_lab_list', name='list_lab'),
+    url(r'^lab/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_laboratory', name='add_lab'),
     url(r'^labs/(?P<id>\d+)/$', 'cconline.views.get_laboratory', name='get_lab'),
     url(r'^operations/(?P<idpatient>\d+)/$', 'cconline.views.get_list_surgery', name='list_surgery'),
     url(r'^operation/(?P<id>\d+)/$', 'cconline.views.get_operation', name='operation'),
@@ -42,12 +43,15 @@ urlpatterns = [
 
     #post request urls
     url(r'^new_exam/', 'cconline.views.new_examen', name='save_exam'),
+    url(r'^new_lab/', 'cconline.views.new_lab', name='save_lab'),
     url(r'^prolong_med/', 'cconline.views.prolong_med', name='save_prolong'),
 
 
     #utility for localnet
     url(r'^getpass/$', 'cconline.utils.getpass', name='get_password'),
-    #url(r'^test/$', 'cconline.utils.gethttp'),
+    url(r'^test/$', 'cconline.utils.gethttp'),
+    url(r'^json/subtest/$', 'cconline.utils.json_subtest', name='get_subtest'),
+    url(r'^json/mkb/$', 'baklab.jsondata.getmkb', name='get_mkb'),
 ]
 if settings.DEBUG == True:
     urlpatterns += staticfiles_urlpatterns()
