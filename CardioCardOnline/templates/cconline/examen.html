@@ -5,13 +5,13 @@
     <p>
         <a href="/examens/list/{{ examen.id_history }}">К списку обследований</a>
     </p>
-    <p><em>Пациент:</em> {{ examen.patient }} </p>
-    <p><em>Отделение:</em> {{ examen.depart }}</p>
-    <p><em>Врач:</em> {{ examen.doctor }} </p>
-    <p><em>Назначен:</em> {{ examen.date_assign|date:"d.m.Y H:d" }}</p>
-    <p><em>Назначен на:</em> {{ examen.date_plan|date:"d.m.Y H:d" }}</p>
-    <p><em>Принят м/с:</em> {{ examen.date_nurse|date:"d.m.Y H:d" }}</p>
-    <p><em>Выполнен:</em> {{ examen.date_execute|date:"d.m.Y H:d" }}</p>
+    <p><strong>Пациент:</strong> {{ examen.patient }} </p>
+    <p><strong>Отделение:</strong> {{ examen.depart }}</p>
+    <p><strong>Врач:</strong> {{ examen.doctor }} </p>
+    <p><strong>Назначен:</strong> {{ examen.date_assign|date:"d.m.Y H:d" }}</p>
+    <p><strong>Назначен на:</strong> {{ examen.date_plan|date:"d.m.Y H:d" }}</p>
+    <p><strong>Принят м/с:</strong> {{ examen.date_nurse|date:"d.m.Y H:d" }}</p>
+    <p><strong>Выполнен:</strong> {{ examen.date_execute|date:"d.m.Y H:d" }}</p>
 
     <p class="bg-primary">Особенности</p>
     <p>

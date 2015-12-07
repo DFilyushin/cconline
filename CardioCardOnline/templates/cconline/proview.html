@@ -6,7 +6,7 @@
     <h2><a href="/proview/list/{{ idpatient }}">№{{ num }} {{ patient }}</a></h2>
     <p><strong>Специализация</strong>: {{ proview.specname }}</p>
     <p><strong>Врач</strong>: {{ proview.doctor }}</p>
-    <p><strong>Дата осмотра</strong>: {{ proview.viewdate}} </p>
+    <p><strong>Дата осмотра</strong>: {{ proview.viewdate|date:"d.m.Y H:d"}} </p>
 
     {% for item in pages %}
         <p><strong>{{ item.param_name }}</strong>: {{ item.text }}</p>

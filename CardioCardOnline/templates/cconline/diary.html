@@ -5,11 +5,11 @@
     <p>
         <a href="/diary/list/{{ diary.id_history }}">К списку дневников</a>
     </p>
-    <p><em>Пациент:</em> № {{ history.num_history }} {{ history.lastname }}</p>
-    <p><em>Дата:</em> {{ diary.reg_date|date:"d.m.Y H:d" }}</p>
-    <p><em>Врач:</em> {{ diary.doctor }} </p>
-    <p><em>Отделение:</em> {{ diary.depart_name }}</p>
-    <p class="bg-primary">Запись осмотра</p>
+    <p><strong>Пациент:</strong> № {{ history.num_history }} {{ history.lastname }}</p>
+    <p><strong>Дата:</strong> {{ diary.reg_date|date:"d.m.Y H:d" }}</p>
+    <p><strong>Врач:</strong> {{ diary.doctor }} </p>
+    <p><strong>Отделение:</strong> {{ diary.depart_name }}</p>
+    <h3>Запись осмотра</h3>
     <p>
         {{ diary.blob_text }}
     </p>

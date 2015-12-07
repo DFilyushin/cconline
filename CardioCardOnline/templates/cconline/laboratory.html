@@ -5,12 +5,12 @@
     <p>
         <a href="/laboratory/list/{{ order.id_history }}">К списку анализов</a>
     </p>
-    <p><em>Пациент:</em> </p>
-    <p><em>Отделение:</em> {{ order.depart }}</p>
-    <p><em>Врач:</em> {{ order.doctor }} </p>
-    <p><em>Назначен:</em> {{ order.date_assign|date:"d.m.Y H:d" }}</p>
-    <p><em>Принят м/с:</em> {{ order.nurse_date_execute|date:"d.m.Y H:d" }}</p>
-    <p><em>Выполнен:</em> {{ order.date_execute|date:"d.m.Y H:d" }}</p>
+    <p><strong>Пациент:</strong> № {{ history.num_history }} {{ history.lastname }}</p>
+    <p><strong>Отделение:</strong> {{ order.depart }}</p>
+    <p><strong>Врач:</strong> {{ order.doctor }} </p>
+    <p><strong>Назначен:</strong> {{ order.date_assign|date:"d.m.Y H:d" }}</p>
+    <p><strong>Принят м/с:</strong> {{ order.nurse_date_execute|date:"d.m.Y H:d" }}</p>
+    <p><strong>Выполнен:</strong> {{ order.date_execute|date:"d.m.Y H:d" }}</p>
 
 
     <p class="bg-primary">Данные анализа</p>
