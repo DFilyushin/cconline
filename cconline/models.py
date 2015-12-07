@@ -12,6 +12,19 @@ class Departments(models.Model):
         db_table = 'departments'
 
 
+class Personal(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=255, db_column='DOCNAME')
+    depart = models.CharField(max_length=255, db_column='DEPARTMENT')
+    honor = models.CharField(max_length=1021, db_column='HONORS')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_REF_MEDPROFF'
+
+
+
+
 class ClassMkb(models.Model):
     id = models.IntegerField(db_column='ID', primary_key=True)
     parent_id = models.IntegerField(db_column='PARENT_ID', blank=True, null=True)
@@ -103,7 +116,7 @@ class History(models.Model):
     extreme_type = models.SmallIntegerField(db_column='EXTREME_TYPE', blank=True, null=True)
     id_type_hospitalize = models.IntegerField(db_column='ID_TYPE_HOSPITALIZE', blank=True, null=True)
     id_depart = models.ForeignKey(Departments, db_column='ID_DEPART', blank=True, null=True)
-    id_doctor = models.IntegerField()
+    id_doctor = models.ForeignKey(Personal, db_column='id_doctor', blank=False, null=False)
     chamber = models.CharField(db_column='CHAMBER', max_length=1020, blank=True)
     incoming_diag = models.CharField(db_column='INCOMING_DIAG', max_length=4096, blank=True)
     id_clinic_diag = models.ForeignKey(ClassMkb, db_column='ID_CLINIC_DIAG', blank=True, null=True, related_name='+')

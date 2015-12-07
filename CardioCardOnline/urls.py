@@ -51,7 +51,6 @@ urlpatterns = [
     url(r'^getpass/$', 'cconline.utils.getpass', name='get_password'),
     url(r'^test/$', 'cconline.utils.gethttp'),
     url(r'^json/subtest/$', 'cconline.utils.json_subtest', name='get_subtest'),
-    url(r'^json/mkb/$', 'baklab.jsondata.getmkb', name='get_mkb'),
 ]
 if settings.DEBUG == True:
     urlpatterns += staticfiles_urlpatterns()
