@@ -27,7 +27,7 @@ def getpass(request):
 def gethttp(request):
     # для внешних адресов нельзя вызывать запрос
     remote_address = request.META['REMOTE_ADDR']
-    is_local_net = ('192.168.100' in remote_address) or ('127.0.0.1' in remote_address)
+    is_local_net = ('192.168.1' in remote_address) or ('127.0.0.1' in remote_address)
     #if not is_local_net:
     #    raise Http404
     template = get_template('cconline/test.html')
