@@ -195,9 +195,14 @@ def get_laboratory(request, id):
         lab = ListAnalysis.objects.get(pk=id)
     except ListAnalysis.DoesNotExist:
         raise Http404
+    try:
+        history = ListHistory.objects.get(pk=lab.id_history)
+    except ListHistory.DoesNotExist:
+        raise Http404
     lab_result = LaboratoryData.objects.filter(id_assigned_anal=id).order_by('sort_pos')
     return render_to_response('cconline/laboratory.html',
                               {
+                                  'history': history,
                                   'order': lab,
                                   'result': lab_result,
                                   'current_doc': get_current_doctor(request),
