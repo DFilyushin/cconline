@@ -23,8 +23,6 @@ class Personal(models.Model):
         db_table = 'VW_REF_MEDPROFF'
 
 
-
-
 class ClassMkb(models.Model):
     id = models.IntegerField(db_column='ID', primary_key=True)
     parent_id = models.IntegerField(db_column='PARENT_ID', blank=True, null=True)
@@ -558,3 +556,11 @@ class ListAllAnalysis(models.Model):
     class Meta:
         managed =False
         db_table = 'VW_ALL_ANALYSIS'
+
+
+class ExamParam(models.Model):
+    id = models.IntegerField(primary_key=True, db_column='UN_ID')
+    param = models.CharField(max_length=255, db_column='PARAM_NAME')
+    type = models.IntegerField(db_column='PARAM_TYPE')
+    measure = models.CharField(max_length=40, db_column='PARAM_MEASURE')
+    value = models.CharField(max_length=7168, db_column='PARAM_VALUE')

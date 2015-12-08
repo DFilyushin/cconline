@@ -2,9 +2,9 @@
 {% load cconline_extras %}
 
 {% block body %}
-
-    <h2><a href="/proview/list/{{ idpatient }}">№{{ num }} {{ patient }}</a></h2>
-    <p><strong>Специализация</strong>: {{ proview.specname }}</p>
+    <p><a href="/proview/list/{{ idpatient }}">К списку осмотров</a></p>
+    <h4 class="text-center">{{ proview.specname }}</h4>
+    <p><strong>Пациент:</strong> {{ patient }} </p>
     <p><strong>Врач</strong>: {{ proview.doctor }}</p>
     <p><strong>Дата осмотра</strong>: {{ proview.viewdate|date:"d.m.Y H:d"}} </p>
 

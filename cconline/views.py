@@ -7,7 +7,7 @@ from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
 from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication
 from models import ListSurgery, SurgeryAdv, ListProffView, Medication
-from models import RefExamens, ExamenDataset, ListOfAnalysis
+from models import RefExamens, ExamenDataset, ListOfAnalysis, ExamParam
 from models import SysUsers, UserGroups
 from django.db.models import Q
 from django.utils.safestring import mark_safe
@@ -35,17 +35,32 @@ def card_login(request, *args, **kwargs):
 
 
 def get_current_doctor(request):
+    """
+    ФИО пользователя КардиоКарты
+    :param request:
+    :return: ФИО пользователя
+    """
     current_user = request.user.username.upper()
     card_user = SysUsers.objects.get(pk=current_user)
     return card_user.user_fullname
 
 
 def get_current_doctor_id(request):
+    """
+    Код пользователя КардиоКарты
+    :param request:
+    :return:
+    """
     current_user = request.user.username.upper()
     card_user = SysUsers.objects.get(pk=current_user)
     return card_user.id_doctor
 
 def get_user_groups(request):
+    """
+    Список групп, доступных пользователю
+    :param request:
+    :return:
+    """
     current_user = request.user.username.upper()
     list_group = UserGroups.objects.filter(sys_login=current_user)
     return [item.sys_group for item in list_group]
@@ -58,9 +73,11 @@ def index(request):
     :param request:
     :return:
     """
+    current_user = request.user.last_name + ' ' + request.user.first_name
     return render_to_response('cconline/index.html',
         {
             'current_doc': get_current_doctor(request),
+            'current_user': current_user,
         },
         context_instance=RequestContext(request))
 
@@ -105,6 +122,12 @@ def get_my_patient(request):
 
 @login_required(login_url='/login')
 def get_patient_first_view(request, idpatient):
+    """
+    Данные первичного осмотра пациента, закладка "Лечащий врач"
+    :param request:
+    :param idpatient: Код пациента
+    :return:
+    """
     patient = History.objects.get(pk=idpatient)
     first_view = PatientInfo.objects.filter(id_history=idpatient).filter(id_view=0)
     return render_to_response('cconline/patient_firstview.html',
@@ -174,7 +197,7 @@ def get_lab_list(request, idpatient):
         history = ListHistory.objects.get(pk=idpatient)
     except ListHistory.DoesNotExist:
         raise Http404
-    labs = ListAnalysis.objects.filter(id_history=idpatient)
+    labs = ListAnalysis.objects.filter(id_history=idpatient).order_by('-date_execute')
     return render_to_response('cconline/list_laboratory.html',
                               {
                                   'labs': labs,
@@ -328,9 +351,13 @@ def get_examen(request, id):
         examen = ListExamens.objects.get(pk=id)
     except ListExamens.DoesNotExist:
         raise Http404
+
+    params = ExamParam.objects.raw('select * from SP_EXAM_PARAM(%s)', [id])
+
     return render_to_response('cconline/examen.html',
                               {
                                   'examen': examen,
+                                  'params': params,
                                   'current_doc': get_current_doctor(request),
                               })
 
