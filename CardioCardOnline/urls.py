@@ -50,6 +50,7 @@ urlpatterns = [
     #utility for localnet
     url(r'^getpass/$', 'cconline.utils.getpass', name='get_password'),
     url(r'^test/$', 'cconline.utils.gethttp'),
+    url(r'^json/test/$', 'cconline.utils.json_test', name='get_test'),
     url(r'^json/subtest/$', 'cconline.utils.json_subtest', name='get_subtest'),
 ]
 if settings.DEBUG == True:

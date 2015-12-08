@@ -4,7 +4,7 @@
 
 <h2 class="center-block">№{{ num }} {{ patient }}</h2>
 
-<div class="table-responsive">
+<div class="container-fluid">
     <p><a href="/patient/first_view/{{ id }}" class="btn btn-primary btn-lg center-block" role="button" >Первичный осмотр</a></p>
     {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group %}
         <p><a href="/diary/list/{{ id }}" class="btn btn-primary btn-lg center-block" role="button"> Дневники пациента</a></p>

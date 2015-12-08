@@ -15,22 +15,22 @@
 
 
     <p class="bg-primary">Данные анализа</p>
-        <table class="table table-condensed">
-            <thead>
-                <th>Параметр</th>
-                <th>Значение</th>
-                <th>Норма</th>
-            </thead>
-        <tbody>
-        {%  for item in result %}
-            <tr>
-                <td>{{ item.param_name }}</td>
-                <td>{% if item.ad_value %}{{ item.ad_value }} {% if item.measure %}{{ item.measure }} {% endif %} {% endif %} </td>
-                <td>{% if item.norm_value %}{{ item.norm_value }}{% endif %}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-        </table>
+    <table class="table table-condensed">
+        <thead>
+            <th>Параметр</th>
+            <th>Значение</th>
+            <th>Норма</th>
+        </thead>
+    <tbody>
+    {%  for item in result %}
+        <tr>
+            <td>{{ item.param_name }}</td>
+            <td>{% if item.ad_value %}{{ item.ad_value }} {% if item.measure %}{{ item.measure }} {% endif %} {% endif %} </td>
+            <td>{% if item.norm_value %}{{ item.norm_value }}{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
     <p>
         <a href="/laboratory/list/{{ order.id_history }}">К списку анализов</a>
     </p>

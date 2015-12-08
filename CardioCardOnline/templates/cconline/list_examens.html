@@ -4,13 +4,11 @@
 
     <h2><a href="/patient/{{ idpatient }}">№{{ num }} {{ patient }}</a></h2>
 
-<div class="table-responsive">
+<div class="container-fluid">
     <table class="table table-condensed">
         <thead>
-            <tr>
                 <th>Обследование</th>
                 <th>Выполнен</th>
-            </tr>
         </thead>
         <tbody>
             {%  for item in examens %}

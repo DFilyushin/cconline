@@ -1,7 +1,7 @@
 {% extends "cconline/base.html" %}
 
 {% block body %}
-<div class="table-responsive">
+<div class="container-fluid">
     {%  for item in departs %}
         <p><a href="/patients/departs/{{ item.id }}" class="btn btn-primary btn-lg center-block" role="button"> {{ item.name }}</a></p>
     {% endfor %}

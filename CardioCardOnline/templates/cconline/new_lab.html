@@ -2,28 +2,62 @@
 {% load staticfiles %}
 
 {% block jscript %}
-
 {% endblock %}
 
 {% block body %}
 <!-- Begin page content -->
+
+<script src="{% static 'js/lib/angular.min.js' %}"></script>
+
+<script type="text/javascript">
+    var myApp = angular.module('myApp', []);
+</script>
+
+<script src="{% static 'js/labService.js' %}"></script>
+<script src="{% static 'js/controllers/labController.js' %}"></script>
+
 <h2>Назначение анализа</h2>
+
+<div  ng-controller="LabController">
 <div class="container">
       <form class="form" action="/new_lab/" method='post'>{% csrf_token %}
           <input type="hidden" name="id_history" value="{{ id }}">
           <div class="form-group">
-          <label class="control-label" for="dateview">ФИО пациента:</label>
+          <label class="control-label" for="dateview">ФИО пациента1:</label>
               <input type="text" class="form-control" name="fio" id="dateview" name="dateview"  value="{{ history.lastname }}" autofocus disabled >
           </div>
 
+    {% verbatim %}
+
           <div class="form-group">
-          <label class="control-label" for="examens">Список анализов:</label>
-              <select class="form-control" name="labs" id="labs" >
-                  {% for item in lab_list %}
-                      <option value="{{ item.id }}">{{ item.name }}</option>
-                  {% endfor %}
-              </select>
+
+            <select name="repeatSelect" id="repeatSelect" ng-model="selectedPk" ng-change="getSubTest()">
+              <option ng-repeat="test in tests" value="{{test.pk}}">{{test.fields.name}}</option>
+            </select>
           </div>
+
+          <div class="col-md-2">
+              <input type="text" class="form-control" name="planyear" id="dplanyear" value="{{ selectedPk }}" placeholder="Год">
+          </div>
+
+        <table class="table">
+            <thead>
+                <th>п.п.</th>
+                <th>Модель</th>
+                <th>Цена</th>
+                <th>Цена</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in subTest">
+                    <td>{{$index + 1}}</td>
+                    <td>{{item.pk}}</td>
+                    <td>{{item.fields.name}}</td>
+                    <td><input type="checkbox" ng-model="item.fields.checked" /></td>
+                </tr>
+            </tbody>
+        </table>
+
+    {% endverbatim %}
 
 
           <div class="form-group">
@@ -44,9 +78,9 @@
                         <option {% if cur_month == 7  %} selected {% endif %} value="7">июль</option>
                         <option {% if cur_month == 8  %} selected {% endif %} value="8">август</option>
                         <option {% if cur_month == 9  %} selected {% endif %} value="9">сентябрь</option>
-                        <option {% if cur_month == 10  %} selected {% endif %} value="10">октябрь</option>
-                        <option {% if cur_month == 11  %} selected {% endif %} value="11">ноябрь</option>
-                        <option {% if cur_month == 12  %} selected {% endif %} value="12">декабрь</option>
+                        <option {% if cur_month == 10 %} selected {% endif %} value="10">октябрь</option>
+                        <option {% if cur_month == 11 %} selected {% endif %} value="11">ноябрь</option>
+                        <option {% if cur_month == 12 %} selected {% endif %} value="12">декабрь</option>
                     </select>
                   </div>
                   <div class="col-md-2">
@@ -66,4 +100,9 @@
           <a href="/examens/list/{{ id }}" class="btn btn-default" role="button">Вернуться</a>
       </form>
 </div>
+
+</div>
+    </div>
+
+
 {% endblock %}
