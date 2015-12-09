@@ -3,61 +3,16 @@
 
 {% block jscript %}
 
-    <script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/jquery/jquery-ui.js' %}"></script>
-    <script src="{% static 'js/dt_picker.js' %}" ></script>
-    <script src="{% static 'js/tab.js' %}"></script>
-
 {% endblock %}
 
 {% block body %}
-<script>
-    $(function()
-    {
-        $("#select").append($("<option></option>").val(1).html("One"));
-        $("#select").append($("<option></option>").val(2).html("Two"));
-        $("#select").append($("<option></option>").val(3).html("Three"));
-        $("#select").append($("<option></option>").val(3).html("DE"));
-    });
-
-    function deleteAnalysis()
-    {
-        var x = document.getElementById("mTest");
-        x.remove(x.selectedIndex);
-    }
-
-
-    function getSubtest()
-    {
-        var APIUrl = "/json/subtest/";
-        var selVal = $( "#mTest" ).val()
-        var jqxhr = $.ajax({
-            url: APIUrl,
-            dataType: "json",
-            data: { q: selVal},
-
-        success: function(data) {
-            alert(data);
-        }
-    });
-
-    }
-</script>
-
-<select id="mTest" onchange="getSubtest(); return false;">
-    <option value="-2">322</option>
-	<option value="-2">43</option>
-    <option value="-5">3</option>
-    <option value="05.040.001">3</option>
-</select>
-
-<a class="btn btn-warning" href="#" onclick="deleteAnalysis(); return false;">ыв</a>
-
 
 <select id="sTest">
 </select>
 
 <div class="results">Ждём данные</div>
+    Val = {{ data1 }}
+    <br/>
+    Val2 = {{ data2 }}
 
 {% endblock %}

@@ -12,7 +12,7 @@
 <script type="text/javascript">
     var myApp = angular.module('myApp', []);
 </script>
-
+<script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
 <script src="{% static 'js/labService.js' %}"></script>
 <script src="{% static 'js/controllers/labController.js' %}"></script>
 
@@ -20,10 +20,10 @@
 
 <div  ng-controller="LabController">
 <div class="container">
-      <form class="form" action="/new_lab/" method='post'>{% csrf_token %}
+      <form class="form">{% csrf_token %}
           <input type="hidden" name="id_history" value="{{ id }}">
           <div class="form-group">
-          <label class="control-label" for="dateview">ФИО пациента1:</label>
+          <label class="control-label" for="dateview">ФИО пациента:</label>
               <input type="text" class="form-control" name="fio" id="dateview" name="dateview"  value="{{ history.lastname }}" autofocus disabled >
           </div>
 
@@ -31,72 +31,51 @@
 
           <div class="form-group">
 
-            <select name="repeatSelect" id="repeatSelect" ng-model="selectedPk" ng-change="getSubTest()">
+            <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="selectedPk" ng-change="getSubTest()">
               <option ng-repeat="test in tests" value="{{test.pk}}">{{test.fields.name}}</option>
             </select>
           </div>
 
-          <div class="col-md-2">
-              <input type="text" class="form-control" name="planyear" id="dplanyear" value="{{ selectedPk }}" placeholder="Год">
-          </div>
-
-        <table class="table">
+        <table class="table table-responsive" ng-show="tableVisible">
             <thead>
-                <th>п.п.</th>
-                <th>Модель</th>
-                <th>Цена</th>
-                <th>Цена</th>
+                <th>Тест</th>
+                <th>Выбран</th>
             </thead>
             <tbody>
                 <tr ng-repeat="item in subTest">
-                    <td>{{$index + 1}}</td>
-                    <td>{{item.pk}}</td>
                     <td>{{item.fields.name}}</td>
                     <td><input type="checkbox" ng-model="item.fields.checked" /></td>
                 </tr>
             </tbody>
         </table>
 
-    {% endverbatim %}
-
-
           <div class="form-group">
           <label class="control-label" for="dplanyear">Дата проведения:</label>
               <div class="row">
                   <div class="col-md-2">
-                      <input type="text" class="form-control" name="planyear" id="dplanyear" value="{% now "Y" %}" placeholder="Год">
+                      <input type="text" class="form-control" name="planyear" id="dplanyear" value="{{ currentYear }}" placeholder="Год">
                   </div>
-                  <div class="col-md-2">
 
-                    <select class="form-control" name="planmonth">
-                        <option {% if cur_month == 1  %} selected {% endif %} value="1">январь</option>
-                        <option {% if cur_month == 2  %} selected {% endif %} value="2">февраль</option>
-                        <option {% if cur_month == 3  %} selected {% endif %} value="3">март</option>
-                        <option {% if cur_month == 4  %} selected {% endif %} value="4">апрель</option>
-                        <option {% if cur_month == 5  %} selected {% endif %} value="5">май</option>
-                        <option {% if cur_month == 6  %} selected {% endif %} value="6">июнь</option>
-                        <option {% if cur_month == 7  %} selected {% endif %} value="7">июль</option>
-                        <option {% if cur_month == 8  %} selected {% endif %} value="8">август</option>
-                        <option {% if cur_month == 9  %} selected {% endif %} value="9">сентябрь</option>
-                        <option {% if cur_month == 10 %} selected {% endif %} value="10">октябрь</option>
-                        <option {% if cur_month == 11 %} selected {% endif %} value="11">ноябрь</option>
-                        <option {% if cur_month == 12 %} selected {% endif %} value="12">декабрь</option>
+                  <div class="col-md-2">
+                    <select class="form-control" name="monthSelect" id="monthSelect" ng-model="currentMonth" ng-options="item for item in listMonths">
                     </select>
                   </div>
+
                   <div class="col-md-2">
-                      <input type="text" class="form-control" name="planday" id="planday" value="{% now "d" %}" placeholder="День" pattern="[0-9]{1,2}">
+                      <input type="text" class="form-control" name="planday" id="planday" value="{{ currentDay }}" placeholder="День" pattern="[0-9]{1,2}">
                   </div>
                   <div class="col-md-2">
-                      <input type="text" class="form-control" name="planhour" id="planhour" value="{% now "H" %}" placeholder="Часы" pattern="[0-9]{1,2}">
+                      <input type="text" class="form-control" name="planhour" id="planhour" value="{{ currentHour }}" placeholder="Часы" pattern="[0-9]{1,2}">
                   </div>
                   <div class="col-md-2">
-                      <input type="text" class="form-control" name="planmin" id="planmin" value="{% now "i" %}" placeholder="Минуты" pattern="[0-9]{1,2}">
+                      <input type="text" class="form-control" name="planmin" id="planmin" value="{{ currentMin }}" placeholder="Минуты" pattern="[0-9]{1,2}">
                   </div>
               </div>
           </div>
 
+{% endverbatim %}
 
-          <button type="submit" class="btn btn-default">Назначить</button>
+          <button type="button" class="btn btn-default" ng-click="sendData()">Назначить</button>
           <a href="/examens/list/{{ id }}" class="btn btn-default" role="button">Вернуться</a>
       </form>
 </div>

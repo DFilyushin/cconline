@@ -52,6 +52,7 @@ urlpatterns = [
     url(r'^test/$', 'cconline.utils.gethttp'),
     url(r'^json/test/$', 'cconline.utils.json_test', name='get_test'),
     url(r'^json/subtest/$', 'cconline.utils.json_subtest', name='get_subtest'),
+    url(r'^json/posttest/$', 'cconline.utils.json_savetest'),
 ]
 if settings.DEBUG == True:
     urlpatterns += staticfiles_urlpatterns()

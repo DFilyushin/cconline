@@ -5,13 +5,15 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.hashers import make_password
 import random
+import views
+from django.http import QueryDict
 import json
 from django.template.loader import get_template
 from django.template import Context
 from models import ListAllAnalysis, ListOfAnalysis
 from django.core import serializers
-
-
+from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime
 
 def getpass(request):
     # create pass sha256 for client ;-)
@@ -69,20 +71,48 @@ def server_error(request):
 
 def json_subtest(request):
     mtest = request.GET['q']
-    tests = ListAllAnalysis.objects.filter(id_parent=mtest)
+    tests = ListAllAnalysis.objects.filter(id_parent=mtest).order_by('name')
     data = serializers.serialize('json', tests)
-    #to_json = []
-    #for item in tests:
-    #    to_json.append(item.id + ': ' + item.name)
-    #response_data = json.dumps(to_json)
     return HttpResponse(data, mimetype='application/json')
 
 
 def json_test(request):
     dataset = ListOfAnalysis.objects.all()
     data = serializers.serialize('json', dataset)
-    #to_json = []
-    #for item in dataset:
-    #    to_json.append(item.id + ': ' + item.name)
-    #response_data = json.dumps(to_json)
     return HttpResponse(data, mimetype='application/json')
+
+
+def json_savetest(request):
+    """
+    Сохранить назначение анализа
+    :param request:
+    :return: Перенаправление на страницу
+    """
+    if request.method == 'POST':
+        json_data = request.body
+        params = json.loads(json_data)
+        id_test = params['pk']
+        subtests = params['selected']
+        id_history = params['id_history']
+        id_doctor = views.get_current_doctor_id(request)
+
+        plan_year = int(params['plan_year'])
+        plan_month = int(params['plan_month'])
+        plan_day = int(params['plan_day'])
+        plan_hour = int(params['plan_hour'])
+        plan_min = int(params['plan_min'])
+        assigndate = datetime.now()
+        plandate = datetime(plan_year, plan_month, plan_day, plan_hour, plan_min)
+        is_cito = params['is_cito']
+
+
+
+
+    return render_to_response('cconline/test.html',
+                                  {
+                                      'body': request.body,
+                                      'data1': id_test,
+                                      'data2': subtests,
+                                  },
+                                  context_instance=RequestContext(request)
+                                  )
