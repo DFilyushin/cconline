@@ -53,7 +53,7 @@ myApp.controller('LabController',
             var dataForSend = new Object();
             dataForSend.pk = $scope.selectedPk;
             dataForSend.selected = listTests;
-            dataForSend.id_history = 100;
+            dataForSend.id_history = document.getElementsByName('id_history')[0].value;
             $http(
                 {
                     url: "/json/posttest/",
