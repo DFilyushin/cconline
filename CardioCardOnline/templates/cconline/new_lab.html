@@ -30,13 +30,12 @@
     {% verbatim %}
 
           <div class="form-group">
-
             <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="selectedPk" ng-change="getSubTest()">
               <option ng-repeat="test in tests" value="{{test.pk}}">{{test.fields.name}}</option>
             </select>
           </div>
 
-        <table class="table table-responsive" ng-show="tableVisible">
+        <table class="table table-responsive table-condensed" ng-show="tableVisible">
             <thead>
                 <th>Тест</th>
                 <th>Выбран</th>
@@ -72,11 +71,14 @@
                   </div>
               </div>
           </div>
+          <div class="form-group">
+              <input type="checkbox" ng-model="isCito">CITO
+          </div>
 
 {% endverbatim %}
 
           <button type="button" class="btn btn-default" ng-click="sendData()">Назначить</button>
-          <a href="/examens/list/{{ id }}" class="btn btn-default" role="button">Вернуться</a>
+          <a href="/laboratory/list/{{ id }}" class="btn btn-default" role="button">Вернуться</a>
       </form>
 </div>
 

@@ -81,6 +81,7 @@ def index(request):
         },
         context_instance=RequestContext(request))
 
+
 @login_required(login_url='/login')
 def search(request):
     """
@@ -146,13 +147,13 @@ def get_patient(request, idpatient):
         raise Http404
 
     return render_to_response('cconline/patient.html',
-        {
-            'patient': history.lastname,
-            'id': idpatient,
-            'num': history.num_history,
-            'current_doc': get_current_doctor(request),
-            'list_group': get_user_groups(request),
-        })
+            {
+                'patient': history.lastname,
+                'id': idpatient,
+                'num': history.num_history,
+                'current_doc': get_current_doctor(request),
+                'list_group': get_user_groups(request),
+            })
 
 
 @login_required(login_url='/login')
@@ -184,11 +185,11 @@ def get_diary(request, id):
         raise Http404
     history = ListHistory.objects.get(pk=diary.id_history)
     return render_to_response('cconline/diary.html',
-                              {
-                                  'diary': diary,
-                                  'history': history,
-                                  'current_doc': get_current_doctor(request),
-                              })
+                {
+                  'diary': diary,
+                  'history': history,
+                  'current_doc': get_current_doctor(request),
+                })
 
 
 @login_required(login_url='/login')
@@ -265,7 +266,7 @@ def patients_by_depart(request, iddepart):
         })
 
 
-login_required(login_url='/login')
+@login_required(login_url='/login')
 def new_examen(request):
     """
     Добавить назначенное обследование
@@ -299,7 +300,7 @@ def new_examen(request):
     dataset.save()
     redirect_url = '/examens/list/' + id_history
     return render_to_response('cconline/redirect.html', {
-        'message': u'Добавлено обследование' ,
+        'message': u'Добавлено обследование',
         'redirect_url': redirect_url,
         'request': request,
     },
@@ -307,7 +308,7 @@ def new_examen(request):
     )
 
 
-login_required(login_url='/login')
+@login_required(login_url='/login')
 def add_new_exam(request, idpatient):
     history = ListHistory.objects.get(pk=idpatient)
     examens = RefExamens.objects.all()
@@ -320,7 +321,7 @@ def add_new_exam(request, idpatient):
     context_instance=RequestContext(request))
 
 
-login_required(login_url='/login')
+@login_required(login_url='/login')
 def get_examen_list(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -518,7 +519,7 @@ def prolong_medication(request, id):
     """
     Продлить назначение препарата
     :param request:
-    :param id_medication: Код назначения
+    :param id: Код назначения
     :return:
     """
     try:

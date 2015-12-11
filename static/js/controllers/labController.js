@@ -15,7 +15,8 @@ myApp.controller('LabController',
 
         $scope.id_history = 0;
         $scope.currentYear=curDate.getFullYear();
-        $scope.currentMonth = months[ curDate.getMonth()];
+        $scope.currentMonth = months[ curDate.getMonth() ];
+        $scope.currentMonthI = 0;
         $scope.currentDay=curDate.getDate();
         $scope.currentHour=curDate.getHours();
         $scope.currentMin=curDate.getMinutes();
@@ -23,6 +24,7 @@ myApp.controller('LabController',
         $scope.subTest= {};
         $scope.listMonths = months;
         $scope.tableVisible = false;
+        $scope.isCito = false;
 
         $http.get('/json/test').success(function(data) {
             $scope.tests=data;
@@ -44,16 +46,37 @@ myApp.controller('LabController',
         }
 
         $scope.sendData = function(){
-            listTests = [];
+            var i;
+            var listTests = [];
             for (i=0; i<$scope.subTest.length; i++){
                 if ($scope.subTest[i].fields.checked == true){
                     listTests.push($scope.subTest[i].pk);
                 }
             };
+            for(i=0; i<months.length; i++){
+                if (months[i]==$scope.currentMonth){
+                    $scope.currentMonthI = i+1;
+                    break;
+                }
+            }
+
             var dataForSend = new Object();
             dataForSend.pk = $scope.selectedPk;
             dataForSend.selected = listTests;
             dataForSend.id_history = document.getElementsByName('id_history')[0].value;
+            dataForSend.plan_year = $scope.currentYear;
+            dataForSend.plan_month = $scope.currentMonthI;
+            dataForSend.plan_day = $scope.currentDay;
+            dataForSend.plan_hour = $scope.currentHour;
+            dataForSend.plan_min = $scope.currentMin;
+            if ($scope.isCito == true){
+                dataForSend.is_cito = 1;
+            }
+            else
+            {
+                dataForSend.is_cito = 0
+            }
+
             $http(
                 {
                     url: "/json/posttest/",
@@ -64,5 +87,6 @@ myApp.controller('LabController',
                         "Content-Type": "application/json"
                     }
                 });
+            window.location.replace("/laboratory/list/" + dataForSend.id_history);
         }
     });
