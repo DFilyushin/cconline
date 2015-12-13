@@ -117,16 +117,18 @@ def json_savetest(request):
         cursor.execute(sql)
         results = named_tuple_fetch_all(cursor)
         id_order = results[0][0]
+        connection.commit()
 
         #Добавить сабтесты для анализа
         for sub_test in sub_tests:
             sql = "EXECUTE PROCEDURE SP_ASSIGN_ANALYSIS (%s, %s, %s)" % (id_order, sub_test, is_cito)
             cursor = connection.cursor()
             cursor.execute(sql)
+        connection.commit()
 
         redirect_url = 'laboratory/list/' + id_history
         response = render_to_response('cconline/redirect.html', {
-            'message': u'Добавлен анализ',
+            'message': u'Добавлен анализ' + str(id_order),
             'redirect_url': redirect_url,
             'request': request,
         },
