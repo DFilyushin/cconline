@@ -66,7 +66,8 @@ TEMPLATE_DIRS = (
 WSGI_APPLICATION = 'CardioCardOnline.wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
+# Firebird
+# for high load need set CONN_MAX_AGE not 0.
 
 DATABASES = {
     'default': {
@@ -76,6 +77,7 @@ DATABASES = {
         'PASSWORD': 'masterkey',
         'HOST': 'localhost',
         'PORT': '3050',
+        'CONN_MAX_AGE': 3600,
     }
 }
 
