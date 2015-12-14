@@ -14,6 +14,7 @@
         {{ diary.blob_text }}
     </p>
     <p>
+        <a href="{% url 'edit_diary' id=diary.id %}" class="btn btn-primary" role="button">Изменить</a>
         <a href="/diary/list/{{ diary.id_history }}">К списку дневников</a>
     </p>
 </div>

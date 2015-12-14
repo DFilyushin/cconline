@@ -1,0 +1,38 @@
+﻿{% extends "cconline/base.html" %}
+{% load staticfiles %}
+
+{% block jscript %}
+{% endblock %}
+
+{% block body %}
+<!-- Begin page content -->
+
+<script src="{% static 'js/lib/angular.min.js' %}"></script>
+
+<script type="text/javascript">
+    var myApp = angular.module('myApp', []);
+</script>
+<script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
+<script src="{% static 'js/labService.js' %}"></script>
+<script src="{% static 'js/controllers/labController.js' %}"></script>
+
+<h2>Ввод дневника</h2>
+
+<div  ng-controller="LabController">
+<div class="container">
+      <form class="form" action="/diary/add/{{ id_history }}/" method="post">
+          {% csrf_token %}
+
+          <div class="form-group">
+            {{ form }}
+          </div>
+          <button type="submit" class="btn btn-default">Сохранить</button>
+
+      </form>
+</div>
+
+</div>
+    </div>
+
+
+{% endblock %}

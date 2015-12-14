@@ -564,3 +564,19 @@ class ExamParam(models.Model):
     type = models.IntegerField(db_column='PARAM_TYPE')
     measure = models.CharField(max_length=40, db_column='PARAM_MEASURE')
     value = models.CharField(max_length=7168, db_column='PARAM_VALUE')
+
+
+class Diary(models.Model):
+    id = models.IntegerField(primary_key=True, db_column='ID')
+    id_history = models.IntegerField()
+    diary_name = models.CharField(max_length=255, db_column='DIARY_NAME')
+    diary_date = models.DateTimeField(db_column='REG_DATE')
+    id_doctor = models.IntegerField()
+    doctor = models.CharField(max_length=255, db_column='DOCTOR')
+    id_depart = models.IntegerField(db_column='ID_DEPARTMENT')
+    depart = models.CharField(max_length=255, db_column='DEPART_NAME')
+    diary_text = models.TextField(db_column='BLOB_TEXT')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_DIARY'

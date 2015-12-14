@@ -9,6 +9,7 @@ from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedic
 from models import ListSurgery, SurgeryAdv, ListProffView, Medication
 from models import RefExamens, ExamenDataset, ListOfAnalysis, ExamParam
 from models import SysUsers, UserGroups
+from models import Diary
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
@@ -16,6 +17,8 @@ from django.contrib.auth.views import login, logout
 from django.core.exceptions import PermissionDenied
 from datetime import datetime
 from django.db import connection
+from forms import DiaryForm
+from django.http import HttpResponseRedirect
 
 
 def card_login(request, *args, **kwargs):
@@ -613,3 +616,48 @@ def new_lab(request):
     if request.method != 'POST':
         raise Http404
 
+
+def add_new_diary(request, idpatient):
+    """
+    Добавить новый дневник пациента
+    :param request:
+    :return:
+    """
+    #history = ListHistory.objects.get(pk=idpatient)
+    #return render_to_response('cconline/new_diary.html', {
+    #    'history': history,
+    #    'id': idpatient,
+    #    'cur_month': datetime.today().month,
+    #},
+    #context_instance=RequestContext(request))
+    if request.method == 'POST':
+        form = DiaryForm(request.POST)
+        if form.is_valid():
+            diary = form.save()
+            return HttpResponseRedirect('/')
+        else:
+            return render_to_response('cconline/redirect.html', {
+                'message': form.errors,
+                'redirect_url': '/',
+                'request': request,
+                },
+                context_instance=RequestContext(request)
+            )
+    else:
+        id_doctor = get_current_doctor_id(request)
+        form = DiaryForm(initial={'id_history': idpatient, 'id_depart': 1, 'id_doctor': id_doctor })
+        return render_to_response('cconline/edit_diary.html', {
+            'form': form,
+            'id_history': idpatient,
+        },
+        context_instance=RequestContext(request))
+
+
+def edit_diary(request, id):
+    dataset = Diary.objects.get(pk=id)
+    form = DiaryForm(instance=dataset)
+    return render_to_response('cconline/edit_diary.html', {
+        'form': form,
+        'id_history': dataset.id_history,
+    },
+    context_instance=RequestContext(request))

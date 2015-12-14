@@ -17,8 +17,12 @@ urlpatterns = [
     url(r'^patients/by_depart/', 'cconline.views.get_active_departs', name='active_departs'),
     url(r'^patient/first_view/(?P<idpatient>\d+)/$', 'cconline.views.get_patient_first_view', name='patient_info'),
     url(r'^patient/(?P<idpatient>\d+)/$', 'cconline.views.get_patient', name='get_patient'),
+
     url(r'^diary/list/(?P<idpatient>\d+)/$', 'cconline.views.get_diary_list', name='list_diary'),
     url(r'^diary/(?P<id>\d+)/$', 'cconline.views.get_diary', name='get_diary'),
+    url(r'^diary/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_diary', name='add_diary'),
+    url(r'^diary/edit/(?P<id>\d+)/$', 'cconline.views.edit_diary', name='edit_diary'),
+
     url(r'^examens/list/(?P<idpatient>\d+)/$', 'cconline.views.get_examen_list', name='list_exam'),
     url(r'^examen/(?P<id>\d+)/$', 'cconline.views.get_examen', name='get_exam'),
     url(r'^examen/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_exam', name='add_exam'),

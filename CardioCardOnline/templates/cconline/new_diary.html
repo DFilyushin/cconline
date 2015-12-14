@@ -1,0 +1,89 @@
+﻿{% extends "cconline/base.html" %}
+{% load staticfiles %}
+
+{% block jscript %}
+{% endblock %}
+
+{% block body %}
+<!-- Begin page content -->
+
+<script src="{% static 'js/lib/angular.min.js' %}"></script>
+
+<script type="text/javascript">
+    var myApp = angular.module('myApp', []);
+</script>
+<script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
+<script src="{% static 'js/labService.js' %}"></script>
+<script src="{% static 'js/controllers/labController.js' %}"></script>
+
+<h2>Ввод дневника</h2>
+
+<div  ng-controller="LabController">
+<div class="container">
+      <form class="form">{% csrf_token %}
+          <input type="hidden" name="id_history" value="{{ id }}">
+          <div class="form-group">
+          <label class="control-label" for="dateview">ФИО пациента:</label>
+              <input type="text" class="form-control" name="fio" id="dateview" name="dateview"  value="{{ history.lastname }}" autofocus disabled >
+          </div>
+
+    {% verbatim %}
+
+          <div class="form-group">
+            <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="selectedPk" ng-change="getSubTest()">
+              <option ng-repeat="test in tests" value="{{test.pk}}">{{test.fields.name}}</option>
+            </select>
+          </div>
+
+        <table class="table table-responsive table-condensed" ng-show="tableVisible">
+            <thead>
+                <th>Тест</th>
+                <th>Выбран</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in subTest">
+                    <td>{{item.fields.name}}</td>
+                    <td><input type="checkbox" ng-model="item.fields.checked" /></td>
+                </tr>
+            </tbody>
+        </table>
+
+          <div class="form-group">
+          <label class="control-label" for="dplanyear">Дата осмотра:</label>
+              <div class="row">
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="planyear" id="dplanyear" value="{{ currentYear }}" placeholder="Год">
+                  </div>
+
+                  <div class="col-md-2">
+                    <select class="form-control" name="monthSelect" id="monthSelect" ng-model="currentMonth" ng-options="item for item in listMonths">
+                    </select>
+                  </div>
+
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="planday" id="planday" value="{{ currentDay }}" placeholder="День" pattern="[0-9]{1,2}">
+                  </div>
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="planhour" id="planhour" value="{{ currentHour }}" placeholder="Часы" pattern="[0-9]{1,2}">
+                  </div>
+                  <div class="col-md-2">
+                      <input type="text" class="form-control" name="planmin" id="planmin" value="{{ currentMin }}" placeholder="Минуты" pattern="[0-9]{1,2}">
+                  </div>
+              </div>
+          </div>
+          <div class="form-group">
+              <textarea class="form-control" rows="3"></textarea>
+          </div>
+
+{% endverbatim %}
+
+          <button type="button" class="btn btn-default" ng-click="sendData()">Назначить</button>
+          <a href="/laboratory/list/{{ id }}" class="btn btn-default" role="button">Вернуться</a>
+      </form>
+</div>
+
+</div>
+    </div>
+
+
+{% endblock %}
