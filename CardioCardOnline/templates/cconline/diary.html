@@ -9,7 +9,9 @@
     <p><strong>Дата:</strong> {{ diary.reg_date|date:"d.m.Y H:d" }}</p>
     <p><strong>Врач:</strong> {{ diary.doctor }} </p>
     <p><strong>Отделение:</strong> {{ diary.depart_name }}</p>
+    {% if diary.diary_name %}
     <p><strong>Совместный осмотр:</strong> {{ diary.diary_name }}</p>
+    {% endif %}
     <h3>Запись осмотра</h3>
     <p>
         {{ diary.blob_text }}
