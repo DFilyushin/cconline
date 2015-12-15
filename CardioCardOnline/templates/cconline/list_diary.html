@@ -1,7 +1,9 @@
 {% extends "cconline/base.html" %}
 
 {% block body %}
-<h2><a href="/patient/{{ history.id }}">№{{ history.num_history }} {{ history.lastname }}</a></h2>
+<h2>
+    <a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a>
+</h2>
 <div class="center-block">
     <h3>Дневники</h3>
 </div>
@@ -13,9 +15,9 @@
         <tbody>
             {%  for item in diarys %}
             <tr>
-                <td><a href="/diary/{{ item.id }}">{{ item.reg_date|date:"d.m.Y H:d" }}</a></td>
-                <td><a href="/diary/{{ item.id }}">{{ item.doctor }}</a></td>
-                <td><a href="/diary/{{ item.id }}">{{ item.depart_name }}</a></td>
+                <td><a href="{% url 'get_diary' id_diary=item.id %}">{{ item.reg_date|date:"d.m.Y H:d" }}</a></td>
+                <td><a href="{% url 'get_diary' id_diary=item.id %}">{{ item.doctor }}</a></td>
+                <td><a href="{% url 'get_diary' id_diary=item.id %}">{{ item.depart_name }}</a></td>
             </tr>
             {% endfor %}
         </tbody>

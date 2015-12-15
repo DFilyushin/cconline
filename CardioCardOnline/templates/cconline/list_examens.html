@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h2><a href="/patient/{{ idpatient }}">№{{ num }} {{ patient }}</a></h2>
+    <h2><a href="{% url 'get_patient' idpatient=idpatient %}">№{{ num }} {{ patient }}</a></h2>
 
 <div class="container-fluid">
     <table class="table table-condensed">
@@ -13,8 +13,12 @@
         <tbody>
             {%  for item in examens %}
             <tr>
-                <td><a href="/examen/{{ item.id }}">{{ item.name_exam }}</a></td>
-                <td>{{ item.date_execute|date:"d.m.Y H:d" }}</td>
+                <td>
+                    <a href="{% url 'get_exam' id=item.id %}">{{ item.name_exam }}</a>
+                </td>
+                <td>
+                    <a href="{% url 'get_exam' id=item.id %}">{{ item.date_execute|date:"d.m.Y H:d" }}</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
@@ -22,6 +26,6 @@
 
 </div>
 
-    <p><a href="/examen/add/{{ idpatient }}" class="btn btn-primary" role="button">Назначить</a></p>
+    <p><a href="{% url 'add_exam' idpatient=idpatient %}" class="btn btn-primary" role="button">Назначить</a></p>
 
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block body %}
 <div class="container-fluid">
     <p>
-        <a href="/laboratory/list/{{ order.id_history }}">К списку анализов</a>
+        <a href="{% url 'list_lab' idpatient=order.id_history %}">К списку анализов</a>
     </p>
     <h4 class="text-center">{{ order.name_labanalysis }} </h4>
     <p><strong>Пациент:</strong> № {{ history.num_history }} {{ history.lastname }}</p>
@@ -32,7 +32,7 @@
     </tbody>
     </table>
     <p>
-        <a href="/laboratory/list/{{ order.id_history }}">К списку анализов</a>
+        <a href="{% url 'list_lab' idpatient=order.id_history %}">К списку анализов</a>
     </p>
 </div>
 

@@ -3,8 +3,9 @@
 {% block body %}
 <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
     <p>
-        <a href="/examens/list/{{ examen.id_history }}">К списку обследований</a>
+        <a href="{% url 'list_exam' idpatient=examen.id_history %}">К списку обследований</a>
     </p>
+
     <h4 class="text-center">{{ examen.name_exam }} </h4>
     <p><strong>Пациент:</strong> {{ examen.patient }} </p>
     <p><strong>Отделение:</strong> {{ examen.depart }}</p>
@@ -42,7 +43,7 @@
 
 
     <p>
-        <a href="/examens/list/{{ examen.id_history }}">К списку обследований</a>
+        <a href="{% url 'list_exam' idpatient=examen.id_history %}">К списку обследований</a>
     </p>
 
 </div>

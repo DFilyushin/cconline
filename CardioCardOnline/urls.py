@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^search/', 'cconline.views.search', name='search'),  # search by num history or firstname patient
     url(r'^patients/my/', 'cconline.views.get_my_patient', name='my_patient'),  # my patients
     url(r'^patients/departs/(?P<iddepart>\d+)/$', 'cconline.views.patients_by_depart', name='departs_patient'),
-    url(r'^patients/by_depart/', 'cconline.views.get_active_departs', name='active_departs'),
+    url(r'^patients/by_depart/', 'cconline.views.get_active_departs', name='patient_by_depart'),
     url(r'^patient/first_view/(?P<idpatient>\d+)/$', 'cconline.views.get_patient_first_view', name='patient_info'),
     url(r'^patient/(?P<idpatient>\d+)/$', 'cconline.views.get_patient', name='get_patient'),
 
@@ -28,14 +28,18 @@ urlpatterns = [
     url(r'^examens/list/(?P<idpatient>\d+)/$', 'cconline.views.get_examen_list', name='list_exam'),
     url(r'^examen/(?P<id>\d+)/$', 'cconline.views.get_examen', name='get_exam'),
     url(r'^examen/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_exam', name='add_exam'),
+
     url(r'^laboratory/list/(?P<idpatient>\d+)/$', 'cconline.views.get_lab_list', name='list_lab'),
     url(r'^lab/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_laboratory', name='add_lab'),
     url(r'^labs/(?P<id>\d+)/$', 'cconline.views.get_laboratory', name='get_lab'),
+
     url(r'^operations/(?P<idpatient>\d+)/$', 'cconline.views.get_list_surgery', name='list_surgery'),
     url(r'^operation/(?P<id>\d+)/$', 'cconline.views.get_operation', name='operation'),
+
     url(r'^medication/list/(?P<idpatient>\d+)/$', 'cconline.views.get_list_medication', name='list_medication'),
-    url(r'^medication/(?P<id>\d+)/$', 'cconline.views.get_medication', name='medication'),
-    url(r'^proview/list/(?P<idpatient>\d+)/$', 'cconline.views.get_list_proffview', name='proview'),
+    url(r'^medication/(?P<id>\d+)/$', 'cconline.views.get_medication', name='get_medication'),
+
+    url(r'^proview/list/(?P<idpatient>\d+)/$', 'cconline.views.get_list_proffview', name='list_proview'),
     url(r'^proview/(?P<id>\d+)/$', 'cconline.views.get_proview', name='proview'),
     url(r'^prolong_medication/(?P<id>\d+)/$', 'cconline.views.prolong_medication', name='prolong_medication'),
 

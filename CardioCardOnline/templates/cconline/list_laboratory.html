@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h2><a href="/patient/{{ history.id }}">№{{ history.num_history }} {{ history.lastname }}</a></h2>
+    <h2><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h2>
     <p><a href="/lab/add/{{ history.id }}" class="btn btn-primary" role="button">Назначить</a></p>
 <div class="container-fluid">
     <table class="table table-condensed">
@@ -15,7 +15,7 @@
         <tbody>
             {%  for item in labs %}
             <tr>
-                <td>{% if item.date_execute %} <a href="/labs/{{ item.id }}"> {% endif %}{{ item.name_labanalysis }}{% if item.date_execute %}</a>{% endif %}</td>
+                <td>{% if item.date_execute %} <a href="{% url 'get_lab' id=item.id %}"> {% endif %}{{ item.name_labanalysis }}{% if item.date_execute %}</a>{% endif %}</td>
                 <td>{% if item.date_execute %}{{ item.date_execute|date:"d.m.Y H:d" }}{% else %}не выполнен{% endif %}</td>
             </tr>
             {% endfor %}
@@ -24,7 +24,7 @@
 </div>
 
     {% if labs %}
-    <p><a href="/lab/add/{{ history.id }}" class="btn btn-primary" role="button">Назначить</a></p>
+    <p><a href="{% url 'add_lab' idpatient=history.id %}" class="btn btn-primary" role="button">Назначить</a></p>
     {% endif %}
 
 {% endblock %}
