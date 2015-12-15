@@ -196,6 +196,7 @@ class ListDiary(models.Model):
     reg_date = models.DateTimeField()
     doctor = models.CharField(max_length=255)
     depart_name = models.CharField(max_length=255)
+    diary_name = models.CharField(max_length=255, db_column='DIARY_NAME')
     blob_text = models.TextField()
 
     class Meta:
@@ -567,9 +568,9 @@ class ExamParam(models.Model):
 
 
 class Diary(models.Model):
-    id = models.IntegerField(primary_key=True, db_column='ID')
+    id = models.AutoField(primary_key=True)
     id_history = models.IntegerField()
-    diary_name = models.CharField(max_length=255, db_column='DIARY_NAME')
+    diary_name = models.CharField(max_length=255, db_column='DIARY_NAME', blank=True)
     diary_date = models.DateTimeField(db_column='REG_DATE')
     id_doctor = models.IntegerField()
     doctor = models.CharField(max_length=255, db_column='DOCTOR')
@@ -580,3 +581,26 @@ class Diary(models.Model):
     class Meta:
         managed = False
         db_table = 'VW_DIARY'
+
+
+class Templates(models.Model):
+    id = models.IntegerField(primary_key=True)
+    id_template = models.IntegerField()
+    id_type = models.IntegerField(db_column='TYPE_TEMPLATE')
+    name = models.CharField(max_length=255, db_column='TEMPL_NAME')
+    text = models.TextField(db_column='text_blob')
+
+    class Meta:
+        managed = False
+        db_table = 'TEMPLATES'
+
+
+class ListTemplates(models.Model):
+    id = models.IntegerField(primary_key=True)
+    id_template = models.IntegerField()
+    id_type = models.IntegerField(db_column='TYPE_TEMPLATE')
+    name = models.CharField(max_length=255, db_column='TEMPL_NAME')
+
+    class Meta:
+        managed = False
+        db_table = 'TEMPLATES'

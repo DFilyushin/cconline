@@ -12,27 +12,32 @@
 <script type="text/javascript">
     var myApp = angular.module('myApp', []);
 </script>
-<script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
-<script src="{% static 'js/labService.js' %}"></script>
-<script src="{% static 'js/controllers/labController.js' %}"></script>
+<script src="{% static 'js/controllers/diaryController.js' %}"></script>
 
 <h2>Ввод дневника</h2>
-
-<div  ng-controller="LabController">
+{{ form.id_history }}
 <div class="container">
-      <form class="form" action="/diary/add/{{ id_history }}/" method="post">
+      <form class="form" action="/diary/save/" method="post">
           {% csrf_token %}
 
           <div class="form-group">
             {{ form }}
           </div>
-          <button type="submit" class="btn btn-default">Сохранить</button>
+{% verbatim %}
+          <div  ng-controller="DiaryController">
+          <div class="form-group">
 
+            <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="selectedTemplate" ng-change="getTemplate()">
+              <option ng-repeat="template in list_templates" value="{{template.pk}}">{{template.fields.name}}</option>
+            </select>
+
+          </div>
+          </div>
+{% endverbatim %}
+
+          <button type="submit" class="btn btn-default">Сохранить</button>
+          <a href="{% url 'list_diary' idpatient=id_history %}" class="btn btn-warning" role="button">Вернуться</a>
       </form>
 </div>
-
-</div>
-    </div>
-
 
 {% endblock %}

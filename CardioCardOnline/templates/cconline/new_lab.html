@@ -12,8 +12,6 @@
 <script type="text/javascript">
     var myApp = angular.module('myApp', []);
 </script>
-<script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
-<script src="{% static 'js/labService.js' %}"></script>
 <script src="{% static 'js/controllers/labController.js' %}"></script>
 
 <h2>Назначение анализа</h2>
@@ -21,7 +19,7 @@
 <div  ng-controller="LabController">
 <div class="container">
       <form class="form">{% csrf_token %}
-          <input type="hidden" name="id_history" value="{{ id }}">
+          <input type="hidden" name="id_history" value="{{ history.id }}">
           <div class="form-group">
           <label class="control-label" for="dateview">ФИО пациента:</label>
               <input type="text" class="form-control" name="fio" id="dateview" name="dateview"  value="{{ history.lastname }}" autofocus disabled >
@@ -78,7 +76,7 @@
 {% endverbatim %}
 
           <button type="button" class="btn btn-default" ng-click="sendData()">Назначить</button>
-          <a href="/laboratory/list/{{ id }}" class="btn btn-default" role="button">Вернуться</a>
+          <a href="/laboratory/list/{{ history.id }}" class="btn btn-default" role="button">Вернуться</a>
       </form>
 </div>
 

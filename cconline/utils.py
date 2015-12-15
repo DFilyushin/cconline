@@ -10,7 +10,7 @@ from models import ListHistory
 import json
 from django.template.loader import get_template
 from django.template import Context
-from models import ListAllAnalysis, ListOfAnalysis
+from models import ListAllAnalysis, ListOfAnalysis, Templates, ListTemplates
 from django.core import serializers
 from django.db import connection
 from datetime import datetime
@@ -143,3 +143,16 @@ def named_tuple_fetch_all(cursor):
     desc = cursor.description
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
+
+
+def json_templates(request):
+    id_group = request.GET.get('g', '')
+    id = request.GET.get('id', '')
+    if (id_group == '') and (id == ''):
+        raise Http404
+    if id_group != '':
+        templates = ListTemplates.objects.filter(id_template=id_group).filter(id_type=0)
+    elif id != '':
+        templates = Templates.objects.filter(id=id)
+    data = serializers.serialize('json', templates)
+    return HttpResponse(data, mimetype='application/json')

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+from _ast import List
 
 import django
 from django.http import HttpResponse, Http404
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render, redirect
 from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
 from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication
@@ -181,21 +182,6 @@ def get_diary_list(request, idpatient):
 
 
 @login_required(login_url='/login')
-def get_diary(request, id):
-    try:
-        diary = ListDiary.objects.get(pk=id)
-    except ListDiary.DoesNotExist:
-        raise Http404
-    history = ListHistory.objects.get(pk=diary.id_history)
-    return render_to_response('cconline/diary.html',
-                {
-                  'diary': diary,
-                  'history': history,
-                  'current_doc': get_current_doctor(request),
-                })
-
-
-@login_required(login_url='/login')
 def get_lab_list(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -306,9 +292,8 @@ def new_examen(request):
         'message': u'Добавлено обследование',
         'redirect_url': redirect_url,
         'request': request,
-    },
-        context_instance=RequestContext(request)
-    )
+        },
+        context_instance=RequestContext(request))
 
 
 @login_required(login_url='/login')
@@ -574,7 +559,7 @@ def prolong_med(request):
     date1 = "%d-%d-%d" % (int(year1), int(month1), int(day1))
     date2 = "%d-%d-%d" % (int(year2), int(month2), int(day2))
 
-    id_medication=0
+    id_medication = 0
 
     sql = "EXECUTE PROCEDURE SP_COPY_ASSIGN_MEDIC (%s, '%s', '%s')" % (id_medication, date1, date2)
     cursor = connection.cursor()
@@ -596,68 +581,115 @@ def prolong_med(request):
 
 
 def add_new_laboratory(request, idpatient):
-    history = ListHistory.objects.get(pk=idpatient)
-    dataset = ListOfAnalysis.objects.all()
+    try:
+        history = ListHistory.objects.get(pk=idpatient)
+    except ListHistory.DoesNotExist:
+        raise Http404
     return render_to_response('cconline/new_lab.html', {
         'history': history,
-        'lab_list': dataset,
-        'id': idpatient,
         'cur_month': datetime.today().month,
-    },
-    context_instance=RequestContext(request))
-
-
-def new_lab(request):
-    """
-    Сохранить добавление нового анализа
-    :param request:
-    :return: Страница перенаправления
-    """
-    if request.method != 'POST':
-        raise Http404
-
-
-def add_new_diary(request, idpatient):
-    """
-    Добавить новый дневник пациента
-    :param request:
-    :return:
-    """
-    #history = ListHistory.objects.get(pk=idpatient)
-    #return render_to_response('cconline/new_diary.html', {
-    #    'history': history,
-    #    'id': idpatient,
-    #    'cur_month': datetime.today().month,
-    #},
-    #context_instance=RequestContext(request))
-    if request.method == 'POST':
-        form = DiaryForm(request.POST)
-        if form.is_valid():
-            diary = form.save()
-            return HttpResponseRedirect('/')
-        else:
-            return render_to_response('cconline/redirect.html', {
-                'message': form.errors,
-                'redirect_url': '/',
-                'request': request,
-                },
-                context_instance=RequestContext(request)
-            )
-    else:
-        id_doctor = get_current_doctor_id(request)
-        form = DiaryForm(initial={'id_history': idpatient, 'id_depart': 1, 'id_doctor': id_doctor })
-        return render_to_response('cconline/edit_diary.html', {
-            'form': form,
-            'id_history': idpatient,
         },
         context_instance=RequestContext(request))
 
 
-def edit_diary(request, id):
-    dataset = Diary.objects.get(pk=id)
-    form = DiaryForm(instance=dataset)
+@login_required(login_url='/login')
+def get_diary(request, id_diary):
+    """
+    Дневник на просмотр
+    :param request:
+    :param id_diary: Код дневника
+    :return:
+    """
+    try:
+        diary = ListDiary.objects.get(pk=id_diary)
+    except ListDiary.DoesNotExist:
+        raise Http404
+    try:
+        history = ListHistory.objects.get(pk=diary.id_history)
+    except ListHistory.DoesNotExist:
+        raise Http404
+    return render_to_response('cconline/diary.html',
+                {
+                  'diary': diary,
+                  'history': history,
+                  'current_doc': get_current_doctor(request),
+                })
+
+
+@login_required(login_url='/login')
+def new_diary(request, idpatient):
+    """
+    Новый дневник пациента
+    :param request:
+    :return:
+    """
+    try:
+        history = ListHistory.objects.get(pk=idpatient)
+    except ListHistory.DoesNotExist:
+        raise Http404
+
+    id_doctor = get_current_doctor_id(request)
+    id_depart = history.id_depart
+    patient = history.lastname
+    depart = history.depart_name
+    form = DiaryForm(initial=
+        {
+            'patient': patient,
+            'department': depart,
+            'id_history': idpatient,
+            'id_depart': id_depart,
+            'id_doctor': id_doctor,
+            'diary_date': datetime.today(),
+
+         }
+        )
     return render_to_response('cconline/edit_diary.html', {
         'form': form,
-        'id_history': dataset.id_history,
-    },
-    context_instance=RequestContext(request))
+        'id_history': idpatient,
+        },
+        context_instance=RequestContext(request))
+
+
+@login_required(login_url='/login')
+def edit_diary(request, id_diary):
+    try:
+        diary = Diary.objects.get(pk=id_diary)
+    except Diary.DoesNotExist:
+        raise Http404
+    diary_form = DiaryForm(instance=diary)
+    return render(request,  'cconline/edit_diary.html', {'form': diary_form})
+
+
+@login_required(login_url='/login')
+def save_diary(request):
+    if request.method != 'POST':
+        raise Http404
+    id_diary = request.POST.get('id', '')
+    if id_diary != '':
+        diary = Diary.objects.get(pk=id_diary)
+        diary_form = DiaryForm(request.POST, instance=diary)
+        if diary_form.is_valid():
+            diary_form.save()
+    else:
+        diary_form = DiaryForm(request.POST)
+        if diary_form.is_valid():
+            diary_form.save()
+
+    return render_to_response('cconline/redirect.html', {
+        'message': diary_form.errors,
+        'redirect_url': '/',
+        'request': request,
+        },
+        context_instance=RequestContext(request)
+    )
+
+@login_required(login_url='/login')
+def delete_diary(request, id_diary):
+    try:
+        diary = Diary.objects.get(pk=id_diary)
+    except Diary.DoesNotExist:
+        raise Http404
+    id_history = diary.id_history
+    diary.delete()
+    redirect_url = '/diary/list/' + str(id_history)
+    return render(request,  'cconline/redirect.html', {'message': 'Дневник удалён', 'redirect_url': redirect_url, 'request': request})

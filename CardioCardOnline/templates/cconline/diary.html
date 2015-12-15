@@ -3,19 +3,26 @@
 {% block body %}
 <div class="container-fluid">
     <p>
-        <a href="/diary/list/{{ diary.id_history }}">К списку дневников</a>
+        <a href="{% url 'list_diary' idpatient=diary.id_history %}">К списку дневников</a>
     </p>
     <p><strong>Пациент:</strong> № {{ history.num_history }} {{ history.lastname }}</p>
     <p><strong>Дата:</strong> {{ diary.reg_date|date:"d.m.Y H:d" }}</p>
     <p><strong>Врач:</strong> {{ diary.doctor }} </p>
     <p><strong>Отделение:</strong> {{ diary.depart_name }}</p>
+    <p><strong>Совместный осмотр:</strong> {{ diary.diary_name }}</p>
     <h3>Запись осмотра</h3>
     <p>
         {{ diary.blob_text }}
     </p>
     <p>
-        <a href="{% url 'edit_diary' id=diary.id %}" class="btn btn-primary" role="button">Изменить</a>
-        <a href="/diary/list/{{ diary.id_history }}">К списку дневников</a>
+        <a href="{% url 'edit_diary' id_diary=diary.id %}" class="btn btn-primary" role="button">Изменить</a>
+    </p>
+    <p>
+        <a href="{% url 'delete_diary' id_diary=diary.id %}" class="btn btn-warning" role="button">Удалить</a>
+    </p>
+
+    <p>
+        <a href="{% url 'list_diary' idpatient=diary.id_history %}">К списку дневников</a>
     </p>
 </div>
 
