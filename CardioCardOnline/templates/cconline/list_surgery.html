@@ -2,15 +2,17 @@
 {% load staticfiles %}
 
 {% block body %}
-<h2><a href="/patient/{{ idpatient }}">№{{ num}} {{ patient }}</a></h2>
+<h2><a href="{% url 'get_patient' idpatient=idpatient %}">№{{ num}} {{ patient }}</a></h2>
+
 <h3>Проведённые операции</h3>
-<div class="table-responsive">
-    <table class="table table-hover table-responsive">
+
+<div class="container-fluid">
+    <table class="table table-condensed">
         <tbody>
             {%  for item in surgery %}
             <tr>
-                <td><a href="/operation/{{ item.id }}">{{ item.surgery_date|date:"d.m.Y H:d" }}</a></td>
-                <td><a href="/operation/{{ item.id }}">{{ item.surgery_name }}</a></td>
+                <td><a href="{% url 'operation' id=item.id %}">{{ item.surgery_date|date:"d.m.Y H:d" }}</a></td>
+                <td><a href="{% url 'operation' id=item.id %}">{{ item.surgery_name }}</a></td>
                 <td>{% if item.surgery_extreme == 1 %} <img src="{% static 'images/exclamation.png' %}"> {% endif %}</td>
             </tr>
             {% endfor %}

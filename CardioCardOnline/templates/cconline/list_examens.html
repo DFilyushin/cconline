@@ -14,10 +14,10 @@
             {%  for item in examens %}
             <tr>
                 <td>
-                    <a href="{% url 'get_exam' id=item.id %}">{{ item.name_exam }}</a>
+                    {% if item.date_execute %}<a href="{% url 'get_exam' id=item.id %}">{% endif %}{{ item.name_exam }}{% if item.date_execute %}</a>{% endif %}
                 </td>
                 <td>
-                    <a href="{% url 'get_exam' id=item.id %}">{{ item.date_execute|date:"d.m.Y H:d" }}</a>
+                    {% if item.date_execute %}<a href="{% url 'get_exam' id=item.id %}">{{ item.date_execute|date:"d.m.Y H:d" }}</a>{% else %} в процессе {% endif %}
                 </td>
             </tr>
             {% endfor %}
