@@ -5,7 +5,7 @@
         <h2>{{ current_place }} </h2>
         {% if from_departs %}
             <p>
-                <a href="/patients/by_depart">К списку отделений</a>
+                <a href="{% url 'patient_by_depart' %}">К списку отделений</a>
             </p>
         {% endif %}
     </div>
@@ -14,9 +14,9 @@
         <tbody>
             {%  for item in patients %}
             <tr>
-                <td><a href="/patient/{{ item.id }}"> {{ item.num_history }}</a></td>
-                <td><a href="/patient/{{ item.id }}">{{ item.lastname }}</a></td>
-                <td><a href="/patient/{{ item.id }}">{{ item.receipt|date:"d.m.Y" }}</a></td>
+                <td><a href="{% url 'get_patient' idpatient=item.id %}"> {{ item.num_history }}</a></td>
+                <td><a href="{% url 'get_patient' idpatient=item.id %}">{{ item.lastname }}</a></td>
+                <td><a href="{% url 'get_patient' idpatient=item.id %}">{{ item.receipt|date:"d.m.Y" }}</a></td>
             </tr>
             {% endfor %}
         </tbody>

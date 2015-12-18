@@ -3,7 +3,7 @@
 {% block body %}
 
     <p>
-        <a href="/nurse/list/{{ view.id_history }}">К списку сестринских осмотров</a>
+        <a href="{% url 'list_nurse' idpatient=view.id_history %}">К списку сестринских осмотров</a>
     </p>
     <p><em>Пациент:</em> {{ view.patient }} [{{ view.num_history }}]</p>
     <p><em>Дата:</em> {{ view.date_view|date:"d.m.Y H:d" }}</p>
@@ -84,7 +84,7 @@
     </form>
 
     <p>
-        <a href="/nurse/list/{{ view.id_history }}">К списку сестринских осмотров</a>
+        <a href="{% url 'list_nurse' idpatient=view.id_history %}">К списку сестринских осмотров</a>
     </p>
 
 

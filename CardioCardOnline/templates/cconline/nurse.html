@@ -5,20 +5,19 @@
     <script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/jquery/jquery-ui.js' %}"></script>
-    <script src="{% static 'js/dt_picker.js' %}" ></script>
     <script src="{% static 'js/tab.js' %}"></script>
 {% endblock %}
 
 {% block body %}
 
-<h2><a href="/patient/{{ idpatient }}">№{{ num }} {{ patient }}</a></h2>
+    <h2><a href="{% url 'get_patient' idpatient=idpatient %}">№{{ num }} {{ patient }}</a></h2>
 
-<ul class="nav nav-tabs" id="myTabEvents">
-    <li class="active"><a class="tabnav" data-toggle="tab" href="#evTempList"><span class="glyphicon glyphicon-dashboard"></span>Температурный лист</a></li>
-    <li><a class="tabnav" data-toggle="tab" href="#evNurseView"><span class="glyphicon glyphicon-user"></span>Осмотры</a></li>
-    <li><a class="tabnav" data-toggle="tab" href="#evRiskDown"><span class="glyphicon glyphicon-tasks"></span>Риск падения</a></li>
-    <li><a class="tabnav" data-toggle="tab" href="#evPainStatus"><span class="glyphicon glyphicon-fire"></span>Оценка боли</a></li>
-</ul>
+    <ul class="nav nav-tabs" id="myTabEvents">
+        <li class="active"><a class="tabnav" data-toggle="tab" href="#evTempList"><span class="glyphicon glyphicon-dashboard"></span>Температурный лист</a></li>
+        <li><a class="tabnav" data-toggle="tab" href="#evNurseView"><span class="glyphicon glyphicon-user"></span>Осмотры</a></li>
+        <li><a class="tabnav" data-toggle="tab" href="#evRiskDown"><span class="glyphicon glyphicon-tasks"></span>Риск падения</a></li>
+        <li><a class="tabnav" data-toggle="tab" href="#evPainStatus"><span class="glyphicon glyphicon-fire"></span>Оценка боли</a></li>
+    </ul>
 
 
 <div class="tab-content" id="myTabContent">
