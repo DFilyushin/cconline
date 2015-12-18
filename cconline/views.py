@@ -59,6 +59,7 @@ def get_current_doctor_id(request):
     card_user = SysUsers.objects.get(pk=current_user)
     return card_user.id_doctor
 
+
 def get_user_groups(request):
     """
     Список групп, доступных пользователю
@@ -110,9 +111,9 @@ def profile(request):
     current_user = request.user.username.upper()
     return render_to_response('cconline/profile.html', {
         'user': request.user,
-    },
-        context_instance=RequestContext(request))
-
+        },
+        context_instance=RequestContext(request)
+        )
 
 
 @login_required(login_url='/login')

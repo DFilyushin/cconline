@@ -72,6 +72,11 @@ def server_error(request):
 
 
 def json_subtest(request):
+    """
+    Список саб-тестов для теста
+    :param request:
+    :return:
+    """
     mtest = request.GET['q']
     tests = ListAllAnalysis.objects.filter(id_parent=mtest).order_by('name')
     data = serializers.serialize('json', tests)
@@ -79,6 +84,11 @@ def json_subtest(request):
 
 
 def json_test(request):
+    """
+    Список основных тестов
+    :param request:
+    :return:
+    """
     dataset = ListOfAnalysis.objects.all()
     data = serializers.serialize('json', dataset)
     return HttpResponse(data, mimetype='application/json')
@@ -119,7 +129,7 @@ def json_savetest(request):
         id_order = results[0][0]
         connection.commit()
 
-        #Добавить сабтесты для анализа
+        # Добавить сабтесты для анализа
         for sub_test in sub_tests:
             sql = "EXECUTE PROCEDURE SP_ASSIGN_ANALYSIS (%s, %s, %s)" % (id_order, sub_test, is_cito)
             cursor = connection.cursor()
@@ -139,13 +149,20 @@ def json_savetest(request):
 
 
 def named_tuple_fetch_all(cursor):
-    "Return all rows from a cursor as a namedtuple"
+    # "Return all rows from a cursor as a namedtuple"
     desc = cursor.description
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
 
 
 def json_templates(request):
+    """
+    Список шаблонов или шаблон
+    :param request:
+    GET - "g" - list template by Group
+          "id" - get template by Id
+    :return:
+    """
     id_group = request.GET.get('g', '')
     id = request.GET.get('id', '')
     if (id_group == '') and (id == ''):
