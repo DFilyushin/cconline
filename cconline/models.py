@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.db import connection
 # Database model
 
 
@@ -169,6 +169,24 @@ class History(models.Model):
     class Meta:
         managed = False
         db_table = 'history'
+
+    def get_blood_type(self, idHistory):
+        # Get patient blood type
+        cursor = connection.cursor()
+        sql = 'SELECT TYPE_BLOOD FROM SP_GET_TYPE_BLOOD (%s)' % (idHistory)
+        cursor.execute(sql)
+        row = cursor.fetchone()
+        return row[0]
+
+    def get_age(self):
+        # Age of patient
+        d1 = self.dob.strftime("%Y-%m-%d")
+        d2 = self.receipt.strftime("%Y-%m-%d")
+        cursor = connection.cursor()
+        sql = "select (Datediff(month, cast('%s' as date), cast('%s' as date)) / 12) from rdb$database" % (d1,d2)
+        cursor.execute(sql)
+        row = cursor.fetchone()
+        return row[0]
 
 
 class ListHistory(models.Model):

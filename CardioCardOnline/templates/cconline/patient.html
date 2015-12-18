@@ -6,8 +6,10 @@
 
 <div class="container-fluid">
     <p><a href="{% url 'patient_info' idpatient=id %}" class="btn btn-primary btn-lg center-block" role="button" >Первичный осмотр</a></p>
+
     {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group %}
-        <p><a href="{% url 'list_diary' idpatient=id %}" class="btn btn-primary btn-lg center-block" role="button"> Дневники пациента</a></p>
+        <p><a href="{% url 'patient_cure' idpatient=id %}" class="btn btn-primary btn-lg center-block" role="button">Лечащий врач</a></p>
+        <p><a href="{% url 'list_diary' idpatient=id %}" class="btn btn-primary btn-lg center-block" role="button">Дневники пациента</a></p>
         <p><a href="{% url 'list_exam' idpatient=id %}" class="btn btn-primary btn-lg center-block" role="button">Обследования</a></p>
         <p><a href="{% url 'list_lab' idpatient=id %}" class="btn btn-primary btn-lg center-block" role="button">Лаборатория</a></p>
         <p><a href="{% url 'list_medication' idpatient=id %}" class="btn btn-primary btn-lg center-block" role="button">Назначения</a></p>

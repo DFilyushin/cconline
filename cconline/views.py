@@ -106,6 +106,16 @@ def search(request):
 
 
 @login_required(login_url='/login')
+def profile(request):
+    current_user = request.user.username.upper()
+    return render_to_response('cconline/profile.html', {
+        'user': request.user,
+    },
+        context_instance=RequestContext(request))
+
+
+
+@login_required(login_url='/login')
 def get_my_patient(request):
     """
     Мои пациенты
@@ -135,12 +145,29 @@ def get_patient_first_view(request, idpatient):
     """
     patient = History.objects.get(pk=idpatient)
     first_view = PatientInfo.objects.filter(id_history=idpatient).filter(id_view=0)
+    age = patient.get_age()
     return render_to_response('cconline/patient_firstview.html',
                        {
                            'patient': patient,
                            'first_view': first_view,
+                           'age': age,
                            'current_doc': get_current_doctor(request),
                        })
+
+
+@login_required(login_url='/login')
+def patient_cure(request, idpatient):
+    try:
+        history = History.objects.get(pk=idpatient)
+    except History.DoesNotExist:
+        raise Http404
+    blood_type = history.get_blood_type(history.id)
+    return render_to_response('cconline/patient_info.html',
+            {
+                'patient': history,
+                'blood': blood_type,
+                'current_doc': get_current_doctor(request),
+            })
 
 
 @login_required(login_url='/login')
@@ -307,6 +334,18 @@ def add_new_exam(request, idpatient):
         'cur_month': datetime.today().month,
     },
     context_instance=RequestContext(request))
+
+
+@login_required(login_url='/login')
+def delete_exam(request, id_exam):
+    try:
+        examen = ListExamens.objects.get(pk=id)
+    except ListExamens.DoesNotExist:
+        raise Http404
+    id_history = examen.id_history
+    examen.delete()
+    redirect_url = '/examens/list/' + str(id_history)
+    return render(request,  'cconline/redirect.html', {'message': 'Обследование удалёно', 'redirect_url': redirect_url, 'request': request})
 
 
 @login_required(login_url='/login')
@@ -667,21 +706,24 @@ def save_diary(request):
     id_diary = request.POST.get('id', '')
     if id_diary != '':
         diary = Diary.objects.get(pk=id_diary)
+        id_history = diary.id_history
         diary_form = DiaryForm(request.POST, instance=diary)
         if diary_form.is_valid():
             diary_form.save()
     else:
         diary_form = DiaryForm(request.POST)
+        id_history = request.POST.get('id_history', 0)
         if diary_form.is_valid():
             diary_form.save()
-
+    redirect_url = '/diary/list/' + id_history
     return render_to_response('cconline/redirect.html', {
         'message': diary_form.errors,
-        'redirect_url': '/',
+        'redirect_url': redirect_url,
         'request': request,
         },
         context_instance=RequestContext(request)
     )
+
 
 @login_required(login_url='/login')
 def delete_diary(request, id_diary):

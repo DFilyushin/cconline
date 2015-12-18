@@ -6,9 +6,10 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    #url(r'^admin/', include(admin.site.password_change)),
     url(r'^login/$', 'cconline.views.card_login'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
+    url(r'^profile/$', 'cconline.views.profile', name='user_profile'),
 
     url(r'^$', 'cconline.views.index', name='index'),  # index page
     url(r'^search/', 'cconline.views.search', name='search'),  # search by num history or firstname patient
@@ -16,6 +17,7 @@ urlpatterns = [
     url(r'^patients/departs/(?P<iddepart>\d+)/$', 'cconline.views.patients_by_depart', name='departs_patient'),
     url(r'^patients/by_depart/', 'cconline.views.get_active_departs', name='patient_by_depart'),
     url(r'^patient/first_view/(?P<idpatient>\d+)/$', 'cconline.views.get_patient_first_view', name='patient_info'),
+    url(r'^patient/cure/(?P<idpatient>\d+)/$', 'cconline.views.patient_cure', name='patient_cure'),
     url(r'^patient/(?P<idpatient>\d+)/$', 'cconline.views.get_patient', name='get_patient'),
 
     url(r'^diary/list/(?P<idpatient>\d+)/$', 'cconline.views.get_diary_list', name='list_diary'),
@@ -28,6 +30,7 @@ urlpatterns = [
     url(r'^examens/list/(?P<idpatient>\d+)/$', 'cconline.views.get_examen_list', name='list_exam'),
     url(r'^examen/(?P<id>\d+)/$', 'cconline.views.get_examen', name='get_exam'),
     url(r'^examen/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_exam', name='add_exam'),
+    url(r'^examen/delete/(?P<id_exam>\d+)/$', 'cconline.views.delete_exam', name='delete_exam'),
 
     url(r'^laboratory/list/(?P<idpatient>\d+)/$', 'cconline.views.get_lab_list', name='list_lab'),
     url(r'^lab/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_laboratory', name='add_lab'),

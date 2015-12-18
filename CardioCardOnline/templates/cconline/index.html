@@ -28,11 +28,18 @@
             <hr width="50%">
         </p>
     </div>
-    <div class="col-lg-12">
-            {% if current_doc %}
-                <p class="text-muted">Пользователь: {{ current_user }} <a href="/logout">[Выход]</a></p>
-            {% endif %}
+
+    <div class="row">
+        <div class="col-xs-6 text-left">
+            <p>©Павлодарский областной кардиологический центр, 2015 г.</p>
         </div>
+        <div class="col-xs-6 text-right">
+        {% if current_doc %}
+            <p class="text-muted">Пользователь: <a href="{% url 'user_profile' %}">{{ current_user }}</a> <a href="/logout">[Выход]</a></p>
+        {% endif %}
+        </div>
+
+    </div>
 
 
 {% endblock %}

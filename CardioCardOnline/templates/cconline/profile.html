@@ -1,0 +1,44 @@
+{% extends "cconline/base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+
+<div class="container">
+
+<h1><span class="glyphicon glyphicon-user"></span>Профиль пользователя</h1>
+
+      <form class="form-horizontal">{% csrf_token %}
+
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="id_login">Логин:</label>
+          <div class="col-xs-9">
+            <input type="text" class="form-control" name="fio" id="id_login" value="{{ user.username }}" autofocus disabled >
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="id_last_name">Фамилия:</label>
+          <div class="col-xs-9">
+            <input type="text" class="form-control" name="fio" id="id_last_name" value="{{ user.last_name }}" autofocus disabled >
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="id_first_name">Имя:</label>
+          <div class="col-xs-9">
+            <input type="text" class="form-control" name="fio" id="id_first_name" value="{{ user.first_name }}" autofocus disabled >
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-xs-2" for="id_first_name">Почта:</label>
+          <div class="col-xs-9">
+            <input type="text" class="form-control" name="fio" id="id_first_name" value="{{ user.email }}" autofocus disabled >
+          </div>
+        </div>
+      </form>
+    <div class="col-xs-offset-2" >
+    <a class="btn btn-danger" href="/">Закрыть</a>
+    </div>
+
+</div>
+
+
+{% endblock %}
