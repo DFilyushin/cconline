@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response, render, redirect
 from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
 from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication
-from models import ListSurgery, SurgeryAdv, ListProffView, Medication
+from models import ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization
 from models import RefExamens, ExamenDataset, ListOfAnalysis, ExamParam
 from models import SysUsers, UserGroups
 from models import Diary
@@ -459,6 +459,28 @@ def get_proview(request, id):
                                   'patient': proview.patient,
                                   'current_doc': get_current_doctor(request),
                               })
+
+
+def add_new_prof(request, idpatient):
+    """
+    Добавление нового осмотра профильным специалистом
+    :param request:
+    :param idpatient: Код пациента
+    :return:
+    """
+    try:
+        history = ListHistory.objects.get(pk=idpatient)
+    except ListHistory.DoesNotExist:
+        raise Http404
+    specs = ListSpecialization.objects.all().order_by('name')
+    return render_to_response('cconline/new_prof.html', {
+        'history': history,
+        'spec_list': specs,
+        'id': idpatient,
+        'cur_month': datetime.today().month,
+        },
+        context_instance=RequestContext(request))
+
 
 
 @login_required(login_url='/login')

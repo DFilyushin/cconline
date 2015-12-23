@@ -41,10 +41,13 @@ urlpatterns = [
 
     url(r'^medication/list/(?P<idpatient>\d+)/$', 'cconline.views.get_list_medication', name='list_medication'),
     url(r'^medication/(?P<id>\d+)/$', 'cconline.views.get_medication', name='get_medication'),
+    url(r'^prolong_medication/(?P<id>\d+)/$', 'cconline.views.prolong_medication', name='prolong_medication'),
+
 
     url(r'^proview/list/(?P<idpatient>\d+)/$', 'cconline.views.get_list_proffview', name='list_proview'),
     url(r'^proview/(?P<id>\d+)/$', 'cconline.views.get_proview', name='proview'),
-    url(r'^prolong_medication/(?P<id>\d+)/$', 'cconline.views.prolong_medication', name='prolong_medication'),
+    url(r'^proview/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_prof', name='add_prof'),
+
 
     # nurse handler
     url(r'^nurse/list/(?P<idpatient>\d+)/$', 'cconline.nurse.get_nurse_list', name='list_nurse'),

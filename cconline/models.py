@@ -48,6 +48,15 @@ class RefSocial(models.Model):
         db_table = 'ref_social'
 
 
+class ListSpecialization(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(db_column='NAME', max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'VW_REF_SPECILIZATION'
+
+
 class RefNationality(models.Model):
     id = models.IntegerField(db_column='ID', primary_key=True)
     name_rus = models.CharField(db_column='NAME_RUS', unique=True, max_length=1020)
