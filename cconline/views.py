@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-from _ast import List
 
-import django
 from django.http import HttpResponse, Http404
-from django.shortcuts import render_to_response, render, redirect
+from django.shortcuts import render_to_response, render
 from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
 from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication
 from models import ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization
-from models import RefExamens, ExamenDataset, ListOfAnalysis, ExamParam, ProfDataset
+from models import RefExamens, ExamenDataset, ExamParam, ProfDataset
 from models import SysUsers, UserGroups
 from models import Diary
 from django.db.models import Q
@@ -319,6 +317,7 @@ def new_examen(request):
     return render_to_response('cconline/redirect.html', {
         'message': u'Добавлено обследование',
         'redirect_url': redirect_url,
+        'type_message': 'bg-info',
         'request': request,
         },
         context_instance=RequestContext(request))
@@ -346,7 +345,7 @@ def delete_exam(request, id_exam):
     id_history = examen.id_history
     examen.delete()
     redirect_url = '/examens/list/' + str(id_history)
-    return render(request,  'cconline/redirect.html', {'message': 'Обследование удалёно', 'redirect_url': redirect_url, 'request': request})
+    return render(request,  'cconline/redirect.html', {'message': 'Обследование удалёно', 'type_message': 'bg-info', 'redirect_url': redirect_url, 'request': request})
 
 
 @login_required(login_url='/login')
@@ -502,7 +501,17 @@ def save_prof(request):
     plan_hour = request.POST['plan_time']
     format_dt = '%Y-%m-%d %H:%M'
     date_str = '%s %s' % (plan_year, plan_hour)
-    plan_date = datetime.strptime(date_str, format_dt)
+    try:
+        plan_date = datetime.strptime(date_str, format_dt)
+    except:
+        redirect_url = '/proview/add/' + id_history
+        return render_to_response('cconline/redirect.html', {
+            'message': u'Некорректно указана дата назначения осмотра!',
+            'redirect_url': redirect_url,
+            'type_message': 'bg-danger',
+            'request': request,
+            },
+            context_instance=RequestContext(request))
 
     dataset = ProfDataset()
     dataset.id_history = id_history
@@ -517,9 +526,9 @@ def save_prof(request):
         'message': u'Добавлено обследование',
         'redirect_url': redirect_url,
         'request': request,
+        'type_message': 'bg-info',
         },
         context_instance=RequestContext(request))
-
 
 
 @login_required(login_url='/login')
@@ -799,4 +808,9 @@ def delete_diary(request, id_diary):
     id_history = diary.id_history
     diary.delete()
     redirect_url = '/diary/list/' + str(id_history)
-    return render(request,  'cconline/redirect.html', {'message': 'Дневник удалён', 'redirect_url': redirect_url, 'request': request})
+    return render(request,  'cconline/redirect.html', {
+        'message': 'Дневник удалён',
+        'redirect_url': redirect_url,
+        'request': request,
+        'type_message': 'bg-info',
+    })
