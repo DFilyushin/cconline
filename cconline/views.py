@@ -498,12 +498,11 @@ def save_prof(request):
     id_doctor = get_current_doctor_id(request)
     id_department = history.id_depart
     id_spec = request.POST['specs']
-    plan_year = request.POST['planyear']
-    plan_month = request.POST['planmonth']
-    plan_day = request.POST['planday']
-    plan_hour = request.POST['planhour']
-    plan_min = request.POST['planmin']
-    plan_date = datetime(int(plan_year), int(plan_month), int(plan_day), int(plan_hour), int(plan_min), 0)
+    plan_year = request.POST['plan_date']
+    plan_hour = request.POST['plan_time']
+    format_dt = '%Y-%m-%d %H:%M'
+    date_str = '%s %s' % (plan_year, plan_hour)
+    plan_date = datetime.strptime(date_str, format_dt)
 
     dataset = ProfDataset()
     dataset.id_history = id_history
