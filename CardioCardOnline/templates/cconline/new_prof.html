@@ -9,15 +9,15 @@
 <!-- Begin page content -->
 <h2>Назначение осмотра профильным специалистом</h2>
 <div class="container">
-      <form class="form" action="/new_prof/" method='post'>{% csrf_token %}
+      <form class="form" action="{% url 'save_prof' %}" method='post'>{% csrf_token %}
           <input type="hidden" name="id_history" value="{{ id }}">
           <div class="form-group">
           <label class="control-label" for="dateview">ФИО пациента:</label>
-              <input type="text" class="form-control" name="fio" id="dateview" name="dateview"  value="{{ history.lastname }}" autofocus disabled >
+              <input type="text" class="form-control" name="fio" id="dateview" value="{{ history.lastname }}" autofocus disabled >
           </div>
 
           <div class="form-group">
-          <label class="control-label" for="examens">Профильный специалист:</label>
+          <label class="control-label" for="specs">Профильный специалист:</label>
               <select class="form-control" name="specs" id="specs" >
                   {% for item in spec_list %}
                       <option value="{{ item.id }}">{{ item.name }}</option>

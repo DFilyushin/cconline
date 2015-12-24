@@ -47,6 +47,7 @@ urlpatterns = [
     url(r'^proview/list/(?P<idpatient>\d+)/$', 'cconline.views.get_list_proffview', name='list_proview'),
     url(r'^proview/(?P<id>\d+)/$', 'cconline.views.get_proview', name='proview'),
     url(r'^proview/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_prof', name='add_prof'),
+    url(r'^proview/save/$', 'cconline.views.save_prof', name='save_prof'),
 
 
     # nurse handler

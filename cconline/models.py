@@ -631,3 +631,18 @@ class ListTemplates(models.Model):
     class Meta:
         managed = False
         db_table = 'TEMPLATES'
+
+
+class ProfDataset(models.Model):
+    id = models.IntegerField(primary_key=True)
+    id_history = models.IntegerField()
+    id_spec = models.IntegerField(db_column='ID_SPECIALIZATION')
+    assign_date = models.DateTimeField(db_column='DATE_ASSIGN')
+    plan_date = models.DateTimeField(db_column='PLAN_DATE')
+    id_doctor = models.IntegerField(db_column='ID_ASSIGN_DOCTOR')
+    id_depart = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'PROF_DOCTOR_VIEW'
+

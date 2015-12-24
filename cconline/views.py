@@ -8,7 +8,7 @@ from django.template import RequestContext
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
 from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication
 from models import ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization
-from models import RefExamens, ExamenDataset, ListOfAnalysis, ExamParam
+from models import RefExamens, ExamenDataset, ListOfAnalysis, ExamParam, ProfDataset
 from models import SysUsers, UserGroups
 from models import Diary
 from django.db.models import Q
@@ -482,6 +482,46 @@ def add_new_prof(request, idpatient):
         context_instance=RequestContext(request))
 
 
+def save_prof(request):
+    """
+    Добавить проф. осмотр
+    :param request:
+    :return:
+    """
+    if request.method != 'POST':
+        raise Http404
+    id_history = request.POST.get('id_history', 0)
+    try:
+        history = ListHistory.objects.get(pk=id_history)
+    except ListHistory.DoesNotExist:
+        raise Http404
+    id_doctor = get_current_doctor_id(request)
+    id_department = history.id_depart
+    id_spec = request.POST['specs']
+    plan_year = request.POST['planyear']
+    plan_month = request.POST['planmonth']
+    plan_day = request.POST['planday']
+    plan_hour = request.POST['planhour']
+    plan_min = request.POST['planmin']
+    plan_date = datetime(int(plan_year), int(plan_month), int(plan_day), int(plan_hour), int(plan_min), 0)
+
+    dataset = ProfDataset()
+    dataset.id_history = id_history
+    dataset.id_doctor = id_doctor
+    dataset.id_depart = id_department
+    dataset.id_spec = id_spec
+    dataset.assign_date = datetime.now()
+    dataset.plan_date = plan_date
+    dataset.save()
+    redirect_url = '/proview/list/' + id_history
+    return render_to_response('cconline/redirect.html', {
+        'message': u'Добавлено обследование',
+        'redirect_url': redirect_url,
+        'request': request,
+        },
+        context_instance=RequestContext(request))
+
+
 
 @login_required(login_url='/login')
 def get_operation(request, id):
@@ -565,6 +605,7 @@ def get_medication(request, id):
           })
 
 
+@login_required(login_url='/login')
 def prolong_medication(request, id):
     """
     Продлить назначение препарата
@@ -594,6 +635,7 @@ def prolong_medication(request, id):
     )
 
 
+@login_required(login_url='/login')
 def prolong_med(request):
     """
     Продлить назначение препарата на период
@@ -642,6 +684,7 @@ def prolong_med(request):
     )
 
 
+@login_required(login_url='/login')
 def add_new_laboratory(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
