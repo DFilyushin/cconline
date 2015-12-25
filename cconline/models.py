@@ -646,3 +646,19 @@ class ProfDataset(models.Model):
         managed = False
         db_table = 'PROF_DOCTOR_VIEW'
 
+
+class NurseLabWork(models.Model):
+    id = models.IntegerField(primary_key=True)
+    num_history = models.CharField(max_length=25)
+    doctor = models.CharField(max_length=255)
+    patient = models.CharField(max_length=3064, db_column='FIO')
+    analysis = models.CharField(max_length=255, db_column='NAME_LABANALYSIS')
+    depart = models.CharField(max_length=255, db_column='DEPARTMENT')
+    datetime_plan = models.DateTimeField(db_column='DATE_PLAN')
+    id_depart = models.IntegerField(db_column='ID_DEPARTMENT')
+    is_cito = models.SmallIntegerField(db_column='IS_CITO')
+    date_plan = models.DateField(db_column='SIMPLE_DATE_PLAN')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_NURSE_WORK_LAB'

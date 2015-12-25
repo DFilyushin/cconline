@@ -10,7 +10,7 @@ from models import ListHistory
 import json
 from django.template.loader import get_template
 from django.template import Context
-from models import ListAllAnalysis, ListOfAnalysis, Templates, ListTemplates
+from models import ListAllAnalysis, ListOfAnalysis, Templates, ListTemplates, NurseLabWork
 from django.core import serializers
 from django.db import connection
 from datetime import datetime
@@ -172,4 +172,29 @@ def json_templates(request):
     elif id != '':
         templates = Templates.objects.filter(id=id)
     data = serializers.serialize('json', templates)
+    return HttpResponse(data, mimetype='application/json')
+
+
+def json_nurse_lab(request):
+    import datetime
+    """
+
+    :param request:
+    :return:
+    """
+    id_depart = request.GET.get('d', '')
+    period = request.GET.get('p', '')
+    if period == '':
+        raise Http404
+    now = datetime.date.today().strftime("%Y-%m-%d")
+    tomorrow = now + datetime.timedelta(1).strftime("%Y-%m-%d")
+
+    if period == 'today':
+        start_date = now + ' 00:00'
+        end_date = now + ' 23:59:59'
+    elif period == 'tomorrow':
+        start_date = tomorrow +  ' 00:00'
+        end_date = tomorrow + ' 23:59:59'
+    dataset = NurseLabWork.objects.filter(id_depart=id_depart)
+    data = serializers.serialize('json', dataset)
     return HttpResponse(data, mimetype='application/json')
