@@ -7,7 +7,7 @@ from models import Departments, ListHistory, ListDiary, ListAnalysis, Laboratory
 from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication
 from models import ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization
 from models import RefExamens, ExamenDataset, ExamParam, ProfDataset
-from models import SysUsers, UserGroups
+from models import SysUsers, UserGroups, Personal
 from models import Diary
 from django.db.models import Q
 from django.utils.safestring import mark_safe
@@ -45,6 +45,22 @@ def get_current_doctor(request):
     current_user = request.user.username.upper()
     card_user = SysUsers.objects.get(pk=current_user)
     return card_user.user_fullname
+
+
+def get_user_depart(request):
+    """
+    Получить код отделения, к которому привязан пользователь
+    :param request:
+    :return:
+    """
+    current_user = request.user.username.upper()
+    card_user = SysUsers.objects.get(pk=current_user)
+    id_doctor = card_user.id_doctor
+    try:
+        person = Personal.objects.get(pk=id_doctor)
+    except:
+        raise Http404
+    return person.id_depart
 
 
 def get_current_doctor_id(request):
@@ -814,3 +830,12 @@ def delete_diary(request, id_diary):
         'request': request,
         'type_message': 'bg-info',
     })
+
+
+def get_nurse_work(request):
+    return render_to_response('cconline/nurse_work.html',
+        {
+            'id_depart': get_user_depart(request),
+            'current_doc': get_current_doctor(request),
+        }
+        )

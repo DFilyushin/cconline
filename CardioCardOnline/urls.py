@@ -51,6 +51,7 @@ urlpatterns = [
 
 
     # nurse handler
+    url(r'^nurse/work/$', 'cconline.views.get_nurse_work', name='nurse_work'),
     url(r'^nurse/list/(?P<idpatient>\d+)/$', 'cconline.nurse.get_nurse_list', name='list_nurse'),
     url(r'^temp_list/(?P<id>\d+)/$', 'cconline.nurse.get_tempearature_data', name='get_templist'),
     url(r'^risk_down/(?P<id>\d+)/$', 'cconline.nurse.get_risk_down', name='get_risk_down'),
@@ -68,7 +69,9 @@ urlpatterns = [
     url(r'^json/posttest/$', 'cconline.utils.json_savetest'),
     url(r'^json/templates/$', 'cconline.utils.json_templates', name='get_templates'),
     url(r'^json/nurse_work_lab/$', 'cconline.utils.json_nurse_lab', name='get_nurse_lab_work'),
+    url(r'^json/nurse_work_med/$', 'cconline.utils.json_nurse_med', name='get_nurse_med_work'),
 ]
+
 if settings.DEBUG == True:
     urlpatterns += staticfiles_urlpatterns()
 

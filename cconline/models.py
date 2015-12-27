@@ -17,6 +17,7 @@ class Personal(models.Model):
     name = models.CharField(max_length=255, db_column='DOCNAME')
     depart = models.CharField(max_length=255, db_column='DEPARTMENT')
     honor = models.CharField(max_length=1021, db_column='HONORS')
+    id_depart = models.IntegerField(db_column='ID_DEPARTMENT')
 
     class Meta:
         managed = False
@@ -651,7 +652,7 @@ class NurseLabWork(models.Model):
     id = models.IntegerField(primary_key=True)
     num_history = models.CharField(max_length=25)
     doctor = models.CharField(max_length=255)
-    patient = models.CharField(max_length=3064, db_column='FIO')
+    patient = models.CharField(max_length=3064, db_column='PATIENT')
     analysis = models.CharField(max_length=255, db_column='NAME_LABANALYSIS')
     depart = models.CharField(max_length=255, db_column='DEPARTMENT')
     datetime_plan = models.DateTimeField(db_column='DATE_PLAN')
@@ -662,3 +663,21 @@ class NurseLabWork(models.Model):
     class Meta:
         managed = False
         db_table = 'VW_NURSE_WORK_LAB'
+
+
+class NurseMedWork(models.Model):
+    id = models.IntegerField(primary_key=True)
+    num_history = models.CharField(max_length=25)
+    doctor = models.CharField(max_length=255)
+    patient = models.CharField(max_length=3064)
+    medic_name = models.CharField(max_length=255)
+    composite = models.CharField(max_length=512, db_column='DRUG_COMPOSIT')
+    med_use = models.CharField(max_length=2200)
+    datetime_plan = models.DateTimeField(db_column='DATE_PLAN')
+    date_plan = models.DateField(db_column='SIMPLE_DATE_PLAN')
+    id_depart = models.IntegerField(db_column='ID_DEPARTMENT')
+    depart = models.CharField(max_length=255, db_column='DEPARTMENT')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_NURSE_WORK_MED'

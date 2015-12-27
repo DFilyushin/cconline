@@ -14,69 +14,33 @@
 </script>
 <script src="{% static 'js/controllers/nurseController.js' %}"></script>
 
-<h2>Назначение анализа</h2>
+<h2>Выполнение назначений</h2>
 
 <div  ng-controller="NurseController">
 <div class="container">
 
           <input type="hidden" name="id_history" value="{{ history.id }}">
-          <div class="form-group">
-          <label class="control-label" for="dateview">ФИО пациента:</label>
-              <input type="text" class="form-control" name="fio" id="dateview" name="dateview"  value="{{ history.lastname }}" autofocus disabled >
-          </div>
-
     {% verbatim %}
 
-          <div class="form-group">
-            <select class="form-control" name="repeatSelect" id="repeatSelect" ng-model="selectedPk" ng-change="getSubTest()">
-              <option ng-repeat="test in tests" value="{{test.pk}}">{{test.fields.name}}</option>
-            </select>
-          </div>
-
-        <table class="table table-responsive table-condensed" ng-show="tableVisible">
+        <table class="table table-responsive table-condensed">
             <thead>
-                <th>Тест</th>
-                <th>Выбран</th>
+                <th>Пациент</th>
+                <th>Анализ</th>
+                <th>Назначен</th>
+                <th></th>
             </thead>
             <tbody>
-                <tr ng-repeat="item in subTest">
-                    <td>{{item.fields.name}}</td>
-                    <td><input type="checkbox" ng-model="item.fields.checked" /></td>
+                <tr ng-repeat="item in labWork">
+                    <td>№{{ item.fields.num_history }} {{ item.fields.patient }}</td>
+                    <td>{{ item.fields.analysis }}</td>
+                    <td ng-class=" item.fields.is_cito == 1 ? 'text-warning' : ''">{{ item.fields.datetime_plan | date:"yyyy.MM.dd HH:mm" }}</td>
+                    <td><button type="button" class="btn btn-success" ng-click="sendData()">Выполнить</button></td>
+
                 </tr>
             </tbody>
         </table>
 
-          <div class="form-group">
-          <label class="control-label" for="dplanyear">Дата проведения:</label>
-              <div class="row">
-                  <div class="col-md-2">
-                      <input type="text" class="form-control" name="planyear" id="dplanyear" value="{{ currentYear }}" placeholder="Год">
-                  </div>
-
-                  <div class="col-md-2">
-                    <select class="form-control" name="monthSelect" id="monthSelect" ng-model="currentMonth" ng-options="item for item in listMonths">
-                    </select>
-                  </div>
-
-                  <div class="col-md-2">
-                      <input type="text" class="form-control" name="planday" id="planday" value="{{ currentDay }}" placeholder="День" pattern="[0-9]{1,2}">
-                  </div>
-                  <div class="col-md-2">
-                      <input type="text" class="form-control" name="planhour" id="planhour" value="{{ currentHour }}" placeholder="Часы" pattern="[0-9]{1,2}">
-                  </div>
-                  <div class="col-md-2">
-                      <input type="text" class="form-control" name="planmin" id="planmin" value="{{ currentMin }}" placeholder="Минуты" pattern="[0-9]{1,2}">
-                  </div>
-              </div>
-          </div>
-          <div class="form-group">
-              <input type="checkbox" ng-model="isCito">CITO
-          </div>
-
-{% endverbatim %}
-
-          <button type="button" class="btn btn-default" ng-click="sendData()">Назначить</button>
-          <a href="/laboratory/list/{{ history.id }}" class="btn btn-default" role="button">Вернуться</a>
+    {% endverbatim %}
 
 </div>
 
