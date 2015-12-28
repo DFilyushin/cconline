@@ -1,0 +1,20 @@
+<div class="container">
+
+        <table class="table table-condensed">
+            <thead>
+                <th>Назначен</th>
+                <th>Препарат</th>
+                <th>Пациент</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in drugs">
+                    <td>{{ item.fields.datetime_plan | date:"HH:mm" }}</td>
+                    <td>{{ item.fields.medic_name }}</td>
+                    <td>{{ item.fields.patient }} ({{ item.fields.num_history }})</td>
+                    <td><button type="button" class="btn btn-success" ng-click="sendData()">Выполнить</button></td>
+                </tr>
+            </tbody>
+        </table>
+</div>
+

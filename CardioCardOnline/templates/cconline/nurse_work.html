@@ -1,4 +1,4 @@
-﻿{% extends "cconline/base.html" %}
+﻿{% extends "cconline/base_nurse.html" %}
 {% load staticfiles %}
 
 {% block jscript %}
@@ -6,46 +6,16 @@
 
 {% block body %}
 <!-- Begin page content -->
-
-<script src="{% static 'js/lib/angular.min.js' %}"></script>
-
-<script type="text/javascript">
-    var myApp = angular.module('myApp', []);
-</script>
-<script src="{% static 'js/controllers/nurseController.js' %}"></script>
-
-<h2>Выполнение назначений</h2>
-
-<div  ng-controller="NurseController">
 <div class="container">
-
-          <input type="hidden" name="id_history" value="{{ history.id }}">
-    {% verbatim %}
-
-        <table class="table table-responsive table-condensed">
-            <thead>
-                <th>Пациент</th>
-                <th>Анализ</th>
-                <th>Назначен</th>
-                <th></th>
-            </thead>
-            <tbody>
-                <tr ng-repeat="item in labWork">
-                    <td>№{{ item.fields.num_history }} {{ item.fields.patient }}</td>
-                    <td>{{ item.fields.analysis }}</td>
-                    <td ng-class=" item.fields.is_cito == 1 ? 'text-warning' : ''">{{ item.fields.datetime_plan | date:"yyyy.MM.dd HH:mm" }}</td>
-                    <td><button type="button" class="btn btn-success" ng-click="sendData()">Выполнить</button></td>
-
-                </tr>
-            </tbody>
-        </table>
-
-    {% endverbatim %}
-
-</div>
-
-</div>
+    <div class="header">
+        <ul class="nav nav-pills ">
+            <li ng-class="labClass"><a href="#/lab"><i class="glyphicon icon-tubes"></i>Анализы</a></li>
+            <li ng-class="examClass"><a href="#/exam"><i class="glyphicon icon-monitor"></i>Функц.</a></li>
+            <li ng-class="drugClass"><a href="#/drug"><i class="glyphicon icon-pills"></i>Лекарства</a></li>
+            <li ng-class="doctorClass"><a href="#/doctor"><i class="glyphicon icon-doctor"></i>Осмотры</a></li>
+        </ul>
     </div>
-
+</div>
+<div ng-view></div>
 
 {% endblock %}
