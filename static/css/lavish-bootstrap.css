@@ -5636,3 +5636,32 @@ button.close {
 @media print {
   .hidden-print {
     display: none !important; } }
+
+
+.icon-pills {
+     background:url('../images/pills.png') 0 0 no-repeat;
+     height: 16px;
+     line-height: 16px;
+     width: 16px;
+     }
+
+.icon-monitor {
+     background:url('../images/monitor.png') 0 0 no-repeat;
+     height: 16px;
+     line-height: 16px;
+     width: 16px;
+}
+
+.icon-tubes {
+     background:url('../images/tubes.png') 0 0 no-repeat;
+     height: 16px;
+     line-height: 16px;
+     width: 16px;
+}
+
+.icon-doctor {
+     background:url('../images/doctor.png') 0 0 no-repeat;
+     height: 16px;
+     line-height: 16px;
+     width: 16px;
+}
