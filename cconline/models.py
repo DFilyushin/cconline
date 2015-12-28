@@ -681,3 +681,19 @@ class NurseMedWork(models.Model):
     class Meta:
         managed = False
         db_table = 'VW_NURSE_WORK_MED'
+
+
+class NurseExamWork(models.Model):
+    id = models.IntegerField(primary_key=True)
+    num_history = models.CharField(max_length=25)
+    doctor = models.CharField(max_length=255)
+    patient = models.CharField(max_length=255, db_column='LASTNAME')
+    exam = models.CharField(max_length=255, db_column='GROUP_NAME')
+    datetime_plan = models.DateTimeField(db_column='PLAN_DATETIME')
+    date_plan = models.DateField(db_column='PLAN_DATE')
+    id_depart = models.IntegerField(db_column='ID_DEPARTMENT')
+    depart = models.CharField(max_length=255, db_column='DEPARTMENT')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_NURSE_WORK_EXAM'
