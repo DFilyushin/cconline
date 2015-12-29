@@ -832,6 +832,7 @@ def delete_diary(request, id_diary):
     })
 
 
+@login_required(login_url='/login')
 def get_nurse_work(request):
     return render_to_response('cconline/nurse_work.html',
         {
