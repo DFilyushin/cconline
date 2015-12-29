@@ -33,12 +33,12 @@ class DiaryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(DiaryForm, self).__init__(*args, **kwargs)
         self.fields.keyOrder = [
-        'patient',
-        'department',
-        'diary_name',
-        'diary_date',
-        'diary_text',
-        'id_history',
-        'id_depart',
-        'id_doctor'
+            'patient',
+            'department',
+            'diary_name',
+            'diary_date',
+            'diary_text',
+            'id_history',
+            'id_depart',
+            'id_doctor'
         ]
