@@ -11,7 +11,7 @@ import json
 from django.template.loader import get_template
 from django.template import Context
 from models import ListAllAnalysis, ListOfAnalysis, Templates, ListTemplates
-from models import NurseLabWork, NurseMedWork, NurseExamWork
+from models import NurseLabWork, NurseMedWork, NurseExamWork, NurseProfViewWork
 from django.core import serializers
 from django.db import connection
 from datetime import datetime
@@ -244,5 +244,25 @@ def json_nurse_exam(request):
         start_date = tomorrow + ' 00:00'
         end_date = tomorrow + ' 23:59:59'
     dataset = NurseExamWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date).order_by('datetime_plan', 'exam')
+    data = serializers.serialize('json', dataset)
+    return HttpResponse(data, mimetype='application/json')
+
+
+def json_nurse_doctor(request):
+    import datetime
+    id_depart = request.GET.get('d', '')
+    period = request.GET.get('p', '')
+    if period == '':
+        raise Http404
+    now = '2015-12-11'  # datetime.date.today().strftime("%Y-%m-%d")
+    tomorrow = '2015-12-12'  # now + datetime.timedelta(1).strftime("%Y-%m-%d")
+
+    if period == 'today':
+        start_date = now # + ' 00:00:00'
+        end_date = now # + ' 23:59:59'
+    elif period == 'tomorrow':
+        start_date = tomorrow + ' 00:00'
+        end_date = tomorrow + ' 23:59:59'
+    dataset = NurseProfViewWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date).order_by('datetime_plan', 'spec')
     data = serializers.serialize('json', dataset)
     return HttpResponse(data, mimetype='application/json')

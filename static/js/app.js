@@ -23,7 +23,7 @@ nurseApp.config(['$routeProvider',
         controller: 'ExamCtrl'
       }).
       when('/doctor', {
-        templateUrl: 'views/anniversary.html',
+        templateUrl: '../../static/pview.html',
         controller: 'DoctorCtrl'
       }).
     otherwise({

@@ -97,6 +97,7 @@ def index(request):
         {
             'current_doc': get_current_doctor(request),
             'current_user': current_user,
+            'list_group': get_user_groups(request),
         },
         context_instance=RequestContext(request))
 
