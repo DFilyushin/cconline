@@ -72,6 +72,7 @@ urlpatterns = [
     url(r'^json/nurse_work_med/$', 'cconline.utils.json_nurse_med', name='get_nurse_med_work'),
     url(r'^json/nurse_work_exam/$', 'cconline.utils.json_nurse_exam', name='get_nurse_exam_work'),
     url(r'^json/nurse_work_doc/$', 'cconline.utils.json_nurse_doctor', name='get_nurse_doctor_work'),
+    url(r'^json/nurse_execute/$', 'cconline.utils.nurse_execute', name='get_nurse_execute'),
 ]
 
 if settings.DEBUG == True:

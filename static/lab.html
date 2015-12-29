@@ -13,7 +13,7 @@
                     <td ng-class=" item.fields.is_cito == 1 ? 'text-warning' : ''">{{ item.fields.datetime_plan | date:"yyyy.MM.dd HH:mm" }}</td>
                     <td>{{ item.fields.analysis }}</td>
                     <td>№{{ item.fields.num_history }} {{ item.fields.patient }}</td>
-                    <td><button type="button" class="btn btn-success" ng-click="sendData()">Выполнить</button></td>
+                    <td><button type="button" class="btn btn-success" ng-click="delete($index)">Выполнить</button></td>
                 </tr>
             </tbody>
         </table>

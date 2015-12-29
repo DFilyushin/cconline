@@ -3,7 +3,10 @@
  */
 'use strict';
 
-var nurseControllers = angular.module('nurseControllers', []);
+var nurseControllers = angular.module('nurseControllers', []).config(function($httpProvider) {
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+});
 
 nurseControllers.controller('LabCtrl', ['$scope', '$http', '$rootScope',
     function($scope, $http, $rootScope) {
@@ -13,18 +16,24 @@ nurseControllers.controller('LabCtrl', ['$scope', '$http', '$rootScope',
         $rootScope.doctorClass = "";
         $scope.labWork = [];
         $scope.dayTitle = new Date();
+        $scope.delete = function (idx) {
+            var lab_to_delete = $scope.labWork[idx];
+            alert($scope.labWork[idx].pk);
 
-        /*$http(
-            {
-                url: "/json/nurse_work_lab/",
-                method: "GET",
-                params: {d: 19, p: 'today'}
-            })
-                .success(function(data){
-                    $scope.labWork = data;
-            }
-            );
-        */
+
+            $http(
+                {
+                    url: "/json/nurse_execute/",
+                    method: 'POST',
+                    data: { t: 2, id:$scope.labWork[idx].pk  },
+                });
+
+
+
+            $scope.labWork.splice(idx, 1);
+
+        };
+
         $scope.getRefreshData = function(){
             $http(
                 {

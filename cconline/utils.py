@@ -17,6 +17,7 @@ from django.db import connection
 from datetime import datetime
 from collections import namedtuple
 
+
 MED_WORK = NurseMedWork
 
 
@@ -266,3 +267,21 @@ def json_nurse_doctor(request):
     dataset = NurseProfViewWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date).order_by('datetime_plan', 'spec')
     data = serializers.serialize('json', dataset)
     return HttpResponse(data, mimetype='application/json')
+
+
+def nurse_execute(request):
+    if request.method != 'POST':
+        raise Http404
+    json_data = request.body
+    params = json.loads(json_data)
+    type_execute = params['t']
+    id_record = params['id']
+    id_nurse = views.get_current_doctor_id(request)
+    assign_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    sql = "EXECUTE PROCEDURE SP_NURSE_EXECUTE(%s, %s, %s, '%s')" % (type_execute, id_record, id_nurse, assign_date)
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    connection.commit()
+
+    return HttpResponse(sql)

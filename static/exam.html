@@ -1,20 +1,21 @@
+<div after-render="getRefreshData"></div>
 <div class="container">
-<button type="button" class="btn btn-success pull-right" ng-click="getRefreshData()">Обновить</button>
-        <table class="table">
-            <thead>
-                <th>Назначен</th>
-                <th>Обследование</th>
-                <th>Пациент</th>
-                <th></th>
-            </thead>
-            <tbody>
-                <tr ng-repeat="item in examens">
-                    <td>{{ item.fields.datetime_plan | date:"HH:mm" }}</td>
-                    <td>{{ item.fields.exam }}</td>
-                    <td>№{{ item.fields.num_history }} {{ item.fields.patient }}</td>
-                    <td><button type="button" class="btn btn-success" ng-click="sendData()">Выполнить</button></td>
-                </tr>
-            </tbody>
-        </table>
+    <button type="button" class="btn btn-success pull-right" ng-click="getRefreshData()">Обновить</button>
+    <table class="table">
+        <thead>
+            <th>Назначен</th>
+            <th>Обследование</th>
+            <th>Пациент</th>
+            <th></th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in examens">
+                <td>{{ item.fields.datetime_plan | date:"HH:mm" }}</td>
+                <td>{{ item.fields.exam }}</td>
+                <td>№{{ item.fields.num_history }} {{ item.fields.patient }}</td>
+                <td><button type="button" class="btn btn-success" ng-click="sendData()">Выполнить</button></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
