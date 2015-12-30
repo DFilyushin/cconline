@@ -26,9 +26,14 @@ myApp.controller('LabController',
         $scope.tableVisible = false;
         $scope.isCito = false;
 
-        $http.get('/json/test').success(function(data) {
-            $scope.tests=data;
-        });
+        $http(
+            {
+                method: 'GET',
+                url: '/json/test',
+                cache: true
+            }).success(function(data) {
+                    $scope.tests=data;
+                })
 
         $scope.getSubTest = function(){
             $http(
