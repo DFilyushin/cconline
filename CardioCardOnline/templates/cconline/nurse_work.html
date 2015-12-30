@@ -1,9 +1,6 @@
 ﻿{% extends "cconline/base_nurse.html" %}
 {% load staticfiles %}
 
-{% block jscript %}
-{% endblock %}
-
 {% block body %}
 <!-- Begin page content -->
 <div class="container">
@@ -16,6 +13,9 @@
         </ul>
     </div>
 </div>
-<div ng-view></div>
+<div ng-controller="HelperCtrl">
+    <div ng-view>
 
+    </div>
+</div>
 {% endblock %}

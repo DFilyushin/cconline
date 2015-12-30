@@ -23,6 +23,10 @@ MED_WORK = NurseMedWork
 
 def getpass(request):
     # create pass sha256 for client ;-)
+    remote_address = request.META['REMOTE_ADDR']
+    is_local_net = ('192.168.1' in remote_address) or ('127.0.0.1' in remote_address)
+    if not is_local_net:
+        raise Http404
     user_pass = request.GET.get('pass')
     salt = request.GET.get('salt', '-')
     if not user_pass:
@@ -31,18 +35,6 @@ def getpass(request):
         salt = str(random.randint(1000, 9000))
     password = make_password(user_pass, salt, 'pbkdf2_sha256')
     return HttpResponse(password, mimetype='text/html')
-
-
-def gethttp(request):
-    # для внешних адресов нельзя вызывать запрос
-    remote_address = request.META['REMOTE_ADDR']
-    is_local_net = ('192.168.1' in remote_address) or ('127.0.0.1' in remote_address)
-    #if not is_local_net:
-    #    raise Http404
-    template = get_template('cconline/test.html')
-    page_data = { 'REQ_META': request.META, 'is_local_net': is_local_net, }
-    context = template.render(Context(page_data))
-    return HttpResponse(context)
 
 
 def page_not_found(request):
@@ -153,7 +145,11 @@ def json_savetest(request):
 
 
 def named_tuple_fetch_all(cursor):
-    # "Return all rows from a cursor as a namedtuple"
+    """
+    Return all rows from a cursor as a namedtuple
+    :param cursor:
+    :return:
+    """
     desc = cursor.description
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
@@ -186,19 +182,19 @@ def json_nurse_lab(request):
     :param request:
     :return:
     """
-    id_depart = request.GET.get('d', '')
+    id_depart = views.get_user_depart(request)
     period = request.GET.get('p', '')
     if period == '':
         raise Http404
+    yesterday = '2015-12-11'  # now + datetime.timedelta(-1).strftime("%Y-%m-%d")
     now = '2015-12-12'  # datetime.date.today().strftime("%Y-%m-%d")
-    tomorrow = '2015-12-12'  # now + datetime.timedelta(1).strftime("%Y-%m-%d")
+    tomorrow = '2015-12-13'  # now + datetime.timedelta(1).strftime("%Y-%m-%d")
 
-    if period == 'today':
-        start_date = now # + ' 00:00:00'
-        end_date = now # + ' 23:59:59'
-    elif period == 'tomorrow':
-        start_date = tomorrow + ' 00:00'
-        end_date = tomorrow + ' 23:59:59'
+    start_date = now
+    if period == 'tomorrow':
+        start_date = tomorrow
+    elif period == 'yesterday':
+        start_date = yesterday
     dataset = NurseLabWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date)
     data = serializers.serialize('json', dataset)
     return HttpResponse(data, mimetype='application/json')
@@ -211,65 +207,74 @@ def json_nurse_med(request):
     :param request:
     :return:
     """
-    id_depart = request.GET.get('d', '')
+    id_depart = views.get_user_depart(request)
     period = request.GET.get('p', '')
     if period == '':
         raise Http404
+    yesterday = '2015-12-11'  # now + datetime.timedelta(-1).strftime("%Y-%m-%d")
     now = '2015-12-11'  # datetime.date.today().strftime("%Y-%m-%d")
     tomorrow = '2015-12-12'  # now + datetime.timedelta(1).strftime("%Y-%m-%d")
 
-    if period == 'today':
-        start_date = now # + ' 00:00:00'
-        end_date = now # + ' 23:59:59'
-    elif period == 'tomorrow':
-        start_date = tomorrow + ' 00:00'
-        end_date = tomorrow + ' 23:59:59'
-    dataset = NurseMedWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date).order_by('datetime_plan', 'medic_name')
+    start_date = now
+    if period == 'tomorrow':
+        start_date = tomorrow
+    elif period == 'yesterday':
+        start_date = yesterday
+    dataset = NurseMedWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date).\
+        order_by('datetime_plan', 'medic_name')
     data = serializers.serialize('json', dataset)
     return HttpResponse(data, mimetype='application/json')
 
 
 def json_nurse_exam(request):
     import datetime
-    id_depart = request.GET.get('d', '')
+    id_depart = views.get_user_depart(request)
     period = request.GET.get('p', '')
     if period == '':
         raise Http404
+    yesterday = '2015-12-10'  # now + datetime.timedelta(-1).strftime("%Y-%m-%d")
     now = '2015-12-11'  # datetime.date.today().strftime("%Y-%m-%d")
     tomorrow = '2015-12-12'  # now + datetime.timedelta(1).strftime("%Y-%m-%d")
 
-    if period == 'today':
-        start_date = now # + ' 00:00:00'
-        end_date = now # + ' 23:59:59'
-    elif period == 'tomorrow':
-        start_date = tomorrow + ' 00:00'
-        end_date = tomorrow + ' 23:59:59'
-    dataset = NurseExamWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date).order_by('datetime_plan', 'exam')
+    start_date = now
+    if period == 'tomorrow':
+        start_date = tomorrow
+    elif period == 'yesterday':
+        start_date = yesterday
+    dataset = NurseExamWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date).\
+        order_by('datetime_plan', 'exam')
     data = serializers.serialize('json', dataset)
     return HttpResponse(data, mimetype='application/json')
 
 
 def json_nurse_doctor(request):
     import datetime
-    id_depart = request.GET.get('d', '')
+    id_depart = views.get_user_depart(request)
     period = request.GET.get('p', '')
     if period == '':
         raise Http404
+    yesterday = '2015-12-10'  # now + datetime.timedelta(-1).strftime("%Y-%m-%d")
     now = '2015-12-11'  # datetime.date.today().strftime("%Y-%m-%d")
     tomorrow = '2015-12-12'  # now + datetime.timedelta(1).strftime("%Y-%m-%d")
-
-    if period == 'today':
-        start_date = now # + ' 00:00:00'
-        end_date = now # + ' 23:59:59'
-    elif period == 'tomorrow':
-        start_date = tomorrow + ' 00:00'
-        end_date = tomorrow + ' 23:59:59'
-    dataset = NurseProfViewWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date).order_by('datetime_plan', 'spec')
+    start_date = now
+    if period == 'tomorrow':
+        start_date = tomorrow
+    elif period == 'yesterday':
+        start_date = yesterday
+    dataset = NurseProfViewWork.objects.filter(id_depart=id_depart).\
+        filter(date_plan=start_date).order_by('datetime_plan', 'spec')
     data = serializers.serialize('json', dataset)
     return HttpResponse(data, mimetype='application/json')
 
 
 def nurse_execute(request):
+    """
+    Выполнение мед. назначений мед. сестрой
+    :param request: POST через json
+        t - тип назначения
+        id - код записи
+    :return:
+    """
     if request.method != 'POST':
         raise Http404
     json_data = request.body

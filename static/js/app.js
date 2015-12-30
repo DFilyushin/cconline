@@ -42,3 +42,19 @@ nurseApp.directive('afterRender', ['$timeout', function ($timeout) {
     };
     return def;
 }]);
+
+
+nurseApp.controller('HelperCtrl', function($rootScope) {
+        $rootScope.datavalue = {};
+        $rootScope.datavalue.mode = 'today';
+        $rootScope.dates = [
+            {value: 'yesterday', label: 'Вчера'},
+            {value: 'today', label: 'Сегодня'},
+            {value: 'tomorrow', label: 'Завтра'}
+        ];
+        $rootScope.setDateValue = function(val){
+          $rootScope.datavalue.mode = val;
+        }
+
+
+    });

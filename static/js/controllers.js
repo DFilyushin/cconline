@@ -15,38 +15,29 @@ nurseControllers.controller('LabCtrl', ['$scope', '$http', '$rootScope',
         $rootScope.drugClass = "";
         $rootScope.doctorClass = "";
         $scope.labWork = [];
-        $scope.dayTitle = new Date();
+        $scope.dayView = 'today';
         $scope.delete = function (idx) {
-            var lab_to_delete = $scope.labWork[idx];
-            alert($scope.labWork[idx].pk);
-
-
             $http(
                 {
                     url: "/json/nurse_execute/",
                     method: 'POST',
-                    data: { t: 2, id:$scope.labWork[idx].pk  },
+                    data: { t: 2, id:$scope.labWork[idx].pk  }
                 });
-
-
-
             $scope.labWork.splice(idx, 1);
 
         };
-
         $scope.getRefreshData = function(){
             $http(
                 {
                     url: "/json/nurse_work_lab/",
                     method: "GET",
-                    params: {d: 19, p: 'today'}
+                    params: {p: $rootScope.datavalue.mode}
                 })
                     .success(function(data){
                         $scope.labWork = data;
                 }
                 );
         }
-
     }]);
 
 nurseControllers.controller('ExamCtrl', ['$scope', '$http', '$rootScope',
@@ -56,20 +47,28 @@ nurseControllers.controller('ExamCtrl', ['$scope', '$http', '$rootScope',
         $rootScope.drugClass = "";
         $rootScope.doctorClass = "";
         $scope.examens = [];
+        $scope.delete = function (idx) {
+            $http(
+                {
+                    url: "/json/nurse_execute/",
+                    method: 'POST',
+                    data: { t: 3, id:$scope.examens[idx].pk  }
+                });
+            $scope.examens.splice(idx, 1);
 
+        };
         $scope.getRefreshData = function(){
             $http(
                 {
                     url: "/json/nurse_work_exam/",
                     method: "GET",
-                    params: {d: 19, p: 'today'}
+                    params: {p: $rootScope.datavalue.mode}
                 })
                     .success(function(data){
                         $scope.examens = data;
                 }
                 );
         }
-
     }]);
 
 nurseControllers.controller('DrugCtrl', ['$scope', '$http', '$rootScope',
@@ -79,22 +78,28 @@ nurseControllers.controller('DrugCtrl', ['$scope', '$http', '$rootScope',
         $rootScope.drugClass = "active";
         $rootScope.doctorClass = "";
         $scope.drugs = [];
+        $scope.delete = function (idx) {
+            $http(
+                {
+                    url: "/json/nurse_execute/",
+                    method: 'POST',
+                    data: { t: 1, id:$scope.drugs[idx].pk  }
+                });
+            $scope.drugs.splice(idx, 1);
+        };
 
         $scope.getRefreshData = function(){
             $http(
                 {
                     url: "/json/nurse_work_med/",
                     method: "GET",
-                    params: {d: 19, p: 'today'}
+                    params: {p: $rootScope.datavalue.mode}
                 })
                     .success(function(data){
                         $scope.drugs = data;
                 }
                 );
         }
-
-
-
     }]);
 
 nurseControllers.controller('DoctorCtrl', ['$scope', '$http', '$rootScope',
@@ -103,20 +108,31 @@ nurseControllers.controller('DoctorCtrl', ['$scope', '$http', '$rootScope',
         $rootScope.examClass = "";
         $rootScope.drugClass = "";
         $rootScope.doctorClass = "active";
+        $scope.dayView = 'today';
         $scope.profview = [];
+        $scope.delete = function (idx) {
+            $http(
+                {
+                    url: "/json/nurse_execute/",
+                    method: 'POST',
+                    data: { t: 4, id:$scope.profview[idx].pk  }
+                });
+            $scope.profview.splice(idx, 1);
 
-
+        };
         $scope.getRefreshData = function(){
             $http(
                 {
                     url: "/json/nurse_work_doc/",
                     method: "GET",
-                    params: {d: 19, p: 'today'}
+                    params: {p: $scope.dayView}
                 })
                     .success(function(data){
                         $scope.profview = data;
                 }
                 );
-
         }
     }]);
+
+
+
