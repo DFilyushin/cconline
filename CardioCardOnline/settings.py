@@ -72,11 +72,11 @@ WSGI_APPLICATION = 'CardioCardOnline.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'firebird',
+        'HOST': 'localhost',
         'NAME': 'cardio',
+        'PORT': '3050',
         'USER': 'SYSDBA',
         'PASSWORD': 'masterkey',
-        'HOST': 'localhost',
-        'PORT': '3050',
         'CONN_MAX_AGE': 3600,
     }
 }

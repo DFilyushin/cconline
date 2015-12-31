@@ -166,13 +166,13 @@ def json_templates(request):
     :return:
     """
     id_group = request.GET.get('g', '')
-    id = request.GET.get('id', '')
-    if (id_group == '') and (id == ''):
+    id_template = request.GET.get('id', '')
+    if (id_group == '') and (id_template == ''):
         raise Http404
     if id_group != '':
         templates = ListTemplates.objects.filter(id_template=id_group).filter(id_type=0)
     elif id != '':
-        templates = Templates.objects.filter(id=id)
+        templates = Templates.objects.filter(id=id_template)
     data = serializers.serialize('json', templates)
     return HttpResponse(data, mimetype='application/json')
 
