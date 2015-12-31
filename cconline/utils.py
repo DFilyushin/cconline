@@ -96,52 +96,54 @@ def json_savetest(request):
     :param request:
     :return: Перенаправление на страницу
     """
-    if request.method == 'POST':
-        json_data = request.body
-        params = json.loads(json_data)
-        id_doctor = views.get_current_doctor_id(request)
-        id_history = params['id_history']
-        id_test = params['pk']
-        sub_tests = params['selected']
-        plan_year = int(params['plan_year'])
-        plan_month = int(params['plan_month'])
-        plan_day = int(params['plan_day'])
-        plan_hour = int(params['plan_hour'])
-        plan_min = int(params['plan_min'])
-        assign_date = datetime.now().strftime("%Y-%m-%d %H:%M")
-        plan_date = datetime(plan_year, plan_month, plan_day, plan_hour, plan_min)
-        is_cito = params['is_cito']
+    if request.method != 'POST':
+        raise Http404
 
-        try:
-            history = ListHistory.objects.get(pk=id_history)
-        except ListHistory.DoesNotExist:
-            raise Http404
-        id_depart = history.id_depart
-        sql = "SELECT ID FROM SP_REG_LABTEST (%s, %s, %s, '%s', '%s', '%s', %s)" \
-              % (id_history, id_doctor, id_depart, id_test, assign_date, plan_date, is_cito)
+    json_data = request.body
+    params = json.loads(json_data)
+    id_doctor = views.get_current_doctor_id(request)
+    id_history = params['id_history']
+    id_test = params['pk']
+    sub_tests = params['selected']
+    plan_year = int(params['plan_year'])
+    plan_month = int(params['plan_month'])
+    plan_day = int(params['plan_day'])
+    plan_hour = int(params['plan_hour'])
+    plan_min = int(params['plan_min'])
+    assign_date = datetime.now().strftime("%Y-%m-%d %H:%M")
+    plan_date = datetime(plan_year, plan_month, plan_day, plan_hour, plan_min)
+    is_cito = params['is_cito']
+
+    try:
+        history = ListHistory.objects.get(pk=id_history)
+    except ListHistory.DoesNotExist:
+        raise Http404
+    id_depart = history.id_depart
+    sql = "SELECT ID FROM SP_REG_LABTEST (%s, %s, %s, '%s', '%s', '%s', %s)" \
+          % (id_history, id_doctor, id_depart, id_test, assign_date, plan_date, is_cito)
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    results = named_tuple_fetch_all(cursor)
+    id_order = results[0][0]
+    connection.commit()
+
+    # Добавить сабтесты для анализа
+    for sub_test in sub_tests:
+        sql = "EXECUTE PROCEDURE SP_ASSIGN_ANALYSIS (%s, %s, %s)" % (id_order, sub_test, is_cito)
         cursor = connection.cursor()
         cursor.execute(sql)
-        results = named_tuple_fetch_all(cursor)
-        id_order = results[0][0]
-        connection.commit()
+    connection.commit()
 
-        # Добавить сабтесты для анализа
-        for sub_test in sub_tests:
-            sql = "EXECUTE PROCEDURE SP_ASSIGN_ANALYSIS (%s, %s, %s)" % (id_order, sub_test, is_cito)
-            cursor = connection.cursor()
-            cursor.execute(sql)
-        connection.commit()
-
-        redirect_url = 'laboratory/list/' + id_history
-        response = render_to_response('cconline/redirect.html', {
-            'message': u'Добавлен анализ' + str(id_order),
-            'redirect_url': redirect_url,
-            'request': request,
-        },
-            context_instance=RequestContext(request)
-        )
-        response.status_code = 200
-        return response
+    redirect_url = 'laboratory/list/' + id_history
+    response = render_to_response('cconline/redirect.html', {
+        'message': u'Добавлен анализ' + str(id_order),
+        'redirect_url': redirect_url,
+        'request': request,
+    },
+        context_instance=RequestContext(request)
+    )
+    response.status_code = 200
+    return response
 
 
 def named_tuple_fetch_all(cursor):
@@ -178,7 +180,7 @@ def json_templates(request):
 def json_nurse_lab(request):
     import datetime
     """
-
+    Список назначений на лабораторные анализы для м/с
     :param request:
     :return:
     """
@@ -186,11 +188,11 @@ def json_nurse_lab(request):
     period = request.GET.get('p', '')
     if period == '':
         raise Http404
-    yesterday = '2015-12-11'  # now + datetime.timedelta(-1).strftime("%Y-%m-%d")
-    now = '2015-12-12'  # datetime.date.today().strftime("%Y-%m-%d")
-    tomorrow = '2015-12-13'  # now + datetime.timedelta(1).strftime("%Y-%m-%d")
+    now = datetime.date.today()
+    yesterday = (now + datetime.timedelta(-1)).strftime("%Y-%m-%d")
+    tomorrow = (now + datetime.timedelta(1)).strftime("%Y-%m-%d")
 
-    start_date = now
+    start_date = now.strftime("%Y-%m-%d")
     if period == 'tomorrow':
         start_date = tomorrow
     elif period == 'yesterday':
@@ -201,21 +203,21 @@ def json_nurse_lab(request):
 
 
 def json_nurse_med(request):
-    import datetime
     """
-
+    Список назначений препаратов пациенту для м/с
     :param request:
     :return:
     """
+    import datetime
     id_depart = views.get_user_depart(request)
     period = request.GET.get('p', '')
     if period == '':
         raise Http404
-    yesterday = '2015-12-11'  # now + datetime.timedelta(-1).strftime("%Y-%m-%d")
-    now = '2015-12-11'  # datetime.date.today().strftime("%Y-%m-%d")
-    tomorrow = '2015-12-12'  # now + datetime.timedelta(1).strftime("%Y-%m-%d")
+    now = datetime.date.today()
+    yesterday = (now + datetime.timedelta(-1)).strftime("%Y-%m-%d")
+    tomorrow = (now + datetime.timedelta(1)).strftime("%Y-%m-%d")
 
-    start_date = now
+    start_date = now.strftime("%Y-%m-%d")
     if period == 'tomorrow':
         start_date = tomorrow
     elif period == 'yesterday':
@@ -227,16 +229,21 @@ def json_nurse_med(request):
 
 
 def json_nurse_exam(request):
+    """
+    Список назначений обследований пациента для м/с
+    :param request:
+    :return:
+    """
     import datetime
     id_depart = views.get_user_depart(request)
     period = request.GET.get('p', '')
     if period == '':
         raise Http404
-    yesterday = '2015-12-10'  # now + datetime.timedelta(-1).strftime("%Y-%m-%d")
-    now = '2015-12-11'  # datetime.date.today().strftime("%Y-%m-%d")
-    tomorrow = '2015-12-12'  # now + datetime.timedelta(1).strftime("%Y-%m-%d")
+    now = datetime.date.today()
+    yesterday = (now + datetime.timedelta(-1)).strftime("%Y-%m-%d")
+    tomorrow = (now + datetime.timedelta(1)).strftime("%Y-%m-%d")
 
-    start_date = now
+    start_date = now.strftime("%Y-%m-%d")
     if period == 'tomorrow':
         start_date = tomorrow
     elif period == 'yesterday':
@@ -248,15 +255,20 @@ def json_nurse_exam(request):
 
 
 def json_nurse_doctor(request):
+    """
+    Список назначений проф. осмотров пациента для м/с
+    :param request:
+    :return:
+    """
     import datetime
     id_depart = views.get_user_depart(request)
     period = request.GET.get('p', '')
     if period == '':
         raise Http404
-    yesterday = '2015-12-10'  # now + datetime.timedelta(-1).strftime("%Y-%m-%d")
-    now = '2015-12-11'  # datetime.date.today().strftime("%Y-%m-%d")
-    tomorrow = '2015-12-12'  # now + datetime.timedelta(1).strftime("%Y-%m-%d")
-    start_date = now
+    now = datetime.date.today()
+    yesterday = (now + datetime.timedelta(-1)).strftime("%Y-%m-%d")
+    tomorrow = (now + datetime.timedelta(1)).strftime("%Y-%m-%d")
+    start_date = now.strftime("%Y-%m-%d")
     if period == 'tomorrow':
         start_date = tomorrow
     elif period == 'yesterday':
