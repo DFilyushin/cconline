@@ -3509,8 +3509,7 @@ tbody.collapse.in {
       .nav-tabs > li > a:hover {
         border-color: #C69D93 #C69D93 #ddd; }
     .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
-      color: #878184;
-      background-color: #DEDCDC;
+      background-color: #C69D93;
       border: 1px solid #ddd;
       border-bottom-color: transparent;
       cursor: default; }
