@@ -28,17 +28,19 @@
         {% endif %}
     </p>
     {% if params %}
-        <strong>Данные обследования</strong>
-        <p>
-            <table class="table table-condensed">
-            {%  for item in params %}
-                <tr>
-                <td>{% if item.type == 8 %} <strong> {% endif %}{{ item.param }} {% if item.type == 8 %} </strong> {% endif %}</td>
-                <td>{% if item.value %}{{ item.value }} {{ item.measure }} {% endif %}</td>
-                </tr>
-            {% endfor %}
-            </table>
-        </p>
+        <div class="panel panel-default">
+            <div class="panel-heading">Данные обследования</div>
+            <div class="panel-body">
+                <table class="table table-condensed">
+                {%  for item in params %}
+                    <tr>
+                    <td>{% if item.type == 8 %} <strong> {% endif %}{{ item.param }} {% if item.type == 8 %} </strong> {% endif %}</td>
+                    <td>{% if item.value %}{{ item.value }} {{ item.measure }} {% endif %}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
     {% endif %}
 
     <p class="text-right">

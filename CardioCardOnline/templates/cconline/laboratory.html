@@ -14,23 +14,27 @@
     <p><strong>Выполнен:</strong> {{ order.date_execute|date:"d.m.Y H:d" }}</p>
 
 
-    <p class="bg-primary">Данные анализа</p>
-    <table class="table table-condensed">
-        <thead>
-            <th>Параметр</th>
-            <th>Значение</th>
-            <th>Норма</th>
-        </thead>
-    <tbody>
-    {%  for item in result %}
-        <tr>
-            <td>{{ item.param_name }}</td>
-            <td>{% if item.ad_value %}{{ item.ad_value }} {% if item.measure %}{{ item.measure }} {% endif %} {% endif %} </td>
-            <td>{% if item.norm_value %}{{ item.norm_value }}{% endif %}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    </table>
+    <div class="panel panel-default">
+        <div class="panel-heading">Данные анализов</div>
+        <div class="panel-body">
+            <table class="table table-condensed">
+                <thead>
+                    <th>Параметр</th>
+                    <th>Значение</th>
+                    <th>Норма</th>
+                </thead>
+                <tbody>
+                    {%  for item in result %}
+                    <tr>
+                    <td>{{ item.param_name }}</td>
+                    <td>{% if item.ad_value %}{{ item.ad_value }} {% if item.measure %}{{ item.measure }} {% endif %} {% endif %} </td>
+                    <td>{% if item.norm_value %}{{ item.norm_value }}{% endif %}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
     <p>
         <a href="{% url 'list_lab' idpatient=order.id_history %}">К списку анализов</a>
     </p>
