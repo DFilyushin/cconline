@@ -3,7 +3,8 @@
 
 {% block body %}
 
-    <h2><a href="/patient/{{ patient.id }}">№{{ patient.num_history }} {{ patient.lastname }}</a></h2>
+    <h2><a href="{% url 'get_patient' idpatient=patient.id %}">№{{ patient.num_history }} {{ patient.lastname }}</a></h2>
+
     <p><strong>Дата рождения</strong>: {{ patient.dob|date:"d.m.Y" }} ({{ age }})</p>
     <p><strong>Отделение</strong>: {{ patient.id_depart.name }}</p>
     <p><strong>Лечащий врач</strong>: {{ patient.id_doctor.name }}</p>
