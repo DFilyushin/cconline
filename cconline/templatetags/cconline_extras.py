@@ -25,7 +25,12 @@ def convertcrlf(string_value, autoescape=True):
     return mark_safe(string_value.replace("\n", "<br>"))
 
 
+def addcss(field, css):
+   return field.as_widget(attrs={"class": css})
+
+
 register.filter('active_link', active_link)
 register.filter('trim_str', trim_str)
 register.filter('ccrlf', convertcrlf)
+register.filter('addcss', addcss)
 
