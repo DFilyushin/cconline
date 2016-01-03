@@ -1,5 +1,8 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from django.db import connection
+from django.contrib.auth.signals import user_logged_in
 # Database model
 
 
@@ -183,7 +186,7 @@ class History(models.Model):
     def get_blood_type(self, idHistory):
         # Get patient blood type
         cursor = connection.cursor()
-        sql = 'SELECT TYPE_BLOOD FROM SP_GET_TYPE_BLOOD (%s)' % (idHistory)
+        sql = 'SELECT TYPE_BLOOD FROM SP_GET_TYPE_BLOOD (%s)' % idHistory
         cursor.execute(sql)
         row = cursor.fetchone()
         return row[0]
@@ -193,7 +196,7 @@ class History(models.Model):
         d1 = self.dob.strftime("%Y-%m-%d")
         d2 = self.receipt.strftime("%Y-%m-%d")
         cursor = connection.cursor()
-        sql = "select (Datediff(month, cast('%s' as date), cast('%s' as date)) / 12) from rdb$database" % (d1,d2)
+        sql = "select (Datediff(month, cast('%s' as date), cast('%s' as date)) / 12) from rdb$database" % (d1, d2)
         cursor.execute(sql)
         row = cursor.fetchone()
         return row[0]
@@ -573,7 +576,7 @@ class ListOfAnalysis(models.Model):
     name = models.CharField(max_length=255)
 
     class Meta:
-        managed =False
+        managed = False
         db_table = 'VW_MASTER_ANALYSIS'
 
 
@@ -583,7 +586,7 @@ class ListAllAnalysis(models.Model):
     name = models.CharField(max_length=255)
 
     class Meta:
-        managed =False
+        managed = False
         db_table = 'VW_ALL_ANALYSIS'
 
 
@@ -713,3 +716,23 @@ class NurseProfViewWork(models.Model):
     class Meta:
         managed = False
         db_table = 'VW_NURSE_WORK_PROF'
+
+
+def do_on_login(sender, user, request, **kwargs):
+    """
+    Обработка сигнала авторизации пользователя
+    :param sender:
+    :param user:
+    :param request:
+    :param kwargs:
+    :return:
+    """
+    remote_address = request.META['REMOTE_ADDR']
+    sql = "INSERT INTO USER_LOGINS (USR, DATE_LOGIN, MACHINEIP, OPER) VALUES('%s', 'now', '%s', 3)" \
+          % (user, remote_address)
+    cursor = connection.cursor()
+    cursor.execute(sql)
+    connection.commit()
+
+# подписка на сигнал
+user_logged_in.connect(do_on_login)
