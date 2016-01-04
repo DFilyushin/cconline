@@ -7,7 +7,8 @@
 
 {% block body %}
 <!-- Begin page content -->
-<h2>Назначение обследования</h2>
+    <h2><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h2>
+    <h3>Назначение обследования</h3>
 <div class="container">
       <form class="form" action="/new_exam/" method='post'>{% csrf_token %}
           <input type="hidden" name="id_history" value="{{ id }}">

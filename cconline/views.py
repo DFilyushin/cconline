@@ -1,23 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from django.http import HttpResponse, Http404
+from django.http import Http404
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render_to_response, render
 from django.template import RequestContext
-from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData
-from models import ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication
-from models import ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization
-from models import RefExamens, ExamenDataset, ExamParam, ProfDataset
-from models import SysUsers, UserGroups, Personal
-from models import Diary
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import login, logout
-from django.core.exceptions import PermissionDenied
-from datetime import datetime
+from django.contrib.auth.views import login
 from django.db import connection
+from datetime import datetime
 from forms import DiaryForm
-from django.http import HttpResponseRedirect
+from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData, \
+    ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication, \
+    ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization,\
+    RefExamens, ExamenDataset, ExamParam, ProfDataset, \
+    SysUsers, UserGroups, Personal, Diary
+from django import forms
 
 
 def card_login(request, *args, **kwargs):
@@ -344,7 +343,7 @@ def new_examen(request):
 def add_new_exam(request, idpatient):
     history = ListHistory.objects.get(pk=idpatient)
     examens = RefExamens.objects.all()
-    return render_to_response('cconline/newexam.html', {
+    return render_to_response('cconline/new_exam.html', {
         'history': history,
         'exam_list': examens,
         'id': idpatient,
@@ -362,7 +361,13 @@ def delete_exam(request, id_exam):
     id_history = examen.id_history
     examen.delete()
     redirect_url = '/examens/list/' + str(id_history)
-    return render(request,  'cconline/redirect.html', {'message': 'Обследование удалёно', 'type_message': 'bg-info', 'redirect_url': redirect_url, 'request': request})
+    return render(request,  'cconline/redirect.html', {
+        'message': 'Обследование удалёно',
+        'type_message': 'bg-info',
+        'redirect_url': redirect_url,
+        'request': request
+        }
+                  )
 
 
 @login_required(login_url='/login')
@@ -413,15 +418,11 @@ def get_list_surgery(request, idpatient):
         history = ListHistory.objects.get(pk=idpatient)
     except ListHistory.DoesNotExist:
         raise Http404
-    patient = history.lastname
-    numhistory = history.num_history
     surgery = ListSurgery.objects.filter(id_history=idpatient).order_by('surgery_date')
     return render_to_response('cconline/list_surgery.html',
                               {
                                   'surgery': surgery,
-                                  'idpatient': idpatient,
-                                  'num': numhistory,
-                                  'patient': patient,
+                                  'history': history,
                                   'current_doc': get_current_doctor(request),
                               })
 
@@ -477,6 +478,7 @@ def get_proview(request, id):
                               })
 
 
+@login_required(login_url='/login')
 def add_new_prof(request, idpatient):
     """
     Добавление нового осмотра профильным специалистом
@@ -498,6 +500,7 @@ def add_new_prof(request, idpatient):
         context_instance=RequestContext(request))
 
 
+@login_required(login_url='/login')
 def save_prof(request):
     """
     Добавить проф. осмотр
@@ -540,7 +543,7 @@ def save_prof(request):
     dataset.save()
     redirect_url = '/proview/list/' + id_history
     return render_to_response('cconline/redirect.html', {
-        'message': u'Добавлено обследование',
+        'message': u'Назначен осмотр профильным специалистом',
         'redirect_url': redirect_url,
         'request': request,
         'type_message': 'bg-info',
@@ -565,14 +568,13 @@ def get_operation(request, id):
     except ListSurgery.DoesNotExist:
         raise Http404
     adv_info = ''
-    if (operation.type_operation == 1):
+    if operation.type_operation == 1:
         advanced = SurgeryAdv.objects.filter(id_surgery=id).filter(id_type=9)
         adv_info = advanced[0].text_value
     return render_to_response('cconline/operation.html',
                               {
                                   'operation': operation,
                                   'adv_info': adv_info,
-                                  'current_doc': get_current_doctor(request),
                               })
 
 
@@ -669,7 +671,9 @@ def prolong_med(request):
     """
     if request.method != 'POST':
         raise Http404
-
+    list_group = get_user_groups(request)
+    if 'DOCTOR' not in list_group:
+        raise PermissionDenied
     id_medication = request.POST['id_medication']
 
     try:
@@ -711,6 +715,16 @@ def prolong_med(request):
 
 @login_required(login_url='/login')
 def add_new_laboratory(request, idpatient):
+    """
+    Добавление нового анализа
+    :param request:
+    :param idpatient: Код пациента
+    :return:
+    """
+    list_group = get_user_groups(request)
+    if 'DOCTOR' not in list_group:
+        raise PermissionDenied
+
     try:
         history = ListHistory.objects.get(pk=idpatient)
     except ListHistory.DoesNotExist:
@@ -753,6 +767,9 @@ def new_diary(request, idpatient):
     :param request:
     :return:
     """
+    list_group = get_user_groups(request)
+    if 'DOCTOR' not in list_group:
+        raise PermissionDenied
     try:
         history = ListHistory.objects.get(pk=idpatient)
     except ListHistory.DoesNotExist:
@@ -818,6 +835,15 @@ def save_diary(request):
 
 @login_required(login_url='/login')
 def delete_diary(request, id_diary):
+    """
+    Удаление дневника
+    :param request:
+    :param id_diary: Код дневника
+    :return:
+    """
+    list_group = get_user_groups(request)
+    if 'DOCTOR' not in list_group:
+        raise PermissionDenied
     try:
         diary = Diary.objects.get(pk=id_diary)
     except Diary.DoesNotExist:
@@ -832,12 +858,3 @@ def delete_diary(request, id_diary):
         'type_message': 'bg-info',
     })
 
-
-@login_required(login_url='/login')
-def get_nurse_work(request):
-    return render_to_response('cconline/nurse_work.html',
-        {
-            'id_depart': get_user_depart(request),
-            'current_doc': get_current_doctor(request),
-        }
-        )
