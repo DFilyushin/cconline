@@ -8,6 +8,7 @@ import random
 import views
 from models import ListHistory
 import json
+import string
 from django.template.loader import get_template
 from django.template import Context
 from models import ListAllAnalysis, ListOfAnalysis, Templates, ListTemplates
@@ -16,6 +17,11 @@ from django.core import serializers
 from django.db import connection
 from datetime import datetime
 from collections import namedtuple
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
+from django import forms
+from django.contrib import auth
+
 
 
 MED_WORK = NurseMedWork
@@ -65,6 +71,34 @@ def server_error(request):
                                   )
     response.status_code = 500
     return response
+
+
+def change_password(request):
+    current_user = request.user.last_name + ' ' + request.user.first_name
+    if request.method == 'GET':
+        return render_to_response('registration/password_change_form.html', {
+            'current_user': current_user,
+            },
+            context_instance=RequestContext(request))
+    else:
+        old_pass = request.POST.get('old_password', '')
+        pass1 = request.POST.get('new_password1', '')
+        pass2 = request.POST.get('new_password2', '')
+        if pass1 == pass2:
+            user = User.objects.get(username__exact=request.user.username)
+            user.set_password(pass1)
+            user.save()
+
+        response = render_to_response('cconline/redirect.html', {
+            'message': u'Пароль изменён',
+            'redirect_url': '/',
+            'request': request,
+        },
+            context_instance=RequestContext(request)
+        )
+        response.status_code = 200
+        return response
+
 
 
 def json_subtest(request):
@@ -302,3 +336,27 @@ def nurse_execute(request):
     connection.commit()
 
     return HttpResponse(sql)
+
+
+class ValidatingPasswordChangeForm(auth.forms.PasswordChangeForm):
+    MIN_LENGTH = 8
+
+    def clean_new_password1(self):
+        password1 = self.cleaned_data.get('new_password1')
+
+        # Минимальная длина пароля
+        if len(password1) < self.MIN_LENGTH:
+            raise forms.ValidationError("The new password must be at least %d characters long." % self.MIN_LENGTH)
+
+        # Должен содержать символы верхнего и нижнего регистра, цифры, спец.символы
+        have_digit = any(c.isdigit() for c in password1)
+        have_upper = any(c.isupper() for c in password1)
+        have_super = any(c in string.punctuation for c in password1)
+        if not have_digit:
+            raise forms.ValidationError("Пароль должен содержать цифры!")
+        if not have_super:
+            raise forms.ValidationError("Пароль должен содержать специальные символы")
+        if not have_upper:
+            raise forms.ValidationError("Пароль должен содержать символы верхнего и нижнего регистра")
+
+        return password1

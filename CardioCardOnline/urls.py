@@ -1,13 +1,25 @@
+# -*- coding: utf-8 -*-
+
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.auth.admin import UserChangeForm
+from cconline.utils import ValidatingPasswordChangeForm
+
 
 admin.autodiscover()
 
 urlpatterns = [
-    #url(r'^admin/', include(admin.site.password_change)),
+    url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', 'cconline.views.card_login'),
+    url(r'^password_change/$',
+        'django.contrib.auth.views.password_change',
+        {'post_change_redirect': '/accounts/password_change/done/',
+         'password_change_form': ValidatingPasswordChangeForm},
+        name="password_change"),
+    url(r'^accounts/password_change/done/$',
+        'django.contrib.auth.views.password_change_done'),
     url(r'^logout/$', 'django.contrib.auth.views.logout', {'next_page': '/'}),
     url(r'^profile/$', 'cconline.views.profile', name='user_profile'),
 
@@ -49,9 +61,8 @@ urlpatterns = [
     url(r'^proview/add/(?P<idpatient>\d+)/$', 'cconline.views.add_new_prof', name='add_prof'),
     url(r'^proview/save/$', 'cconline.views.save_prof', name='save_prof'),
 
-
     # nurse handler
-    url(r'^nurse/work/$', 'cconline.views.get_nurse_work', name='nurse_work'),
+    url(r'^nurse/work/$', 'cconline.nurse.get_nurse_work', name='nurse_work'),
     url(r'^nurse/list/(?P<idpatient>\d+)/$', 'cconline.nurse.get_nurse_list', name='list_nurse'),
     url(r'^temp_list/(?P<id>\d+)/$', 'cconline.nurse.get_tempearature_data', name='get_templist'),
     url(r'^risk_down/(?P<id>\d+)/$', 'cconline.nurse.get_risk_down', name='get_risk_down'),
@@ -75,7 +86,7 @@ urlpatterns = [
     url(r'^json/nurse_execute/$', 'cconline.utils.nurse_execute', name='get_nurse_execute'),
 ]
 
-if settings.DEBUG == True:
+if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
 
 # server error pages handlers

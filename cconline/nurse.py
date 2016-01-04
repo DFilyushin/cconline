@@ -1,11 +1,13 @@
+# -*- coding: utf-8 -*-
+
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, Http404
+from django.http import Http404
 from django.shortcuts import render_to_response
-from django.template import RequestContext
 from models import ListHistory
 from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
 from models import TemperatureData, RiskDownData, PainStatus
-from views import get_current_doctor, get_current_doctor_id
+from views import get_current_doctor, get_user_depart, get_user_groups
+from django.core.exceptions import PermissionDenied
 
 
 @login_required(login_url='/login')
@@ -20,17 +22,16 @@ def get_nurse_list(request, idpatient):
     view_list = NurseViewList.objects.filter(id_history=idpatient)
     pain_list = PainStatusList.objects.filter(id_history=idpatient)
     down_list = RiskDownList.objects.filter(id_history=idpatient)
-    return render_to_response('cconline/nurse.html',
-                              {
-                                  'temp_list': temp_list,
-                                  'view_list': view_list,
-                                  'pain_list': pain_list,
-                                  'down_list': down_list,
-                                  'patient': patient,
-                                  'num': numhistory,
-                                  'idpatient': idpatient,
-                                  'current_doc': get_current_doctor(request),
-                              })
+    return render_to_response('cconline/nurse.html', {
+              'temp_list': temp_list,
+              'view_list': view_list,
+              'pain_list': pain_list,
+              'down_list': down_list,
+              'patient': patient,
+              'num': numhistory,
+              'idpatient': idpatient,
+              'current_doc': get_current_doctor(request),
+        })
 
 
 @login_required(login_url='/login')
@@ -76,3 +77,20 @@ def get_pain_status(request, id):
                                   'current_doc': get_current_doctor(request),
                               })
 
+
+@login_required(login_url='/login')
+def get_nurse_work(request):
+    """
+    Сестринский журнал выполнения мед. назначений
+    :param request:
+    :return:
+    """
+    list_group = get_user_groups(request)
+    if 'NURSE' not in list_group:
+        raise PermissionDenied
+    return render_to_response('cconline/nurse_work.html',
+        {
+            'id_depart': get_user_depart(request),
+            'current_doc': get_current_doctor(request),
+        }
+        )

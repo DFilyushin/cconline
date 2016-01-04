@@ -5,7 +5,7 @@
 
 <div class="container">
 
-<h2 class="text-center"><span class="glyphicon glyphicon-user"></span>Профиль пользователя</h2>
+<h2>Профиль пользователя</h2>
 
       <form class="form-horizontal">{% csrf_token %}
 
@@ -34,8 +34,13 @@
           </div>
         </div>
       </form>
-    <div class="col-xs-offset-2" >
-    <a class="btn btn-danger" href="/">Закрыть</a>
+    <div class="row">
+        <div class="col-xs-6 text-center">
+            <a class="btn btn-default" href="{% url 'password_change' %}">Сменить пароль</a>
+        </div>
+        <div class="col-xs-6 text-center">
+            <a class="btn btn-default" href="{% url 'index' %}">Закрыть</a>
+        </div>
     </div>
 
 </div>
