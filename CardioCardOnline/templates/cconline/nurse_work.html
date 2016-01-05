@@ -1,16 +1,18 @@
-﻿{% extends "cconline/base_nurse.html" %}
+{% extends "cconline/base_nurse.html" %}
 {% load staticfiles %}
 
 {% block body %}
 <!-- Begin page content -->
 <div class="container">
     <div class="header">
-        <ul class="nav nav-pills ">
-            <li ng-class="labClass"><a href="#/lab"><i class="glyphicon icon-tubes"></i>Анализы</a></li>
-            <li ng-class="examClass"><a href="#/exam"><i class="glyphicon icon-monitor"></i>Функц.</a></li>
-            <li ng-class="drugClass"><a href="#/drug"><i class="glyphicon icon-pills"></i>Лекарства</a></li>
-            <li ng-class="doctorClass"><a href="#/doctor"><i class="glyphicon icon-doctor"></i>Осмотры</a></li>
+    <div class="span12 centered-pills">
+        <ul class="nav nav-pills">
+            <li ng-class="labClass"><a href="#/lab"><i class="glyphicon icon-tubes"></i></a></li>
+            <li ng-class="examClass"><a href="#/exam"><i class="glyphicon icon-monitor"></i></a></li>
+            <li ng-class="drugClass"><a href="#/drug"><i class="glyphicon icon-pills"></i></a></li>
+            <li ng-class="doctorClass"><a href="#/doctor"><i class="glyphicon icon-doctor"></i></a></li>
         </ul>
+    </div>
     </div>
 </div>
 <div ng-controller="HelperCtrl">
