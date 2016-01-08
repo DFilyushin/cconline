@@ -858,3 +858,16 @@ def delete_diary(request, id_diary):
         'type_message': 'bg-info',
     })
 
+@login_required(login_url='/login')
+def stat(request):
+    """
+    Статистика
+    :param request:
+    :return:
+    """
+    list_depart = ActiveDepart.objects.all().order_by('name') # количество пациентов по отделениям
+    return render_to_response('cconline/stat.html',
+        {
+            'departs': list_depart,
+        },
+        context_instance=RequestContext(request))

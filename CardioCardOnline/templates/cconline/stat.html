@@ -1,0 +1,27 @@
+{% extends "cconline/base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+<h2>Статистика</h2>
+
+<div class="container">
+    <h3>Заполненность отделений</h3>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Отделение</th>
+                <th class="text-center">Кол-во пациентов</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%  for item in departs %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td class="text-center">{{ item.cnt }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

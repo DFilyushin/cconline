@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^profile/$', 'cconline.views.profile', name='user_profile'),
 
     url(r'^$', 'cconline.views.index', name='index'),  # index page
+    url(r'^stat/$', 'cconline.views.stat', name='stat'),  # stat page
     url(r'^search/', 'cconline.views.search', name='search'),  # search by num history or firstname patient
     url(r'^patients/my/', 'cconline.views.get_my_patient', name='my_patient'),  # my patients
     url(r'^patients/departs/(?P<iddepart>\d+)/$', 'cconline.views.patients_by_depart', name='departs_patient'),
