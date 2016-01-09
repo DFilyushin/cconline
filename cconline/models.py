@@ -718,6 +718,27 @@ class NurseProfViewWork(models.Model):
         db_table = 'VW_NURSE_WORK_PROF'
 
 
+class Hospitalization(models.Model):
+    hosp_date = models.DateField(primary_key=True, db_column='OUT_DATE')
+    cnt_extreme = models.IntegerField(db_column='OUT_CNT_EXTREME')
+    cnt_plan = models.IntegerField(db_column='OUT_CNT_NORMAL')
+    cnt_all = models.IntegerField(db_column='OUT_CNT_ALL')
+
+    class Meta:
+        managed = False
+        db_table = 'GET_HOSPITALIZATION'
+
+
+class WebUsersStat(models.Model):
+    user_name = models.CharField(primary_key=True, max_length=80)
+    cnt_system = models.IntegerField(db_column='CNT_SYSTEMUSER')
+    cnt_web = models.IntegerField(db_column='CNT_CCONLINEUSER')
+
+    class Meta:
+        managed = False
+        db_table = 'GET_CCONLINE_USER'
+
+
 def do_on_login(sender, user, request, **kwargs):
     """
     Обработка сигнала авторизации пользователя

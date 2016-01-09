@@ -15,7 +15,7 @@ from models import Departments, ListHistory, ListDiary, ListAnalysis, Laboratory
     ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication, \
     ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization,\
     RefExamens, ExamenDataset, ExamParam, ProfDataset, \
-    SysUsers, UserGroups, Personal, Diary
+    SysUsers, UserGroups, Personal, Diary, Hospitalization, WebUsersStat
 from django import forms
 
 
@@ -865,9 +865,13 @@ def stat(request):
     :param request:
     :return:
     """
-    list_depart = ActiveDepart.objects.all().order_by('name') # количество пациентов по отделениям
+    list_depart = ActiveDepart.objects.all().order_by('name')# количество пациентов по отделениям
+    hospitalization = Hospitalization.objects.all()
+    user_stat = WebUsersStat.objects.all()
     return render_to_response('cconline/stat.html',
         {
             'departs': list_depart,
+            'hospit': hospitalization,
+            'users': user_stat,
         },
         context_instance=RequestContext(request))

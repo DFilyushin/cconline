@@ -22,6 +22,50 @@
             {% endfor %}
         </tbody>
     </table>
+
+    <h3>Госпитализация</h3>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Дата</th>
+                <th class="text-center">Экстренно</th>
+                <th class="text-center">Планово</th>
+                <th class="text-center">Всего</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%  for item in hospit %}
+            <tr>
+                <td>{{ item.hosp_date }}</td>
+                <td class="text-center">{{ item.cnt_extreme }}</td>
+                <td class="text-center">{{ item.cnt_plan }}</td>
+                <td class="text-center">{{ item.cnt_all }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Пользователи</h3>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Отделение</th>
+                <th class="text-center">Кол-во пользователей</th>
+                <th class="text-center">Подключенные к ККО</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%  for item in users %}
+            <tr>
+                <td>{{ item.user_name }}</td>
+                <td class="text-center">{{ item.cnt_system }}</td>
+                <td class="text-center">{{ item.cnt_web }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
 </div>
 
 {% endblock %}
