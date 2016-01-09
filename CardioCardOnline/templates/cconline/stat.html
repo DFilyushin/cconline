@@ -36,7 +36,7 @@
         <tbody>
             {%  for item in hospit %}
             <tr>
-                <td>{{ item.hosp_date|date:"M d" }}</td>
+                <td>{{ item.hosp_date }}</td>
                 <td class="text-center">{{ item.cnt_extreme }}</td>
                 <td class="text-center">{{ item.cnt_plan }}</td>
                 <td class="text-center">{{ item.cnt_all }}</td>
@@ -50,8 +50,8 @@
         <thead>
             <tr>
                 <th>Отделение</th>
-                <th class="text-center">Пользователи</th>
-                <th class="text-center">Подключены к ККО</th>
+                <th class="text-center">Кол-во пользователей</th>
+                <th class="text-center">Подключенные к ККО</th>
             </tr>
         </thead>
         <tbody>
@@ -64,6 +64,7 @@
             {% endfor %}
         </tbody>
     </table>
+
 
 </div>
 

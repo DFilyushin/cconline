@@ -15,7 +15,7 @@ from models import Departments, ListHistory, ListDiary, ListAnalysis, Laboratory
     ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication, \
     ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization,\
     RefExamens, ExamenDataset, ExamParam, ProfDataset, \
-    SysUsers, UserGroups, Personal, Diary, Hospitalization, WebUsersStat, ActiveMonitoringByHospital
+    SysUsers, UserGroups, Personal, Diary, Hospitalization, WebUsersStat
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.response import TemplateResponse
@@ -878,7 +878,6 @@ def delete_diary(request, id_diary):
         'type_message': 'bg-info',
     })
 
-
 @login_required(login_url='/login')
 def stat(request):
     """
@@ -886,7 +885,7 @@ def stat(request):
     :param request:
     :return:
     """
-    list_depart = ActiveDepart.objects.all().order_by('name')  # количество пациентов по отделениям
+    list_depart = ActiveDepart.objects.all().order_by('name')# количество пациентов по отделениям
     hospitalization = Hospitalization.objects.all()
     user_stat = WebUsersStat.objects.all()
     return render_to_response('cconline/stat.html',
