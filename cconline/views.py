@@ -869,12 +869,10 @@ def stat(request):
     list_depart = ActiveDepart.objects.all().order_by('name')  # количество пациентов по отделениям
     hospitalization = Hospitalization.objects.all()
     user_stat = WebUsersStat.objects.all()
-    active_users = ActiveMonitoringByHospital.objects.all()  # список активных пользователей по больницам
     return render_to_response('cconline/stat.html',
         {
             'departs': list_depart,
             'hospit': hospitalization,
             'users': user_stat,
-            'active_users': active_users,
         },
         context_instance=RequestContext(request))
