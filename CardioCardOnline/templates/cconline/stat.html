@@ -50,8 +50,8 @@
         <thead>
             <tr>
                 <th>Отделение</th>
-                <th class="text-center">Кол-во пользователей</th>
-                <th class="text-center">Подключенные к ККО</th>
+                <th class="text-center">Пользователи</th>
+                <th class="text-center">Подключены к ККО</th>
             </tr>
         </thead>
         <tbody>
@@ -60,6 +60,24 @@
                 <td>{{ item.user_name }}</td>
                 <td class="text-center">{{ item.cnt_system }}</td>
                 <td class="text-center">{{ item.cnt_web }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Активные пользователи</h3>
+    <table class="table table-condensed">
+        <thead>
+            <tr>
+                <th>Группа</th>
+                <th class="text-center">Количество</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%  for item in active_users %}
+            <tr>
+                <td>{{ item.hospital }}</td>
+                <td class="text-center">{{ item.cnt_user }}</td>
             </tr>
             {% endfor %}
         </tbody>

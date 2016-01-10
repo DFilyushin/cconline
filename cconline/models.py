@@ -739,6 +739,15 @@ class WebUsersStat(models.Model):
         db_table = 'GET_CCONLINE_USER'
 
 
+class ActiveMonitoringByHospital(models.Model):
+    hospital = models.CharField(primary_key=True, max_length=255, db_column='GROUP_NAME')
+    cnt_user = models.IntegerField(db_column='CNT_USER')
+
+    class Meta:
+        managed = False
+        db_table = 'GET_ACTIVE_USER_BY_HOSPITAL'
+
+
 def do_on_login(sender, user, request, **kwargs):
     """
     Обработка сигнала авторизации пользователя
