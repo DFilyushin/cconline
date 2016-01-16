@@ -17,6 +17,18 @@ from models import Departments, ListHistory, ListDiary, ListAnalysis, Laboratory
     RefExamens, ExamenDataset, ExamParam, ProfDataset, \
     SysUsers, UserGroups, Personal, Diary, Hospitalization, WebUsersStat, ActiveMonitoringByHospital
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
+from django.template.response import TemplateResponse
+from django.http import HttpResponseRedirect
+from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout, get_user_model
+
+"""
+class AuthenticationForm(forms.Form):
+    def __init__(self, request, *args, **kwargs):
+        super(AuthenticationForm, self).__init__(*args, **kwargs)
+        # self.fields['username'] = forms.CharField(max_length=254, initial='asdasd')
+        self.fields['username'].initial = 'asdasd'
+"""
 
 
 def card_login(request, *args, **kwargs):
@@ -28,11 +40,19 @@ def card_login(request, *args, **kwargs):
     :return:
     """
     if request.method == 'POST':
-        if not request.POST.get('remember_me', None):
-            request.session.set_expiry(0)
-        else:
-            request.session.set_expiry(86400)
-    return login(request, *args, **kwargs)
+        f = AuthenticationForm(request, data=request.POST)
+        if f.is_valid():
+            last_user = request.POST.get('username','')
+            auth_login(request, f.get_user())
+            response = HttpResponseRedirect('/')
+            response.set_cookie('last_user', last_user)
+            return response
+    else:
+        last_user = ''
+        if request.COOKIES.has_key('last_user'):
+            last_user = request.COOKIES['last_user']
+        f = AuthenticationForm(initial={'username': last_user})
+    return render(request, 'registration/login.html', {'form': f})
 
 
 def get_current_doctor(request):

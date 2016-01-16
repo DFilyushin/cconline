@@ -1,5 +1,6 @@
 {% extends "admin/admin_base.html" %}
 {% load staticfiles %}
+{% load cconline_extras %}
 
 {% block extrastyle %}{% endblock %}
 
@@ -16,21 +17,24 @@
 
     <form class="form-signin" role="form" action='.' method='post'>
         {% csrf_token %}
-        <input type="text" class="form-control" placeholder="Логин" name="username" id="username" required>
-        <input type="password" class="form-control" placeholder="Пароль" name="password" id="password" required>
+    	<label for="id_username" class="required">{{ form.username.label }}:</label> {{ form.username|addcss:"form-control" }}
+	    <label for="id_password" class="required">{{ form.password.label }}</label> {{ form.password|addcss:"form-control" }}
         <div class="checkbox">
-        <label>
-            <input type="checkbox" name="remember_me" value="1"> Запомнить
-        </label>
-            </div>
-
+            <label><input type="checkbox" name="remember_me" value="1"> Запомнить</label>
+        </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">Вход</button>
         <input type="hidden" name="this_is_the_login_form" value="1" />
         <input type="hidden" name="next" value="{{ next|escape }}" />
     </form>
 
     <script type="text/javascript">
-        document.getElementById('username').focus()
+        if (document.getElementById('id_username').value ==  ""){
+            document.getElementById('id_username').focus()
+        }
+        else{
+            document.getElementById('id_password').focus()
+        }
     </script>
+
 </div> <!-- /container -->
 {% endblock %}
