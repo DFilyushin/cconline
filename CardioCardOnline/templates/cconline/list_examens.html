@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h2><a href="{% url 'get_patient' idpatient=idpatient %}">№{{ num }} {{ patient }}</a></h2>
+    <h2><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h2>
 
 <div class="container-fluid">
     <table class="table table-condensed">
@@ -26,6 +26,6 @@
 
 </div>
 
-    <p><a href="{% url 'add_exam' idpatient=idpatient %}" class="btn btn-primary" role="button">Назначить</a></p>
+    <p><a href="{% url 'add_exam' idpatient=history.id %}" class="btn btn-primary" role="button">Назначить</a></p>
 
 {% endblock %}

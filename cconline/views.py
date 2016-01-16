@@ -7,7 +7,6 @@ from django.template import RequestContext
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.views import login
 from django.db import connection
 from datetime import datetime
 from forms import DiaryForm
@@ -15,10 +14,8 @@ from models import Departments, ListHistory, ListDiary, ListAnalysis, Laboratory
     ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication, \
     ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization,\
     RefExamens, ExamenDataset, ExamParam, ProfDataset, \
-    SysUsers, UserGroups, Personal, Diary, Hospitalization, WebUsersStat, ActiveMonitoringByHospital
-from django import forms
+    SysUsers, UserGroups, Personal, Diary, Hospitalization, WebUsersStat
 from django.contrib.auth.forms import AuthenticationForm
-from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login as auth_login
 
@@ -108,13 +105,15 @@ def index(request):
     :return:
     """
     current_user = request.user.last_name + ' ' + request.user.first_name
-    return render_to_response('cconline/index.html',
+    return render_to_response(
+        'cconline/index.html',
         {
             'current_doc': get_current_doctor(request),
             'current_user': current_user,
             'list_group': get_user_groups(request),
         },
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request)
+    )
 
 
 @login_required(login_url='/login')
@@ -126,24 +125,29 @@ def search(request):
     """
     if request.method == "POST":
         find_string = request.POST['patient']
-        patients = ListHistory.objects.filter(Q(num_history__startswith=find_string) | Q(lastname__iexact=find_string)).order_by('receipt')
+        patients = ListHistory.objects.filter(Q(num_history__startswith=find_string) | Q(lastname__iexact=find_string))\
+            .order_by('receipt')
         where_find = mark_safe(u"Результаты поиска по <em>" + find_string + "</em>")
-        return render_to_response('cconline/patients.html',
-                                  {
-                                      'patients': patients,
-                                      'current_place': where_find,
-                                      'current_doc': get_current_doctor(request),
-                                  })
+        return render_to_response(
+            'cconline/patients.html',
+            {
+                'patients': patients,
+                'current_place': where_find,
+                'current_doc': get_current_doctor(request),
+            }
+        )
 
 
 @login_required(login_url='/login')
 def profile(request):
     current_user = request.user.username.upper()
-    return render_to_response('cconline/profile.html', {
-        'user': request.user,
+    return render_to_response(
+        'cconline/profile.html',
+        {
+            'user': request.user,
         },
         context_instance=RequestContext(request)
-        )
+    )
 
 
 @login_required(login_url='/login')
@@ -157,13 +161,16 @@ def get_my_patient(request):
     card_user = SysUsers.objects.get(pk=current_user)
     id_doctor = card_user.id_doctor
     current_doc = card_user.user_fullname
-    patients = ListHistory.objects.filter(id_doctor=id_doctor).filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.today()))
-    return render_to_response('cconline/patients.html',
+    patients = ListHistory.objects.filter(id_doctor=id_doctor).\
+        filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.today()))
+    return render_to_response(
+        'cconline/patients.html',
         {
             'current_doc': current_doc,
             'patients': patients,
             'current_place': u'Мои пациенты',
-        })
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -177,13 +184,15 @@ def get_patient_first_view(request, idpatient):
     patient = History.objects.get(pk=idpatient)
     first_view = PatientInfo.objects.filter(id_history=idpatient).filter(id_view=0)
     age = patient.get_age()
-    return render_to_response('cconline/patient_firstview.html',
-                       {
-                           'patient': patient,
-                           'first_view': first_view,
-                           'age': age,
-                           'current_doc': get_current_doctor(request),
-                       })
+    return render_to_response(
+        'cconline/patient_firstview.html',
+        {
+            'patient': patient,
+            'first_view': first_view,
+            'age': age,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -193,12 +202,14 @@ def patient_cure(request, idpatient):
     except History.DoesNotExist:
         raise Http404
     blood_type = history.get_blood_type(history.id)
-    return render_to_response('cconline/patient_info.html',
-            {
-                'patient': history,
-                'blood': blood_type,
-                'current_doc': get_current_doctor(request),
-            })
+    return render_to_response(
+        'cconline/patient_info.html',
+        {
+            'patient': history,
+            'blood': blood_type,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -208,14 +219,14 @@ def get_patient(request, idpatient):
     except ListHistory.DoesNotExist:
         raise Http404
 
-    return render_to_response('cconline/patient.html',
-            {
-                'patient': history.lastname,
-                'id': idpatient,
-                'num': history.num_history,
-                'current_doc': get_current_doctor(request),
-                'list_group': get_user_groups(request),
-            })
+    return render_to_response(
+        'cconline/patient.html',
+        {
+            'history': history,
+            'current_doc': get_current_doctor(request),
+            'list_group': get_user_groups(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -231,12 +242,14 @@ def get_diary_list(request, idpatient):
     except ListHistory.DoesNotExist:
         raise Http404
     diarys = ListDiary.objects.filter(id_history=idpatient).order_by('-reg_date')
-    return render_to_response('cconline/list_diary.html',
-                              {
-                                  'diarys': diarys,
-                                  'history': history,
-                                  'current_doc': get_current_doctor(request),
-                              })
+    return render_to_response(
+        'cconline/list_diary.html',
+        {
+            'diarys': diarys,
+            'history': history,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -246,12 +259,14 @@ def get_lab_list(request, idpatient):
     except ListHistory.DoesNotExist:
         raise Http404
     labs = ListAnalysis.objects.filter(id_history=idpatient).order_by('-date_execute')
-    return render_to_response('cconline/list_laboratory.html',
-                              {
-                                  'labs': labs,
-                                  'history': history,
-                                  'current_doc': get_current_doctor(request),
-                              })
+    return render_to_response(
+        'cconline/list_laboratory.html',
+        {
+            'labs': labs,
+            'history': history,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -271,23 +286,27 @@ def get_laboratory(request, id):
     except ListHistory.DoesNotExist:
         raise Http404
     lab_result = LaboratoryData.objects.filter(id_assigned_anal=id).order_by('sort_pos')
-    return render_to_response('cconline/laboratory.html',
-                              {
-                                  'history': history,
-                                  'order': lab,
-                                  'result': lab_result,
-                                  'current_doc': get_current_doctor(request),
-                              })
+    return render_to_response(
+        'cconline/laboratory.html',
+        {
+            'history': history,
+            'order': lab,
+            'result': lab_result,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
 def get_active_departs(request):
     departs = ActiveDepart.objects.all()
-    return render_to_response('cconline/departs.html',
-                              {
-                                  'departs': departs,
-                                  'current_doc': get_current_doctor(request),
-                              })
+    return render_to_response(
+        'cconline/departs.html',
+        {
+            'departs': departs,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -304,13 +323,15 @@ def patients_by_depart(request, iddepart):
         raise Http404
 
     patients = ListHistory.objects.filter(id_depart=iddepart).filter(discharge__isnull=True)
-    return render_to_response('cconline/patients.html',
+    return render_to_response(
+        'cconline/patients.html',
         {
             'patients': patients,
             'current_place': depart.name,
             'current_doc': get_current_doctor(request),
             'from_departs': True,
-        })
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -336,6 +357,7 @@ def new_examen(request):
     planhour = request.POST['planhour']
     planmin = request.POST['planmin']
     plandate = datetime(int(planyear), int(planmonth), int(planday), int(planhour), int(planmin), 0)
+
     dataset = ExamenDataset()
     dataset.id_history = id_history
     dataset.id_doctor = id_doctor
@@ -359,13 +381,16 @@ def new_examen(request):
 def add_new_exam(request, idpatient):
     history = ListHistory.objects.get(pk=idpatient)
     examens = RefExamens.objects.all()
-    return render_to_response('cconline/new_exam.html', {
-        'history': history,
-        'exam_list': examens,
-        'id': idpatient,
-        'cur_month': datetime.today().month,
-    },
-    context_instance=RequestContext(request))
+    return render_to_response(
+        'cconline/new_exam.html',
+        {
+            'history': history,
+            'exam_list': examens,
+            'id': idpatient,
+            'cur_month': datetime.today().month,
+        },
+        context_instance=RequestContext(request)
+    )
 
 
 @login_required(login_url='/login')
@@ -393,16 +418,13 @@ def get_examen_list(request, idpatient):
     except ListHistory.DoesNotExist:
         raise Http404
     examens = ListExamens.objects.filter(id_history=idpatient).order_by('-date_plan')
-    patient = history.lastname
-    numhistory = history.num_history
     return render_to_response('cconline/list_examens.html',
-                              {
-                                  'examens': examens,
-                                  'patient': patient,
-                                  'num': numhistory,
-                                  'idpatient': idpatient,
-                                  'current_doc': get_current_doctor(request),
-                              })
+        {
+            'examens': examens,
+            'history': history,
+            'current_doc': get_current_doctor(request),
+        }
+                              )
 
 
 @login_required(login_url='/login')
@@ -417,15 +439,15 @@ def get_examen(request, id):
         examen = ListExamens.objects.get(pk=id)
     except ListExamens.DoesNotExist:
         raise Http404
-
     params = ExamParam.objects.raw('select * from SP_EXAM_PARAM(%s)', [id])
-
-    return render_to_response('cconline/examen.html',
-                              {
-                                  'examen': examen,
-                                  'params': params,
-                                  'current_doc': get_current_doctor(request),
-                              })
+    return render_to_response(
+        'cconline/examen.html',
+        {
+            'examen': examen,
+            'params': params,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -435,12 +457,14 @@ def get_list_surgery(request, idpatient):
     except ListHistory.DoesNotExist:
         raise Http404
     surgery = ListSurgery.objects.filter(id_history=idpatient).order_by('surgery_date')
-    return render_to_response('cconline/list_surgery.html',
-                              {
-                                  'surgery': surgery,
-                                  'history': history,
-                                  'current_doc': get_current_doctor(request),
-                              })
+    return render_to_response(
+        'cconline/list_surgery.html',
+        {
+            'surgery': surgery,
+            'history': history,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -455,18 +479,15 @@ def get_list_proffview(request, idpatient):
         history = ListHistory.objects.get(pk=idpatient)
     except ListHistory.DoesNotExist:
         raise Http404
-
-    patient = history.lastname
-    numhistory = history.num_history
     dataset = ListProffView.objects.filter(id_history=idpatient)
-    return render_to_response('cconline/list_prof_view.html',
-                              {
-                                  'proflist': dataset,
-                                  'idpatient': idpatient,
-                                  'num': numhistory,
-                                  'patient': patient,
-                                  'current_doc': get_current_doctor(request),
-                              })
+    return render_to_response(
+        'cconline/list_prof_view.html',
+        {
+            'history': history,
+            'proflist': dataset,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -483,15 +504,17 @@ def get_proview(request, id):
         raise Http404
 
     pages = PatientInfo.objects.filter(id_history=proview.id_history).filter(id_view=id)
-    return render_to_response('cconline/proview.html',
-                              {
-                                  'proview': proview,
-                                  'pages': pages,
-                                  'idpatient': proview.id_history,
-                                  'num': proview.num_history,
-                                  'patient': proview.patient,
-                                  'current_doc': get_current_doctor(request),
-                              })
+    return render_to_response(
+        'cconline/proview.html',
+        {
+            'proview': proview,
+            'pages': pages,
+            'idpatient': proview.id_history,
+            'num': proview.num_history,
+            'patient': proview.patient,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -507,13 +530,15 @@ def add_new_prof(request, idpatient):
     except ListHistory.DoesNotExist:
         raise Http404
     specs = ListSpecialization.objects.all().order_by('name')
-    return render_to_response('cconline/new_prof.html', {
-        'history': history,
-        'spec_list': specs,
-        'id': idpatient,
-        'cur_month': datetime.today().month,
+    return render_to_response(
+        'cconline/new_prof.html',
+        {
+            'history': history,
+            'spec_list': specs,
+            'cur_month': datetime.today().month,
         },
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request)
+    )
 
 
 @login_required(login_url='/login')
@@ -541,13 +566,16 @@ def save_prof(request):
         plan_date = datetime.strptime(date_str, format_dt)
     except:
         redirect_url = '/proview/add/' + id_history
-        return render_to_response('cconline/redirect.html', {
-            'message': u'Некорректно указана дата назначения осмотра!',
-            'redirect_url': redirect_url,
-            'type_message': 'bg-danger',
-            'request': request,
+        return render_to_response(
+            'cconline/redirect.html',
+            {
+                'message': u'Некорректно указана дата назначения осмотра!',
+                'redirect_url': redirect_url,
+                'type_message': 'bg-danger',
+                'request': request,
             },
-            context_instance=RequestContext(request))
+            context_instance=RequestContext(request)
+        )
 
     dataset = ProfDataset()
     dataset.id_history = id_history
@@ -558,13 +586,16 @@ def save_prof(request):
     dataset.plan_date = plan_date
     dataset.save()
     redirect_url = '/proview/list/' + id_history
-    return render_to_response('cconline/redirect.html', {
-        'message': u'Назначен осмотр профильным специалистом',
-        'redirect_url': redirect_url,
-        'request': request,
-        'type_message': 'bg-info',
+    return render_to_response(
+        'cconline/redirect.html',
+        {
+            'message': u'Назначен осмотр профильным специалистом',
+            'redirect_url': redirect_url,
+            'request': request,
+            'type_message': 'bg-info',
         },
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request)
+    )
 
 
 @login_required(login_url='/login')
@@ -577,7 +608,7 @@ def get_operation(request, id):
     """
     avail_groups = get_user_groups(request)
     # докторам разрешен просмотр
-    if ('DOCTOR' not in avail_groups) and (request.user.username.upper() != 'SYSDBA'):
+    if 'DOCTOR' not in avail_groups:
         raise PermissionDenied
     try:
         operation = ListSurgery.objects.get(pk=id)
@@ -587,11 +618,13 @@ def get_operation(request, id):
     if operation.type_operation == 1:
         advanced = SurgeryAdv.objects.filter(id_surgery=id).filter(id_type=9)
         adv_info = advanced[0].text_value
-    return render_to_response('cconline/operation.html',
-                              {
-                                  'operation': operation,
-                                  'adv_info': adv_info,
-                              })
+    return render_to_response(
+        'cconline/operation.html',
+        {
+            'operation': operation,
+            'adv_info': adv_info,
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -606,17 +639,15 @@ def get_list_medication(request, idpatient):
         history = ListHistory.objects.get(pk=idpatient)
     except ListHistory.DoesNotExist:
         raise Http404
-    patient = history.lastname
-    numhistory = history.num_history
     dataset = HistoryMedication.objects.filter(id_history=idpatient)
-    return render_to_response('cconline/list_medication.html',
-                              {
-                                  'dataset': dataset,
-                                  'num': numhistory,
-                                  'patient': patient,
-                                  'idpatient': idpatient,
-                                  'current_doc': get_current_doctor(request),
-                              })
+    return render_to_response(
+        'cconline/list_medication.html',
+        {
+            'dataset': dataset,
+            'history': history,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -634,18 +665,16 @@ def get_medication(request, id):
 
     # get history information
     history = ListHistory.objects.get(pk=medication.id_history)
-    patient = history.lastname
-    numhistory = history.num_history
     dataset = Medication.objects.filter(id_key=id)
-    return render_to_response('cconline/medication.html',
-          {
-              'dataset': dataset,
-              'num': numhistory,
-              'patient': patient,
-              'idpatient': medication.id_history,
-              'medicname': medication.medic_name,
-              'current_doc': get_current_doctor(request),
-          })
+    return render_to_response(
+        'cconline/medication.html',
+        {
+            'dataset': dataset,
+            'history': history,
+            'medicname': medication.medic_name,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -663,17 +692,16 @@ def prolong_medication(request, id):
 
     # get history information
     history = ListHistory.objects.get(pk=medication.id_history)
-    patient = history.lastname
-    numhistory = history.num_history
 
-    return render_to_response('cconline/prolong_medic.html', {
-          'dataset': medication,
-          'id': medication.id,
-          'num': numhistory,
-          'patient': patient,
-          'current_doc': get_current_doctor(request),
-          'cur_month': datetime.today().month,
-    },
+    return render_to_response(
+        'cconline/prolong_medic.html',
+        {
+            'dataset': medication,
+            'history': history,
+            'id': medication.id,
+            'current_doc': get_current_doctor(request),
+            'cur_month': datetime.today().month,
+        },
         context_instance=RequestContext(request)
     )
 
@@ -720,10 +748,12 @@ def prolong_med(request):
         mess = u'Ошибка продления лечения!'
 
     redirect_url = '/medication/' + str(medication.id_key)
-    return render_to_response('cconline/redirect.html', {
-        'message': mess,
-        'redirect_url': redirect_url,
-        'request': request,
+    return render_to_response(
+        'cconline/redirect.html',
+        {
+            'message': mess,
+            'redirect_url': redirect_url,
+            'request': request,
         },
         context_instance=RequestContext(request)
     )
@@ -745,11 +775,14 @@ def add_new_laboratory(request, idpatient):
         history = ListHistory.objects.get(pk=idpatient)
     except ListHistory.DoesNotExist:
         raise Http404
-    return render_to_response('cconline/new_lab.html', {
-        'history': history,
-        'cur_month': datetime.today().month,
+    return render_to_response(
+        'cconline/new_lab.html',
+        {
+            'history': history,
+            'cur_month': datetime.today().month,
         },
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request)
+    )
 
 
 @login_required(login_url='/login')
@@ -768,12 +801,14 @@ def get_diary(request, id_diary):
         history = ListHistory.objects.get(pk=diary.id_history)
     except ListHistory.DoesNotExist:
         raise Http404
-    return render_to_response('cconline/diary.html',
-                {
-                  'diary': diary,
-                  'history': history,
-                  'current_doc': get_current_doctor(request),
-                })
+    return render_to_response(
+        'cconline/diary.html',
+        {
+            'diary': diary,
+            'history': history,
+            'current_doc': get_current_doctor(request),
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -791,26 +826,24 @@ def new_diary(request, idpatient):
     except ListHistory.DoesNotExist:
         raise Http404
 
-    id_doctor = get_current_doctor_id(request)
-    id_depart = history.id_depart
-    patient = history.lastname
-    depart = history.depart_name
     form = DiaryForm(initial=
         {
-            'patient': patient,
-            'department': depart,
+            'patient': history.lastname,
+            'department': history.depart_name,
             'id_history': idpatient,
-            'id_depart': id_depart,
-            'id_doctor': id_doctor,
+            'id_depart': history.id_depart,
+            'id_doctor': get_current_doctor_id(request),
             'diary_date': datetime.today(),
-
-         }
-        )
-    return render_to_response('cconline/edit_diary.html', {
-        'form': form,
-        'id_history': idpatient,
+        }
+    )
+    return render_to_response(
+        'cconline/edit_diary.html',
+        {
+            'form': form,
+            'id_history': idpatient,
         },
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request)
+    )
 
 
 @login_required(login_url='/login')
@@ -820,7 +853,13 @@ def edit_diary(request, id_diary):
     except Diary.DoesNotExist:
         raise Http404
     diary_form = DiaryForm(instance=diary)
-    return render(request,  'cconline/edit_diary.html', {'form': diary_form})
+    return render(
+        request,
+        'cconline/edit_diary.html',
+        {
+            'form': diary_form
+        }
+    )
 
 
 @login_required(login_url='/login')
@@ -883,12 +922,14 @@ def stat(request):
     :return:
     """
     list_depart = ActiveDepart.objects.all().order_by('name')  # количество пациентов по отделениям
-    hospitalization = Hospitalization.objects.all()
-    user_stat = WebUsersStat.objects.all()
-    return render_to_response('cconline/stat.html',
+    hospitalization = Hospitalization.objects.all()  # госпитализация по отделениям
+    user_stat = WebUsersStat.objects.all()  # список пользователей ККО по отделениям в сравнении с сист. пользователями
+    return render_to_response(
+        'cconline/stat.html',
         {
             'departs': list_depart,
             'hospit': hospitalization,
             'users': user_stat,
         },
-        context_instance=RequestContext(request))
+        context_instance=RequestContext(request)
+    )

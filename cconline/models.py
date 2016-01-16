@@ -764,5 +764,6 @@ def do_on_login(sender, user, request, **kwargs):
     cursor.execute(sql)
     connection.commit()
 
+
 # подписка на сигнал
 user_logged_in.connect(do_on_login)
