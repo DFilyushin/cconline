@@ -9,7 +9,7 @@
 {% block content %}
 <div class="container">
 
-    <img src="{% static 'images/logo2.png'%}" class="center-block">
+    <img src="{% static 'images/logo_snowman.png'%}" class="center-block">
 
     {% if form.errors %}
         <p class="text-center text-danger">Неверно указан логин или пароль. Повторите ещё раз.</p>
@@ -18,7 +18,7 @@
     <form class="form-signin" role="form" action='.' method='post'>
         {% csrf_token %}
     	<label for="id_username" class="required">{{ form.username.label }}:</label> {{ form.username|addcss:"form-control" }}
-	    <label for="id_password" class="required">{{ form.password.label }}</label> {{ form.password|addcss:"form-control" }}
+	    <label for="id_password" class="required">{{ form.password.label }}:</label> {{ form.password|addcss:"form-control" }}
         <div class="checkbox">
             <label><input type="checkbox" name="remember_me" value="1"> Запомнить</label>
         </div>
