@@ -20,15 +20,7 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect
-from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login, logout as auth_logout, get_user_model
-
-"""
-class AuthenticationForm(forms.Form):
-    def __init__(self, request, *args, **kwargs):
-        super(AuthenticationForm, self).__init__(*args, **kwargs)
-        # self.fields['username'] = forms.CharField(max_length=254, initial='asdasd')
-        self.fields['username'].initial = 'asdasd'
-"""
+from django.contrib.auth import login as auth_login
 
 
 def card_login(request, *args, **kwargs):
@@ -46,6 +38,10 @@ def card_login(request, *args, **kwargs):
             auth_login(request, f.get_user())
             response = HttpResponseRedirect('/')
             response.set_cookie('last_user', last_user)
+            if not request.POST.get('remember_me', None):
+                request.session.set_expiry(0)
+            else:
+                request.session.set_expiry(86400)
             return response
     else:
         last_user = ''
