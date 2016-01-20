@@ -1,0 +1,47 @@
+{% extends "cconline/base_nurse_patient.html" %}
+{% load staticfiles %}
+
+{% block jscript %}
+    <script src="{% static 'js/lib/angular.min.js' %}"></script>
+    <script type="text/javascript">var vikingApp = angular.module('vikingApp', []);</script>
+    <script src="{% static 'js/controllers/nurseController.js' %}"></script>
+{% endblock %}
+
+
+{% block body %}
+<!-- Begin page content -->
+
+    {{ history.num_history }}
+
+<div ng-controller="NurseController" ng-init="init({{ history.id }});getRefreshData()">
+    <div after-render="getRefreshData"></div>
+    {% verbatim %}
+        {{ id_history }}
+        {{ dayView }}
+        <table class="table table-condensed">
+            <thead>
+                <th></th>
+                <th>Время</th>
+                <th>Анализ</th>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in nurseWork">
+                    <td>
+                        <i ng-if="item.fields.type_app===2" class="glyphicon icon-tubes"></i>
+                        <i ng-if="item.fields.type_app===3" class="glyphicon icon-monitor"></i>
+                        <i ng-if="item.fields.type_app===1" class="glyphicon icon-pills"></i>
+                        <i ng-if="item.fields.type_app===4" class="glyphicon icon-doctor"></i>
+                    </td>
+                    <td>{{ item.fields.dt_appointment| date:"HH:mm" }}</td>
+                    <td>{{ item.fields.appointment }}</td>
+                    <td></td>
+                    <td><button type="button" class="btn btn-success" ng-click="delete($index)">Выполнить</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+    {% endverbatim %}
+</div>
+{% endblock %}

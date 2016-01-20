@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from _ast import mod
 
 from django.db import models
 from django.db import connection
@@ -747,6 +748,25 @@ class ActiveMonitoringByHospital(models.Model):
         managed = False
         db_table = 'GET_ACTIVE_USER_BY_HOSPITAL'
 
+
+class NurseAssign(models.Model):
+    id = models.IntegerField(primary_key=True)
+    type_app = models.IntegerField()  # TYPE_APP DMN_INTEGER,
+    num_history = models.CharField(max_length=12) # NUM_HISTORY DMN_DOCUM,
+    patient = models.CharField(max_length=2048) # PATIENT DMN_NAME,
+    dt_appointment = models.DateTimeField() # DT_APPOINTMENT DMN_DATETIME_NULL,
+    dt_nurse_exec = models.DateTimeField() # DT_NURSE_EXEC DMN_DATETIME_NULL,
+    doctor = models.CharField(max_length=255) # DOCTOR DMN_NAME,
+    nurse = models.CharField(max_length=255) # NURSE DMN_NAME,
+    appointment = models.CharField(max_length=512) # APPOINTMENT DMN_TEXT512,
+    appcomment = models.CharField(max_length=255) # APPCOMMENT DMN_NAME,
+    department = models.CharField(max_length=255) # DEPARTMENT DMN_NAME,
+    dt_cancel = models.DateTimeField() # DT_CANCEL DMN_DATETIME_NULL,
+    out_code = models.CharField(max_length=255) # OUT_CODE DMN_NAME,
+    is_cito = models.SmallIntegerField() # IS_CITO DMN_BOOLEAN
+
+    class Meta:
+        managed = False
 
 def do_on_login(sender, user, request, **kwargs):
     """

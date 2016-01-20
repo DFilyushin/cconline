@@ -99,7 +99,7 @@ def get_nurse_work(request):
 
 
 @login_required(login_url='/login')
-def get_nurse_patient(request):
+def get_nurse_patients(request):
     """
 
     :param request:
@@ -114,5 +114,25 @@ def get_nurse_patient(request):
         {
             'depart': depart,
             'patients': patients,
+        }
+    )
+
+
+@login_required(login_url='/login')
+def get_nurse_patient(request, id):
+    """
+
+    :param request:
+    :return:
+    """
+    try:
+        history = ListHistory.objects.get(pk=id)
+    except ListHistory.DoesNotExist:
+        raise Http404
+
+    return render_to_response(
+        'cconline/nurse_patient.html',
+        {
+            'history': history,
         }
     )

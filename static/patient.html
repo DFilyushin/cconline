@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="btn-group" ng-repeat="button in dates">
+              <button type="button" class="btn btn-default" ng-class="{active : datavalue.mode === button.value}" ng-click="setDateValue(button.value);getRefreshData()">{{button.label}}</button>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+
+
+<div ng-controller="PatientCtrl" ng-init="init('James Bond', data_from_django)">
+    <h1>I am {{ name }} {{ id }}</h1>
+    {{ path }}
+</div>

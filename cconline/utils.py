@@ -11,7 +11,7 @@ import json
 import string
 from django.template.loader import get_template
 from django.template import Context
-from models import ListAllAnalysis, ListOfAnalysis, Templates, ListTemplates
+from models import ListAllAnalysis, ListOfAnalysis, Templates, ListTemplates, NurseAssign
 from models import NurseLabWork, NurseMedWork, NurseExamWork, NurseProfViewWork
 from django.core import serializers
 from django.db import connection
@@ -336,6 +336,23 @@ def nurse_execute(request):
     connection.commit()
 
     return HttpResponse(sql)
+
+
+def nurse_work_by_patient(request):
+    """
+    Список работ по истории болезни
+    :param request:
+    :return:
+    """
+    id_patient = request.GET.get('id', 0)
+    period = request.GET.get('period', 'today')
+
+    sql = "SELECT * FROM GET_LIST_NURSE_MEDICATION(%s, '%s', %s, %s)" % (id_patient, period, 0, 0)
+
+    dataset = NurseAssign.objects.raw(sql)
+
+    data = serializers.serialize('json', dataset)
+    return HttpResponse(data, mimetype='application/json')
 
 
 class ValidatingPasswordChangeForm(auth.forms.PasswordChangeForm):
