@@ -75,6 +75,22 @@ def get_user_depart(request):
     return person.id_depart
 
 
+def get_user_depart_name(request):
+    """
+    Получить код отделения, к которому привязан пользователь
+    :param request:
+    :return:
+    """
+    current_user = request.user.username.upper()
+    card_user = SysUsers.objects.get(pk=current_user)
+    id_doctor = card_user.id_doctor
+    try:
+        person = Personal.objects.get(pk=id_doctor)
+    except:
+        raise Http404
+    return person.depart
+
+
 def get_current_doctor_id(request):
     """
     Код пользователя КардиоКарты

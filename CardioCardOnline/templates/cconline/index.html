@@ -1,19 +1,18 @@
 {% extends "cconline/base.html" %}
 
 {% block body %}
+    <div class="col-lg-12"><p></p></div>
 
     {% if "NURSE" in list_group %}
-        <div class="col-lg-12"><p></p></div>
         <div class="col-lg-12">
-            <p>
-                <a href="{% url 'nurse_work' %}" class="btn btn-primary btn-lg center-block" role="button">Журнал назначений</a>
-            </p>
+            <p><a href="{% url 'nurse_work' %}" class="btn btn-primary btn-lg center-block" role="button">Журнал назначений</a></p>
+        </div>
+        <div class="col-lg-12">
+            <p><a href="{% url 'nurse_patient' %}" class="btn btn-primary btn-lg center-block" role="button">Назначения по пациентам</a></p>
         </div>
     {% endif %}
 
-    {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group %}
-
-        <div class="col-lg-12"><h2></h2></div>
+    {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "FUNCT" in list_group %}
         <div class="col-lg-12">
             <form action="/search/" method="post" role="form">{% csrf_token %}
                 <div class="input-group">
@@ -43,9 +42,7 @@
     {% endif %}
 
     <div class="col-lg-12">
-        <p>
-            <hr width="50%">
-        </p>
+        <p><hr width="50%"></p>
     </div>
 
     <div class="row">
