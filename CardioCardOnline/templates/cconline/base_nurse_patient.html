@@ -1,32 +1,26 @@
 ﻿{% load staticfiles %}
 <!DOCTYPE html>
-<html lang="ru"  ng-app="nurseApp">
+<html lang="ru"  ng-app="vikingApp">
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
     <link rel="stylesheet" href="{% static 'css/lavish-bootstrap.css' %}" >
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}" />
-
-    <script src="{% static 'js/lib/angular.min.js' %}"></script>
-    <script src="{% static 'js/lib/angular-route/angular-route.min.js' %}"></script>
-    <script src="{% static 'js/lib/angular_ru-ru.js' %}"></script>
-    <script src="{% static 'js/app.js' %}"></script>
-    <script src="{% static 'js/controllers.js' %}"></script>
-
+    {% block jscript %}
+    {% endblock %}
     <title>КардиоКарта Онлайн</title>
 </head>
 
 <body>
 <a href="{% url 'index' %}">
-	<img src="{% static 'images/logo_snowman.png'%}" class="center-block">
+        <img src="{% static 'images/logo_snowman.png'%}" class="center-block">
 </a>
 
 <div class="container">
         {% block body %}
         {% endblock %}
 </div>
-
 </body>
 
 </html>

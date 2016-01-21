@@ -68,6 +68,8 @@ urlpatterns = [
     url(r'^temp_list/(?P<id>\d+)/$', 'cconline.nurse.get_tempearature_data', name='get_templist'),
     url(r'^risk_down/(?P<id>\d+)/$', 'cconline.nurse.get_risk_down', name='get_risk_down'),
     url(r'^pain_status/(?P<id>\d+)/$', 'cconline.nurse.get_pain_status', name='get_pain_status'),
+    url(r'^nurse/patients/$', 'cconline.nurse.get_nurse_patients', name='nurse_patients'),
+    url(r'^nurse/patient/(?P<id>\d+)/$', 'cconline.nurse.get_nurse_patient', name='nurse_patient'),
 
     # post request urls
     url(r'^new_exam/', 'cconline.views.new_examen', name='save_exam'),
@@ -85,6 +87,8 @@ urlpatterns = [
     url(r'^json/nurse_work_exam/$', 'cconline.utils.json_nurse_exam', name='get_nurse_exam_work'),
     url(r'^json/nurse_work_doc/$', 'cconline.utils.json_nurse_doctor', name='get_nurse_doctor_work'),
     url(r'^json/nurse_execute/$', 'cconline.utils.nurse_execute', name='get_nurse_execute'),
+    url(r'^json/nurse/$', 'cconline.utils.nurse_work_by_patient', name='get_nurse_json'),
+
 ]
 
 if settings.DEBUG:

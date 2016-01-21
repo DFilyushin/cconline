@@ -133,6 +133,3 @@ nurseControllers.controller('DoctorCtrl', ['$scope', '$http', '$rootScope',
                 );
         }
     }]);
-
-
-

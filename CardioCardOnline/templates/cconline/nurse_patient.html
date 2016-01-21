@@ -1,0 +1,58 @@
+{% extends "cconline/base_nurse_patient.html" %}
+{% load staticfiles %}
+
+{% block jscript %}
+    <script src="{% static 'js/lib/angular.min.js' %}"></script>
+    <script type="text/javascript">var vikingApp = angular.module('vikingApp', []);</script>
+    <script src="{% static 'js/controllers/nurseController.js' %}"></script>
+{% endblock %}
+
+{% block body %}
+<!-- Begin page content -->
+    <a type="button" class="btn btn-default" href="/nurse/patients/">Вернуться</a>
+    <h3>№{{ history.num_history }} {{ history.lastname }}</h3>
+
+<div ng-controller="NurseController" ng-init="init({{ history.id }});getRefreshData()">
+    {% verbatim %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="btn-group" ng-repeat="button in dates">
+                  <button type="button" class="btn btn-default" ng-class="{active : datavalue.mode === button.value}" ng-click="setDateValue(button.value);getRefreshData();">{{button.label}}</button>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+
+    <div after-render="getRefreshData"></div>
+
+        <table class="table table-condensed">
+            <thead>
+                <th></th>
+                <th>Время</th>
+                <th>Анализ</th>
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in nurseWork">
+                    <td>
+                        <i ng-if="item.fields.type_app===2" class="glyphicon icon-tubes"></i>
+                        <i ng-if="item.fields.type_app===3" class="glyphicon icon-monitor"></i>
+                        <i ng-if="item.fields.type_app===1" class="glyphicon icon-pills"></i>
+                        <i ng-if="item.fields.type_app===4" class="glyphicon icon-doctor"></i>
+                    </td>
+                    <td>{{ item.fields.dt_appointment| date:"HH:mm" }}</td>
+                    <td>{{ item.fields.appointment }}</td>
+                    <td></td>
+                    <td><button type="button" class="btn btn-success" ng-click="executeNurse($index, item.fields.type_app )">Выполнить</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+    {% endverbatim %}
+</div>
+{% endblock %}

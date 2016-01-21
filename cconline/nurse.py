@@ -3,10 +3,12 @@
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render_to_response
+from django.db.models import Q
+from datetime import datetime
 from models import ListHistory
 from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
 from models import TemperatureData, RiskDownData, PainStatus
-from views import get_current_doctor, get_user_depart, get_user_groups
+from views import get_current_doctor, get_user_depart, get_user_groups, get_user_depart_name
 from django.core.exceptions import PermissionDenied
 
 
@@ -94,3 +96,43 @@ def get_nurse_work(request):
             'current_doc': get_current_doctor(request),
         }
         )
+
+
+@login_required(login_url='/login')
+def get_nurse_patients(request):
+    """
+
+    :param request:
+    :return:
+    """
+    id_depart = get_user_depart(request)
+    depart = get_user_depart_name(request)
+    patients = ListHistory.objects.filter(id_depart=id_depart).\
+        filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.today()))
+    return render_to_response(
+        'cconline/nurse_patients.html',
+        {
+            'depart': depart,
+            'patients': patients,
+        }
+    )
+
+
+@login_required(login_url='/login')
+def get_nurse_patient(request, id):
+    """
+
+    :param request:
+    :return:
+    """
+    try:
+        history = ListHistory.objects.get(pk=id)
+    except ListHistory.DoesNotExist:
+        raise Http404
+
+    return render_to_response(
+        'cconline/nurse_patient.html',
+        {
+            'history': history,
+        }
+    )
