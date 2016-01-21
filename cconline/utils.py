@@ -23,10 +23,6 @@ from django import forms
 from django.contrib import auth
 
 
-
-MED_WORK = NurseMedWork
-
-
 def getpass(request):
     # create pass sha256 for client ;-)
     remote_address = request.META['REMOTE_ADDR']
