@@ -335,7 +335,7 @@ def nurse_execute(request):
     cursor.execute(sql)
     connection.commit()
 
-    return HttpResponse(sql)
+    return HttpResponse('200 Ok')
 
 
 def nurse_work_by_patient(request):
