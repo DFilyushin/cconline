@@ -33,7 +33,7 @@ myApp.controller('LabController',
                 cache: true
             }).success(function(data) {
                     $scope.tests=data;
-                })
+                });
 
         $scope.getSubTest = function(){
             $http(
@@ -48,22 +48,24 @@ myApp.controller('LabController',
                     $scope.subTest.fields.checked = false;
             }
             )
-        }
+        };
 
         $scope.sendData = function(){
             var i;
             var listTests = [];
+
             for (i=0; i<$scope.subTest.length; i++){
                 if ($scope.subTest[i].fields.checked == true){
                     listTests.push($scope.subTest[i].pk);
-                }
+                };
             };
             for(i=0; i<months.length; i++){
                 if (months[i]==$scope.currentMonth){
                     $scope.currentMonthI = i+1;
                     break;
-                }
-            }
+                };
+            };
+
 
             var dataForSend = new Object();
             dataForSend.pk = $scope.selectedPk;
@@ -79,7 +81,7 @@ myApp.controller('LabController',
             }
             else
             {
-                dataForSend.is_cito = 0
+                dataForSend.is_cito = 0;
             }
 
             $http(

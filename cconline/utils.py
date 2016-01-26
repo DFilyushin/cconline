@@ -159,7 +159,7 @@ def json_savetest(request):
 
     # Добавить сабтесты для анализа
     for sub_test in sub_tests:
-        sql = "EXECUTE PROCEDURE SP_ASSIGN_ANALYSIS (%s, %s, %s)" % (id_order, sub_test, is_cito)
+        sql = "EXECUTE PROCEDURE SP_ASSIGN_ANALYSIS (%s, '%s', %s)" % (id_order, sub_test, is_cito)
         cursor = connection.cursor()
         cursor.execute(sql)
     connection.commit()
