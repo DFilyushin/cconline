@@ -337,8 +337,9 @@ def patients_by_depart(request, iddepart):
         depart = Departments.objects.get(pk=iddepart)
     except Departments.DoesNotExist:
         raise Http404
-
-    patients = ListHistory.objects.filter(id_depart=iddepart).filter(discharge__isnull=True)
+    cur_date = datetime.now()
+    patients = ListHistory.objects.filter(id_depart=iddepart).\
+        filter(Q(discharge__gt=cur_date) | Q(discharge__isnull=True))
     return render_to_response(
         'cconline/patients.html',
         {
