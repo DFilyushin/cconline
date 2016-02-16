@@ -17,6 +17,7 @@
                 <td><a href="{% url 'get_patient' idpatient=item.id %}"> {{ item.num_history }}</a></td>
                 <td><a href="{% url 'get_patient' idpatient=item.id %}">{{ item.lastname }}</a></td>
                 <td><a href="{% url 'get_patient' idpatient=item.id %}">{{ item.receipt|date:"d.m.Y" }}</a></td>
+                <td><a href="{% url 'get_patient' idpatient=item.id %}">{{ item.doctor }}</a></td>
             </tr>
             {% endfor %}
         </tbody>

@@ -214,6 +214,7 @@ class ListHistory(models.Model):
     discharge = models.DateTimeField()
     id_doctor = models.IntegerField()
     id_depart = models.IntegerField()
+    doctor = models.CharField(max_length=255, db_column='DOCTOR_NAME')
 
     class Meta:
         managed = False
