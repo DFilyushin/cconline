@@ -12,7 +12,7 @@
     <p><strong>Выписан</strong>: {% if patient.discharge %} {{ patient.discharge|date:"d.m.Y H:d" }} {% else %} находится на лечении {% endif %}</p>
 
     {% for item in first_view %}
-        {% if item.text|trim_str != "" %}<p><strong>{{ item.param_name }}</strong>: {{ item.text }}</p>{% endif %}
+        <p><strong><a href="/patient/editview/{{ item.id_history }}/{{ item.id_param }}">{{ item.param_name }}</a></strong>: {{ item.text }}</p>
     {% endfor %}
 
 {% endblock %}

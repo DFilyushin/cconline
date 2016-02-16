@@ -950,3 +950,59 @@ def stat(request):
         },
         context_instance=RequestContext(request)
     )
+
+
+@login_required(login_url='/login')
+def get_doctor_view(request, idpatient, idparam):
+    """
+
+    :param request:
+    :return:
+    """
+
+    # Обработка ошибок пока исключена !!!
+
+    data_view = PatientInfo.objects.filter(id_history=idpatient).filter(id_view=0).filter(id_param=idparam)
+    try:
+        history = ListHistory.objects.get(pk=idpatient)
+    except ListHistory.DoesNotExist:
+        raise Http404
+    return render_to_response(
+        'cconline/edit_view.html',
+        {
+            'view': data_view,
+            'history': history,
+        },
+        context_instance=RequestContext(request)
+    )
+
+
+def save_doctor_view(request):
+    if request.method != 'POST':
+        raise Http404
+    id = request.POST.get('id', 0)
+    id_history = request.POST.get('id_history', 0)
+    id_param = request.POST.get('id_param', 0)
+    text_view = request.POST.get('view_text', '')
+
+    if id == 0:
+        dataset = PatientInfo()
+    else:
+        dataset = PatientInfo.objects.get(pk=id)
+    dataset.text = text_view
+    dataset.id_history = id_history
+    dataset.id_param = id_param
+    dataset.id_view = 0
+    dataset.save()
+
+    redirect_url = '/patient/first_view/' + id_history
+    return render_to_response(
+        'cconline/redirect.html',
+        {
+            'message': u'Изменения сохранены...',
+            'redirect_url': redirect_url,
+            'request': request,
+            'type_message': 'bg-info',
+        },
+        context_instance=RequestContext(request)
+    )

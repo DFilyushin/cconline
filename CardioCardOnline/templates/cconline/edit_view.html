@@ -1,0 +1,32 @@
+﻿{% extends "cconline/base.html" %}
+{% load staticfiles %}
+
+{% block jscript %}
+{% endblock %}
+
+{% block body %}
+<!-- Begin page content -->
+<h2>№{{ history.num_history }} {{ history.lastname }}</h2>
+<h3>{{ view.0.param_name }}</h3>
+
+
+    <form class="form" action="/patient/view/save/" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{ view.0.id }}">
+        <input type="hidden" name="id_param" value="{{ view.0.id_param }}">
+        <input type="hidden" name="id_history" value="{{ view.0.id_history }}">
+        <div class="form-group">
+          <textarea class="form-control" rows="10" name="view_text">{{ view.0.text }}</textarea>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 text-center">
+                <button type="submit" class="btn btn-default">Сохранить</button>
+            </div>
+            <div class="col-xs-6 text-center" >
+                <a href="{% url 'patient_info' idpatient=view.0.id_history %}" class="btn btn-warning" role="button">Вернуться</a>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
