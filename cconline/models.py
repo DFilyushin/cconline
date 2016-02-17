@@ -4,6 +4,7 @@ from _ast import mod
 from django.db import models
 from django.db import connection
 from django.contrib.auth.signals import user_logged_in
+from collections import namedtuple
 # Database model
 
 
@@ -449,6 +450,35 @@ class PatientInfo(models.Model):
     class Meta:
         managed = False
         db_table = 'VW_DATA_BLOB'
+
+    @staticmethod
+    def check_uniq_param(id_history, id_param):
+        #
+        # Проверяет уникальность записи осмотра, для исключения двойного описания состояния
+        # True - уникальна запись, добавлять можно, False - неуникальна
+        cursor = connection.cursor()
+        sql = "select count(*) from data_blob where id_history = %s and id_doctorview = 0 and id_param = %s" % \
+              (id_history, id_param)
+        cursor.execute(sql)
+        row = cursor.fetchone()
+        return row[0] == 0
+
+    @staticmethod
+    def get_non_existent_view(id_history):
+        #
+        # Список записей осмотров, которых у пациента ещё нет
+        #
+        cursor = connection.cursor()
+        sql = "select id_param, page_name from page_group where group_name = 'AMBULANCE'" \
+              "and not exists (select id from data_blob db where db.id_history = %s " \
+              "and db.id_doctorview = 0 and db.id_param = page_group.id_param)" % id_history
+        cursor.execute(sql)
+        # "Return all rows from a cursor as a dict"
+        columns = [col[0] for col in cursor.description]
+        return [
+            dict(zip(columns, row))
+            for row in cursor.fetchall()
+        ]
 
 
 class ListSurgery(models.Model):

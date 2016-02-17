@@ -953,15 +953,44 @@ def stat(request):
 
 
 @login_required(login_url='/login')
-def get_doctor_view(request, idpatient, idparam):
+def add_doctor_view(request, idpatient):
+    """
+    Добавление новой записи осмотра с выбором вида осмотра
+    :param request:
+    :param idpatient: Код пациента
+    :return:
     """
 
+    rst_unused = PatientInfo.get_non_existent_view(idpatient)
+    try:
+        history = ListHistory.objects.get(pk=idpatient)
+    except ListHistory.DoesNotExist:
+        raise Http404
+
+    return render_to_response(
+        'cconline/edit_view.html',
+        {
+            'listpages': rst_unused,
+            'id': 0,
+            'doctor_page_title': 'Добавление новой записи',
+            'id_param': 0,
+            'id_history': idpatient,
+            'text': '',
+            'history': history,
+        },
+        context_instance=RequestContext(request)
+    )
+
+
+@login_required(login_url='/login')
+def get_doctor_view(request, idpatient, idparam):
+    """
+    Изменение записи по первичному осмотру пациента
     :param request:
     :return:
     """
 
     # Обработка ошибок пока исключена !!!
-
     data_view = PatientInfo.objects.filter(id_history=idpatient).filter(id_view=0).filter(id_param=idparam)
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -970,22 +999,52 @@ def get_doctor_view(request, idpatient, idparam):
     return render_to_response(
         'cconline/edit_view.html',
         {
-            'view': data_view,
+            'id': data_view[0].id,
+            'doctor_page_title': data_view[0].param_name,
+            'id_param': data_view[0].id_param,
+            'id_history': data_view[0].id_history,
+            'text': data_view[0].text,
             'history': history,
         },
         context_instance=RequestContext(request)
     )
 
 
+@login_required(login_url='/login')
 def save_doctor_view(request):
+    """
+
+    Запись изменений по осмотру пациента (отдельная вкладка лечащего врача)
+
+    """
     if request.method != 'POST':
         raise Http404
     id = request.POST.get('id', 0)
     id_history = request.POST.get('id_history', 0)
-    id_param = request.POST.get('id_param', 0)
+
+    if id == '0':
+        id_param = request.POST.get('selected_title', 0)
+    else:
+        id_param = request.POST.get('id_param', 0)
     text_view = request.POST.get('view_text', '')
 
-    if id == 0:
+    redirect_url = '/patient/first_view/' + id_history
+
+    # проверка уникальности записей
+
+    if not PatientInfo.check_uniq_param(id_history, id_param):
+        return render_to_response(
+            'cconline/redirect.html',
+            {
+                'message': u'Запись уже имеется у пациента...',
+                'redirect_url': redirect_url,
+                'request': request,
+                'type_message': 'bg-warning',
+            },
+            context_instance=RequestContext(request)
+        )
+
+    if id == '0':
         dataset = PatientInfo()
     else:
         dataset = PatientInfo.objects.get(pk=id)
@@ -995,7 +1054,6 @@ def save_doctor_view(request):
     dataset.id_view = 0
     dataset.save()
 
-    redirect_url = '/patient/first_view/' + id_history
     return render_to_response(
         'cconline/redirect.html',
         {

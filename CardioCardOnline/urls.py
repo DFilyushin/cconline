@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^patient/cure/(?P<idpatient>\d+)/$', 'cconline.views.patient_cure', name='patient_cure'),
     url(r'^patient/(?P<idpatient>\d+)/$', 'cconline.views.get_patient', name='get_patient'),
     url(r'^patient/editview/(?P<idpatient>\d+)/(?P<idparam>\d+)/$', 'cconline.views.get_doctor_view', name='get_doctor_view'),
+    url(r'^patient/addview/(?P<idpatient>\d+)/$', 'cconline.views.add_doctor_view', name='add_doctor_view'),
     url(r'^patient/view/save/$', 'cconline.views.save_doctor_view', name='save_doctor_view'),
 
     url(r'^diary/list/(?P<idpatient>\d+)/$', 'cconline.views.get_diary_list', name='list_diary'),
