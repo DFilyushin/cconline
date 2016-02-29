@@ -1032,7 +1032,7 @@ def save_doctor_view(request):
 
     # проверка уникальности записей
 
-    if not PatientInfo.check_uniq_param(id_history, id_param):
+    if (id == '0') and not PatientInfo.check_uniq_param(id_history, id_param):
         return render_to_response(
             'cconline/redirect.html',
             {
