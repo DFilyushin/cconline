@@ -208,6 +208,8 @@ class ListHistory(models.Model):
     id = models.IntegerField(primary_key=True)
     num_history = models.CharField(max_length=25)
     lastname = models.CharField(max_length=255)
+    firstname = models.CharField(max_length=255)
+    middlename = models.CharField(max_length=255)
     depart_name = models.CharField(max_length=255)
     dob = models.DateField()
     yearof = models.IntegerField()
