@@ -15,7 +15,7 @@
             {%  for item in patients %}
             <tr>
                 <td><a href="{% url 'get_patient' idpatient=item.id %}"> {{ item.num_history }}</a></td>
-                <td><a href="{% url 'get_patient' idpatient=item.id %}">{{ item.lastname }}</br>{{ item.firstname }}</br>{{ item.middlename }}</a></td>
+                <td><a href="{% url 'get_patient' idpatient=item.id %}"> {{ item.lastname }} </br> {{ item.firstname }} </br>{{ item.middlename }}</a></td>
                 <td><a href="{% url 'get_patient' idpatient=item.id %}">{{ item.receipt|date:"d.m.Y" }}</a></td>
                 <td><a href="{% url 'get_patient' idpatient=item.id %}">{{ item.doctor }}</a></td>
             </tr>
