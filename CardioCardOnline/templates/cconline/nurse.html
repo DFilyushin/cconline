@@ -25,7 +25,7 @@
             <tbody>
                 {%  for item in temp_list %}
                 <tr>
-                    <td><a href="/temp_list/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:d" }}</a></td>
+                    <td><a href="/temp_list/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
                     <td>{{ item.nurse }}</td>
                     <td>{{ item.depart }}</td>
                 </tr>
@@ -38,7 +38,7 @@
             <tbody>
                 {%  for item in view_list %}
                 <tr>
-                    <td><a href="/nurse_view/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:d" }}</a></td>
+                    <td><a href="/nurse_view/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
                     <td>{{ item.nurse }}</td>
                     <td>{{ item.depart }}</td>
                 </tr>
@@ -52,7 +52,7 @@
             <tbody>
                 {%  for item in down_list %}
                 <tr>
-                    <td><a href="/risk_down/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:d" }}</a></td>
+                    <td><a href="/risk_down/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
                     <td>{{ item.nurse }}</td>
                     <td>{{ item.depart }}</td>
                 </tr>
@@ -66,7 +66,7 @@
             <tbody>
                 {%  for item in pain_list %}
                 <tr>
-                    <td><a href="/pain_status/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:d" }}</a></td>
+                    <td><a href="/pain_status/{{ item.id }}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
                     <td>{{ item.nurse }}</td>
                     <td>{{ item.depart }}</td>
                 </tr>

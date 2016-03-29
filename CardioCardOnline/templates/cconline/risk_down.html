@@ -6,7 +6,7 @@
         <a href="{% url 'list_nurse' idpatient=view.id_history %}">К списку сестринских осмотров</a>
     </p>
     <p><em>Пациент:</em> {{ view.patient }} [{{ view.num_history }}]</p>
-    <p><em>Дата:</em> {{ view.date_view|date:"d.m.Y H:d" }}</p>
+    <p><em>Дата:</em> {{ view.date_view|date:"d.m.Y H:i" }}</p>
     <p><em>М/с:</em> {{ view.nurse }} </p>
     <p><em>Отделение:</em> {{ view.depart }}</p>
     <p class="bg-primary">Запись осмотра</p>

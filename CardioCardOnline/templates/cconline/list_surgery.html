@@ -11,7 +11,7 @@
         <tbody>
             {%  for item in surgery %}
             <tr>
-                <td><a href="{% url 'operation' id=item.id %}">{{ item.surgery_date|date:"d.m.Y H:d" }}</a></td>
+                <td><a href="{% url 'operation' id=item.id %}">{{ item.surgery_date|date:"d.m.Y H:i" }}</a></td>
                 <td><a href="{% url 'operation' id=item.id %}">{{ item.surgery_name }}</a></td>
                 <td>{% if item.surgery_extreme == 1 %} <img src="{% static 'images/exclamation.png' %}"> {% endif %}</td>
             </tr>

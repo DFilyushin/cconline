@@ -15,7 +15,7 @@
         <tbody>
             {%  for item in diarys %}
             <tr>
-                <td><a href="{% url 'get_diary' id_diary=item.id %}">{{ item.reg_date|date:"d.m.Y H:d" }}</a></td>
+                <td><a href="{% url 'get_diary' id_diary=item.id %}">{{ item.reg_date|date:"d.m.Y H:i" }}</a></td>
                 <td><a href="{% url 'get_diary' id_diary=item.id %}">{{ item.doctor }}</a></td>
                 <td><a href="{% url 'get_diary' id_diary=item.id %}">{{ item.depart_name }}</a></td>
             </tr>

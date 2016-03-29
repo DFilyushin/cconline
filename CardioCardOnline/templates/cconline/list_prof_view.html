@@ -13,7 +13,7 @@
             <tr>
                 <td>{% if item.viewdate %}<a href="{% url 'proview' id=item.id %}">{% endif %}{{ item.specname }}{% if item.viewdate %}</a>{% endif %}</td>
                 <td>{% if item.viewdate %}<a href="{% url 'proview' id=item.id %}">{% endif %}{{ item.doctor }}{% if item.viewdate %}</a>{% endif %}</td>
-                <td>{% if item.viewdate %}<a href="{% url 'proview' id=item.id %}">{% endif %}{{ item.viewdate|date:"d.m.Y H:d" }}{% if item.viewdate %}</a>{% endif %}</td>
+                <td>{% if item.viewdate %}<a href="{% url 'proview' id=item.id %}">{% endif %}{{ item.viewdate|date:"d.m.Y H:i" }}{% if item.viewdate %}</a>{% endif %}</td>
             </tr>
             {% endfor %}
         </tbody>

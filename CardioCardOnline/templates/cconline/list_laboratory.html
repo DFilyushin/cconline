@@ -16,7 +16,7 @@
             {%  for item in labs %}
             <tr>
                 <td>{% if item.date_execute %} <a href="{% url 'get_lab' id=item.id %}"> {% endif %}{{ item.name_labanalysis }}{% if item.date_execute %}</a>{% endif %}</td>
-                <td>{% if item.date_execute %}{{ item.date_execute|date:"d.m.Y H:d" }}{% else %}не выполнен{% endif %}</td>
+                <td>{% if item.date_execute %}{{ item.date_execute|date:"d.m.Y H:i" }}{% else %}не выполнен{% endif %}</td>
             </tr>
             {% endfor %}
         </tbody>

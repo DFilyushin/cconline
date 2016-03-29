@@ -10,10 +10,10 @@
     <p><strong>Пациент:</strong> {{ examen.patient }} </p>
     <p><strong>Отделение:</strong> {{ examen.depart }}</p>
     <p><strong>Врач:</strong> {{ examen.doctor }} </p>
-    <p><strong>Назначен:</strong>  {{ examen.date_assign|date:"d.m.Y H:d" }}</p>
-    <p><strong>Назначен на:</strong> {{ examen.date_plan|date:"d.m.Y H:d" }}</p>
-    <p><strong>Принят м/с:</strong> {{ examen.date_nurse|date:"d.m.Y H:d" }}</p>
-    <p><strong>Выполнен:</strong> {{ examen.date_execute|date:"d.m.Y H:d" }}</p>
+    <p><strong>Назначен:</strong>  {{ examen.date_assign|date:"d.m.Y H:i" }}</p>
+    <p><strong>Назначен на:</strong> {{ examen.date_plan|date:"d.m.Y H:i" }}</p>
+    <p><strong>Принят м/с:</strong> {{ examen.date_nurse|date:"d.m.Y H:i" }}</p>
+    <p><strong>Выполнен:</strong> {{ examen.date_execute|date:"d.m.Y H:i" }}</p>
 
     {% if examen.feature_data %}
         <strong>Особенности</strong>

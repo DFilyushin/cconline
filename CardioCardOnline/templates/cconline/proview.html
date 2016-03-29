@@ -7,7 +7,7 @@
     <h4 class="text-center">{{ proview.specname }}</h4>
     <p><strong>Пациент:</strong> {{ patient }} </p>
     <p><strong>Врач</strong>: {{ proview.doctor }}</p>
-    <p><strong>Дата осмотра</strong>: {{ proview.viewdate|date:"d.m.Y H:d"}} </p>
+    <p><strong>Дата осмотра</strong>: {{ proview.viewdate|date:"d.m.Y H:i"}} </p>
 
     {% for item in pages %}
         <p><strong>{{ item.param_name }}</strong>: {{ item.text }}</p>
