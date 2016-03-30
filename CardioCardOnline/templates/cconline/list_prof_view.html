@@ -11,9 +11,9 @@
         <tbody>
             {%  for item in proflist %}
             <tr>
-                <td>{% if item.viewdate %}<a href="{% url 'proview' id=item.id %}">{% endif %}{{ item.specname }}{% if item.viewdate %}</a>{% endif %}</td>
-                <td>{% if item.viewdate %}<a href="{% url 'proview' id=item.id %}">{% endif %}{{ item.doctor }}{% if item.viewdate %}</a>{% endif %}</td>
-                <td>{% if item.viewdate %}<a href="{% url 'proview' id=item.id %}">{% endif %}{{ item.viewdate|date:"d.m.Y H:i" }}{% if item.viewdate %}</a>{% endif %}</td>
+                <td><a href="{% url 'proview' id=item.id %}">{{ item.specname }}</a></td>
+                <td><a href="{% url 'proview' id=item.id %}">{{ item.doctor }}</a></td>
+                <td><a href="{% url 'proview' id=item.id %}">{{ item.viewdate|date:"d.m.Y H:i" }}</a></td>
             </tr>
             {% endfor %}
         </tbody>

@@ -1,0 +1,42 @@
+﻿{% extends "cconline/base.html" %}
+{% load cconline_extras %}
+{% load staticfiles %}
+
+{% block jscript %}
+{% endblock %}
+
+{% block body %}
+<!-- Begin page content -->
+<h2>№{{ history.num_history }} {{ history.lastname }}</h2>
+<h3>{{ spec_doctor }}</h3>
+
+    <form class="form" action="/patient/prof_view/save/" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="id" value="{{ id }}">
+
+        <div class="form-group">
+            <label class="control-label" for="dateexec">Дата осмотра:</label>
+            <input type="date" class="form-control" name="dateexec" id="dateexec" value="{{ date_exec }}">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="timeexec">Время осмотра:</label>
+            <input type="time" class="form-control" name="timeexec" id="timeexec" value="{{ time_exec }}">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" for="view_text">Заключение осмотра:</label>
+            <textarea class="form-control" rows="10" name="view_text">{% if text %}{{ text }}{% endif %}</textarea>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-6 text-center">
+                <button type="submit" class="btn btn-default">Сохранить</button>
+            </div>
+            <div class="col-xs-6 text-center" >
+
+            </div>
+        </div>
+    </form>
+
+{% endblock %}

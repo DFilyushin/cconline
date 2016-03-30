@@ -13,7 +13,8 @@
         <p><strong>{{ item.param_name }}</strong>: {{ item.text }}</p>
     {% endfor %}
 
-    <p><strong>Заключение</strong>: {{ proview.conclusion|ccrlf }}</p>
+    <p><strong>Заключение</strong>: {% if proview.conclusion %} {{ proview.conclusion|ccrlf }} {% endif %} </p>
+    {% if not proview.conclusion %} <p><a href="" class="btn btn-primary" role="button">Добавить заключение</a></p> {% endif %}
     <p><a href="{% url 'list_proview' idpatient=idpatient %}">К списку осмотров</a></p>
 
 {% endblock %}

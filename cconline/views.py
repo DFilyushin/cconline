@@ -1011,6 +1011,44 @@ def get_doctor_view(request, idpatient, idparam):
 
 
 @login_required(login_url='/login')
+def edit_prof_conclusion(request, id):
+    spec_doctor = ''
+    text_value = ''
+    try:
+        dataset = ListProffView.objects.get(pk=id)
+        text_value = dataset.conclusion
+        if dataset.viewdate:
+            cur_date = dataset.viewdate.strftime('%Y-%m-%d')
+            cur_time = dataset.viewdate.strftime('%H:%M')
+        else:
+            cur_date = datetime.now().strftime('%Y-%m-%d')
+            cur_time = datetime.now().strftime('%H:%M')
+
+    except ListProffView.DoesNotExist:
+        raise Http404
+    id_history = dataset.id_history
+    try:
+        history = ListHistory.objects.get(pk=id_history)
+    except ListHistory.DoesNotExist:
+        raise Http404
+
+
+
+    return render_to_response(
+        'cconline/edit_prof_view.html',
+        {
+            'id': id,
+            'history': history,
+            'spec_doctor': dataset.specname,
+            'text': text_value,
+            'date_exec': cur_date,
+            'time_exec': cur_time,
+        },
+        context_instance=RequestContext(request)
+    )
+
+
+@login_required(login_url='/login')
 def save_doctor_view(request):
     """
 
