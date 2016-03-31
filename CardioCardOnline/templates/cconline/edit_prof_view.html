@@ -10,9 +10,13 @@
 <h2>№{{ history.num_history }} {{ history.lastname }}</h2>
 <h3>{{ spec_doctor }}</h3>
 
-    <form class="form" action="/patient/prof_view/save/" method="post">
+    <form class="form" action="/proview/save_pv/" method="post">
         {% csrf_token %}
         <input type="hidden" name="id" value="{{ id }}">
+        <div class="form-group">
+            <label class="control-label" for="doctor">ФИО врача:</label>
+            <input type="text" class="form-control" name="doctor" id="doctor" value="{{ doctor }}">
+        </div>
 
         <div class="form-group">
             <label class="control-label" for="dateexec">Дата осмотра:</label>
@@ -30,11 +34,9 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-6 text-center">
-                <button type="submit" class="btn btn-default">Сохранить</button>
-            </div>
-            <div class="col-xs-6 text-center" >
-
+            <div class="col-xs-12 text-left">
+                <a href="{% url 'list_proview' idpatient=history.id %}" type="submit" class="btn btn-warning" role="button">Отменить</a>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
             </div>
         </div>
     </form>

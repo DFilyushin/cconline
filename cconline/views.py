@@ -441,7 +441,7 @@ def get_examen_list(request, idpatient):
             'history': history,
             'current_doc': get_current_doctor(request),
         }
-                              )
+    )
 
 
 @login_required(login_url='/login')
@@ -1011,8 +1011,48 @@ def get_doctor_view(request, idpatient, idparam):
 
 
 @login_required(login_url='/login')
+def save_prof_conclusion(request):
+    """
+    Сохранить изменения в заключении проф. осмотра
+    :param request:
+    :return:
+    """
+    id = request.POST.get('id', 0)
+    id_doctor = get_current_doctor_id(request)
+    date_exec = request.POST.get('dateexec', '')
+    time_exec = request.POST.get('timeexec', '')
+    conclusion = request.POST.get('view_text', '')
+    datetime_exec = date_exec + ' ' + time_exec
+    try:
+        dataset = ListProffView.objects.get(pk=id)
+        dataset.conclusion = conclusion
+        dataset.id_doctor = id_doctor
+        dataset.viewdate = datetime_exec
+        dataset.save()
+    except ListProffView.DoesNotExist:
+        raise Http404
+
+    redirect_url = '/proview/list/' + str(dataset.id_history)
+    return render_to_response(
+        'cconline/redirect.html',
+        {
+            'message': u'Изменения сохранены...',
+            'redirect_url': redirect_url,
+            'request': request,
+            'type_message': 'bg-info',
+        },
+        context_instance=RequestContext(request)
+    )
+
+
+@login_required(login_url='/login')
 def edit_prof_conclusion(request, id):
-    spec_doctor = ''
+    """
+    Редактирование проф. осмотра, ввод заключения
+    :param request:
+    :param id:
+    :return:
+    """
     text_value = ''
     try:
         dataset = ListProffView.objects.get(pk=id)
@@ -1020,9 +1060,11 @@ def edit_prof_conclusion(request, id):
         if dataset.viewdate:
             cur_date = dataset.viewdate.strftime('%Y-%m-%d')
             cur_time = dataset.viewdate.strftime('%H:%M')
+            doctor = dataset.doctor
         else:
             cur_date = datetime.now().strftime('%Y-%m-%d')
             cur_time = datetime.now().strftime('%H:%M')
+            doctor = get_current_doctor(request)
 
     except ListProffView.DoesNotExist:
         raise Http404
@@ -1032,14 +1074,13 @@ def edit_prof_conclusion(request, id):
     except ListHistory.DoesNotExist:
         raise Http404
 
-
-
     return render_to_response(
         'cconline/edit_prof_view.html',
         {
             'id': id,
             'history': history,
             'spec_doctor': dataset.specname,
+            'doctor': doctor,
             'text': text_value,
             'date_exec': cur_date,
             'time_exec': cur_time,

@@ -14,7 +14,11 @@
     {% endfor %}
 
     <p><strong>Заключение</strong>: {% if proview.conclusion %} {{ proview.conclusion|ccrlf }} {% endif %} </p>
-    {% if not proview.conclusion %} <p><a href="" class="btn btn-primary" role="button">Добавить заключение</a></p> {% endif %}
+    {% if not proview.conclusion %}
+        <p><a href="/proview/edit/{{ proview.id }}" class="btn btn-primary" role="button">Добавить заключение</a></p>
+    {% else %}
+        <p><a href="/proview/edit/{{ proview.id }}" class="btn btn-primary" role="button">Изменить</a></p>
+    {% endif %}
     <p><a href="{% url 'list_proview' idpatient=idpatient %}">К списку осмотров</a></p>
 
 {% endblock %}

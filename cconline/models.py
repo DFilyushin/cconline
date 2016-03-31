@@ -515,6 +515,7 @@ class SurgeryAdv(models.Model):
 class ListProffView(models.Model):
     id = models.IntegerField(primary_key=True)
     id_history = models.IntegerField()
+    id_doctor = models.IntegerField()
     specname = models.CharField(max_length=255, db_column='SPECIALIZATION')
     num_history = models.CharField(max_length=25)
     patient = models.CharField(max_length=3068)
