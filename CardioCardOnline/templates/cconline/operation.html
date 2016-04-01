@@ -4,13 +4,13 @@
 {% block body %}
     <h2><a href="{% url 'list_surgery' idpatient=operation.id_history %}">№{{ operation.num_history }} {{ operation.patient }}</a></h2>
     <h3>Оперативное вмешательство</h3>
-    <p><strong>Наименование операции:</strong> {{ operation.surgery_name }}</p>
-    <p><strong>Тип операции:</strong> {{ operation.surgery_type }}</p>
-    <p><strong>Дата проведения операции:</strong> {{ operation.surgery_date|date:"d.m.Y" }}</p>
-    <p><strong>Наименование операции:</strong> {{ operation.surgery_name }}</p>
-    <p><strong>Протокол операции:</strong><br> {{ operation.conclusion }}</p>
+    <p><strong>Наименование операции: </strong> {{ operation.surgery_name }}</p>
+    <p><strong>Тип операции: </strong> {{ operation.surgery_type }}</p>
+    <p><strong>Дата проведения операции: </strong> {{ operation.surgery_date|date:"d.m.Y" }}</p>
+    <p><strong>Наименование операции: </strong> {{ operation.surgery_name }}</p>
+    <p><strong>Протокол операции: </strong><br> {{ operation.conclusion }}</p>
     {% if adv_info %}
-        <p><strong>Состояние артерий:</strong><br> {{ adv_info|ccrlf }}</p>
+        <p><strong>Состояние артерий: </strong><br> {{ adv_info|ccrlf }}</p>
     {% endif %}
     <p>
         <a href="{% url 'list_surgery' idpatient=operation.id_history %}">Вернуться к списку операций</a>
