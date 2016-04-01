@@ -14,7 +14,7 @@
         <p><a href="{% url 'list_exam' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Обследования</a></p>
         <p><a href="{% url 'list_lab' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Лаборатория</a></p>
         <p><a href="{% url 'list_medication' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Назначения</a></p>
-        <p><a href="{% url 'list_proview' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Проф. осмотры</a></p>
+        <p><a href="{% url 'list_proview' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Консультации</a></p>
         <p><a href="{% url 'list_surgery' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Операции</a></p>
     {% endif %}
     <p><a href="{% url 'list_nurse' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Сестринские осмотры</a></p>
