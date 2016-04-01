@@ -70,9 +70,10 @@ urlpatterns = [
     # nurse handler
     url(r'^nurse/work/$', 'cconline.nurse.get_nurse_work', name='nurse_work'),
     url(r'^nurse/list/(?P<idpatient>\d+)/$', 'cconline.nurse.get_nurse_list', name='list_nurse'),
-    url(r'^temp_list/(?P<id>\d+)/$', 'cconline.nurse.get_tempearature_data', name='get_templist'),
+    url(r'^temp_list/(?P<id>\d+)/$', 'cconline.nurse.get_tempearature_data', name='get_temperature_list'),
     url(r'^risk_down/(?P<id>\d+)/$', 'cconline.nurse.get_risk_down', name='get_risk_down'),
     url(r'^pain_status/(?P<id>\d+)/$', 'cconline.nurse.get_pain_status', name='get_pain_status'),
+    url(r'^nurse_view/(?P<id>\d+)/$', 'cconline.nurse.get_nurse_view', name='get_nurse_view'),
     url(r'^nurse/patients/$', 'cconline.nurse.get_nurse_patients', name='nurse_patients'),
     url(r'^nurse/patient/(?P<id>\d+)/$', 'cconline.nurse.get_nurse_patient', name='nurse_patient'),
 

@@ -4,12 +4,11 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from django.shortcuts import render_to_response
 from django.db.models import Q
-from datetime import datetime
-from models import ListHistory
-from models import TemperatureList, NurseViewList, PainStatusList, RiskDownList
-from models import TemperatureData, RiskDownData, PainStatus
-from views import get_current_doctor, get_user_depart, get_user_groups, get_user_depart_name
 from django.core.exceptions import PermissionDenied
+from datetime import datetime
+from models import ListHistory, TemperatureList, NurseViewList, PainStatusList, RiskDownList, \
+    TemperatureData, RiskDownData, PainStatus, NurseViewData
+from views import get_current_doctor, get_user_depart, get_user_groups, get_user_depart_name
 
 
 @login_required(login_url='/login')
@@ -44,7 +43,7 @@ def get_tempearature_data(request, id):
         raise Http404
 
     values = TemperatureData.objects.filter(id_ctrl_nurse=id)
-    return render_to_response('cconline/temp_list.html',
+    return render_to_response('cconline/nurse_temp_list.html',
                        {
                            'view': view,
                            'values': values,
@@ -59,7 +58,7 @@ def get_risk_down(request, id):
     except RiskDownData.DoesNotExist:
         raise Http404
 
-    return render_to_response('cconline/risk_down.html',
+    return render_to_response('cconline/nurse_risk_down.html',
                               {
                                   'view': view,
                                   'current_doc': get_current_doctor(request),
@@ -73,7 +72,7 @@ def get_pain_status(request, id):
     except PainStatus.DoesNotExist:
         raise Http404
 
-    return render_to_response('cconline/pain_status.html',
+    return render_to_response('cconline/nurse_pain_status.html',
                               {
                                   'view': view,
                                   'current_doc': get_current_doctor(request),
@@ -134,5 +133,44 @@ def get_nurse_patient(request, id):
         'cconline/nurse_patient.html',
         {
             'history': history,
+        }
+    )
+
+
+@login_required(login_url='/login')
+def get_nurse_view(request, id):
+    """
+    Данные сестринского осмотра
+    :param request:
+    :param id: Код осмотра
+    :return:
+    """
+    nurse_data = []
+    old_group = ''
+    group_value = ''
+
+    # get view data
+    try:
+        view_list = NurseViewList.objects.get(pk=id)
+    except NurseViewList.DoesNotExist:
+        raise Http404
+
+    # get nurse view data
+    dataset = NurseViewData.objects.filter(id_inspec=id)
+    for record in dataset:
+        if old_group == record.group:
+            if group_value != '':
+                group_value = group_value + ', ' + record.value
+        else:
+            if old_group != '':
+                nurse_data.append({'group': old_group, 'value': group_value})
+            old_group = record.group
+            group_value = record.value
+
+    return render_to_response(
+        'cconline/nurse_view.html',
+        {
+            'nurse_data': nurse_data,
+            'view': view_list,
         }
     )

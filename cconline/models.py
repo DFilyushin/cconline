@@ -802,6 +802,20 @@ class NurseAssign(models.Model):
     class Meta:
         managed = False
 
+
+class NurseViewData(models.Model):
+    id = models.IntegerField(primary_key=True)
+    id_inspec = models.IntegerField(db_column='ID_INSPECT_NURSE')
+    group = models.CharField(max_length=255, db_column='GROUP_NAME')
+    value = models.CharField(max_length=255, db_column='INSPECT_NAME')
+    is_checked = models.SmallIntegerField(db_column='CHECK_VALUE')
+    inspect_descr = models.CharField(max_length=255, db_column='TEXT_VALUE')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_EXTACTED_NURSE_DATA'
+
+
 def do_on_login(sender, user, request, **kwargs):
     """
     Обработка сигнала авторизации пользователя

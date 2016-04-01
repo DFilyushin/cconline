@@ -5,10 +5,11 @@
     <p>
         <a href="{% url 'list_nurse' idpatient=view.id_history %}">К списку температурных листов</a>
     </p>
-    <p><em>Пациент:</em>   {{ view.patient }} [{{ view.num_card }}]</p>
-    <p><em>Дата:</em>      {{ view.date_view|date:"d.m.Y H:i" }}</p>
-    <p><em>Врач:</em>      {{ view.nurse }} </p>
-    <p><em>Отделение:</em> {{ view.depart }}</p>
+    <h3>Температурный лист пациента</h3>
+    <p><em>Пациент: </em>{{ view.patient }} [{{ view.num_card }}]</p>
+    <p><em>Дата: </em>{{ view.date_view|date:"d.m.Y H:i" }}</p>
+    <p><em>Мед. сестра: </em>{{ view.nurse }} </p>
+    <p><em>Отделение: </em> {{ view.depart }}</p>
     <table class="table table-hover table-responsive table-condensed">
         <thead>
             <tr>
