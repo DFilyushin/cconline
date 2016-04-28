@@ -152,7 +152,8 @@ def search(request):
                 'current_doc': get_current_doctor(request),
             }
         )
-
+    else:
+        raise Http404
 
 @login_required(login_url='/login')
 def profile(request):
