@@ -19,10 +19,10 @@ def get_nurse_list(request, idpatient):
         raise Http404
     patient = history.lastname
     numhistory = history.num_history
-    temp_list = TemperatureList.objects.filter(id_history=idpatient)
-    view_list = NurseViewList.objects.filter(id_history=idpatient)
-    pain_list = PainStatusList.objects.filter(id_history=idpatient)
-    down_list = RiskDownList.objects.filter(id_history=idpatient)
+    temp_list = TemperatureList.objects.filter(id_history=idpatient).order_by('-date_view')
+    view_list = NurseViewList.objects.filter(id_history=idpatient).order_by('-date_view')
+    pain_list = PainStatusList.objects.filter(id_history=idpatient).order_by('-date_view')
+    down_list = RiskDownList.objects.filter(id_history=idpatient).order_by('-date_view')
     return render_to_response('cconline/nurse.html', {
               'temp_list': temp_list,
               'view_list': view_list,
