@@ -4,7 +4,7 @@
 <div class="container-fluid">
     {%  for item in departs %}
         <p>
-            <a href="{% url 'departs_patient' iddepart=item.id %}" class="btn btn-primary btn-lg center-block" role="button">
+            <a href="{% url 'departs_patient' iddepart=item.id %}" class="btn btn-primary btn-wide center-block" role="button">
                 {{ item.name }}
             </a>
         </p>
