@@ -1,7 +1,7 @@
 {% extends "cconline/base.html" %}
 
 {% block body %}
-<h2><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h2>
+<h3><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h3>
 <div class="center-block">
     <h3>Консультации профильных специалистов</h3>
 </div>

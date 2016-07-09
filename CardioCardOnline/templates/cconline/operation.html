@@ -2,7 +2,7 @@
 {% load cconline_extras %}
 
 {% block body %}
-    <h2><a href="{% url 'list_surgery' idpatient=operation.id_history %}">№{{ operation.num_history }} {{ operation.patient }}</a></h2>
+    <h3><a href="{% url 'list_surgery' idpatient=operation.id_history %}">№{{ operation.num_history }} {{ operation.patient }}</a></h3>
     <h3>Оперативное вмешательство</h3>
     <p><strong>Наименование операции: </strong> {{ operation.surgery_name }}</p>
     <p><strong>Тип операции: </strong> {{ operation.surgery_type }}</p>

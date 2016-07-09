@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h2><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h2>
+    <h3><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h3>
     <p><a href="/lab/add/{{ history.id }}" class="btn btn-primary" role="button">Назначить</a></p>
 <div class="container-fluid">
     <table class="table table-condensed">

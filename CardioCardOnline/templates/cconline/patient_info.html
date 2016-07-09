@@ -2,7 +2,7 @@
 
 {% block body %}
 
-    <h2><a href="{% url 'get_patient' idpatient=patient.id %}">№{{ patient.num_history }} {{ patient.lastname }}</a></h2>
+    <h3><a href="{% url 'get_patient' idpatient=patient.id %}">№{{ patient.num_history }} {{ patient.lastname }}</a></h3>
 
     <p><strong>Диагноз предварительный:</strong> {{ patient.preliminary_diag }}</p>
     <p><strong>Диагноз клинический:</strong> {% if patient.clinic_diag %}{{ patient.clinic_diag }}{% endif %}</p>

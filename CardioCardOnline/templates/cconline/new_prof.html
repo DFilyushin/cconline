@@ -7,7 +7,7 @@
 
 {% block body %}
 <!-- Begin page content -->
-    <h2><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h2>
+    <h3><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h3>
     <h3>Назначение осмотра профильным специалистом</h3>
 
     <div class="container">

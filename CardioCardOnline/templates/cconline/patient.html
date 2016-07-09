@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<h2 class="center-block">№{{ history.num_history }} {{ history.lastname }} {{ history.firstname }} {{ history.middlename }}</h2>
+<h3 class="center-block">№{{ history.num_history }} {{ history.lastname }} {{ history.firstname }} {{ history.middlename }}</h3>
 
 <div class="container-fluid">
     <p><a href="{% url 'patient_cure' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Лечащий врач</a></p>

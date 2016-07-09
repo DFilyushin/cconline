@@ -6,7 +6,7 @@
 
 {% block body %}
 <!-- Begin page content -->
-<h2>Продлить медикаментозное лечение</h2>
+<h3>Продлить медикаментозное лечение</h3>
 <div class="container">
       <form class="form" action="/prolong_med/" method='post'>{% csrf_token %}
           <input type="hidden" name="id_medication" value="{{ id }}">
