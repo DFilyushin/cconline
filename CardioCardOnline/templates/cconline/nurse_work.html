@@ -4,13 +4,14 @@
 {% block body %}
 <!-- Begin page content -->
 <div class="container">
+<p><a href="{% url 'index' %}" class="btn btn-default btn-wide center-block" role="button">На главную</a></p>
     <div class="header">
     <div class="span12 centered-pills">
         <ul class="nav nav-pills">
-            <li ng-class="labClass"><a href="#/lab"><i class="glyphicon icon-tubes"></i></a></li>
-            <li ng-class="examClass"><a href="#/exam"><i class="glyphicon icon-monitor"></i></a></li>
-            <li ng-class="drugClass"><a href="#/drug"><i class="glyphicon icon-pills"></i></a></li>
-            <li ng-class="doctorClass"><a href="#/doctor"><i class="glyphicon icon-doctor"></i></a></li>
+            <li ng-class="labClass"><a href="#/lab" class="glyphicon icon-tubes"></a></li>
+            <li ng-class="examClass"><a href="#/exam" class="glyphicon icon-monitor"></a></li>
+            <li ng-class="drugClass"><a href="#/drug" class="glyphicon icon-pills"></a></li>
+            <li ng-class="doctorClass"><a href="#/doctor" class="glyphicon icon-doctor"></a></li>
         </ul>
     </div>
     </div>
@@ -20,4 +21,6 @@
 
     </div>
 </div>
+
+
 {% endblock %}
