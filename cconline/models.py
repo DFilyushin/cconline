@@ -180,6 +180,7 @@ class History(models.Model):
     id_patient_sender = models.IntegerField(db_column='ID_PATIENT_SENDER', blank=True, null=True)
     type_hospit = models.SmallIntegerField(db_column='TYPE_HOSPIT', blank=True, null=True)
     count_hospit_inyear = models.SmallIntegerField(db_column='COUNT_HOSPIT_INYEAR', blank=True, null=True)
+    diag_preliminary_rd = models.CharField(db_column='PRELIMINARY_DIAG_RD', max_length=1024, null=True)
 
     class Meta:
         managed = False
@@ -242,7 +243,7 @@ class ListDiary(models.Model):
 
 class ListAnalysis(models.Model):
     id = models.IntegerField(primary_key=True)
-    id_history = models.IntegerField()
+    id_history = models.ForeignKey('History', db_column='id_history')
     id_doctor = models.IntegerField()
     id_labanalysis = models.CharField(max_length=10)
     date_assign = models.DateTimeField(db_column='DATE_ASSIGN', blank=True, null=True)
@@ -258,6 +259,7 @@ class ListAnalysis(models.Model):
     name_labanalysis = models.CharField(db_column='NAME_LABANALYSIS', max_length=255)
     doctor = models.CharField(max_length=255)
     depart = models.CharField(db_column='DEPARTMENT', max_length=255)
+    #patient = models.ForeignKey('History')
 
     class Meta:
         managed = False
@@ -290,7 +292,7 @@ class ActiveDepart(models.Model):
 
 class ListExamens(models.Model):
     id = models.IntegerField(primary_key=True)
-    id_history = models.IntegerField()
+    id_history = models.ForeignKey('History', db_column='id_history')
     id_doctor = models.IntegerField()
     id_executer = models.IntegerField()
     date_assign = models.DateTimeField(db_column='APPOINTMENT_DATE')

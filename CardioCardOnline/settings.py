@@ -64,11 +64,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'firebird',
         'HOST': 'localhost',
-        'NAME': 'cardio',
+        'NAME': 'C://var//db//M6.FDB',
         'PORT': '3050',
         'USER': 'SYSDBA',
         'PASSWORD': 'masterkey',
-        'CONN_MAX_AGE': 3600,
+        'CONN_MAX_AGE': 360000,
     }
 }
 
@@ -83,7 +83,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-#USE_TZ = True
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)

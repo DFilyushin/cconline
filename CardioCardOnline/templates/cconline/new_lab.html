@@ -10,18 +10,13 @@
 {% block body %}
 <!-- Begin page content -->
 
-    <h3><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h3>
-    <h3>Назначение анализа</h3>
+    <h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h4>
+    <h4>Назначение анализа</h4>
 
     <div  ng-controller="LabController">
         <div class="container">
               <form class="form">{% csrf_token %}
                   <input type="hidden" name="id_history" value="{{ history.id }}">
-                  <div class="form-group">
-                  <label class="control-label" for="dateview">ФИО пациента:</label>
-                      <input type="text" class="form-control" name="fio" id="dateview" name="dateview"  value="{{ history.lastname }}" autofocus disabled >
-                  </div>
-
             {% verbatim %}
 
                   <div class="form-group">

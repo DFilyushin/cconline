@@ -6,8 +6,9 @@
 
 {% block body %}
 <!-- Begin page content -->
-<h3>№{{ history.num_history }} {{ history.lastname }}</h3>
-<h3>{{ doctor_page_title }}</h3>
+    <h4 class="text-center">{{ doctor_page_title }}</h4>
+    <p><strong>Пациент:</strong> №{{ history.num_history }} {{ history.lastname }}</p>
+
 
     <form class="form" action="/patient/view/save/" method="post">
         {% csrf_token %}
@@ -32,7 +33,7 @@
 
         <div class="row">
             <div class="col-xs-6 text-center">
-                <button type="submit" class="btn btn-default">Сохранить</button>
+                <button type="submit" class="btn btn-primary">Сохранить</button>
             </div>
             <div class="col-xs-6 text-center" >
                 <a href="{% url 'patient_info' idpatient=id_history %}" class="btn btn-warning" role="button">Вернуться</a>

@@ -1,27 +1,28 @@
 {% extends "cconline/base.html" %}
 
+{% block jscript %}
+{% endblock %}
+
+
 {% block body %}
+
     <div class="center-block">
-        <h3>{{ current_place }} </h3>
-        {% if from_departs %}
-            <p>
-                <a href="{% url 'patient_by_depart' %}">К списку отделений</a>
-            </p>
-        {% endif %}
+        <h4>{{ current_place }} </h4>
     </div>
 
-    <table class="table">
+    <table class="table table-condensed table-hover">
         <tbody>
             {%  for item in patients %}
             <tr>
                 <td><a href="{% url 'get_patient' idpatient=item.id %}"> {{ item.num_history }}</a></td>
-                <td><a href="{% url 'get_patient' idpatient=item.id %}"> {{ item.lastname }} </br> {{ item.firstname }} </br>{{ item.middlename }}</a></td>
-                <td><a href="{% url 'get_patient' idpatient=item.id %}">{{ item.receipt|date:"d.m.Y" }}</a></td>
-                <td><a href="{% url 'get_patient' idpatient=item.id %}">{{ item.doctor }}</a></td>
+                <td><a href="{% url 'get_patient' idpatient=item.id %}"> {{ item.lastname|lower|capfirst }} </br> {{ item.firstname|lower|capfirst }} </br>{{ item.middlename|lower|capfirst }}</a></td>
+                <td><a href="{% url 'get_patient' idpatient=item.id %}"> {% ifequal item.receipt|date:"Y" year %}{{ item.receipt|date:"j b" }}{% else %} {{item.receipt|date:"d.m.Y"}} {% endifequal %}</a></td>
+                <td><a href="{% url 'get_patient' idpatient=item.id %}"> {{ item.doctor }}</a></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
+    <a href="javascript: history.go(-1)" class="text-center btn btn-default btn-sm center-block">Вернуться</a>
 
 {% endblock %}

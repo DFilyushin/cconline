@@ -2,22 +2,26 @@
 
 {% block body %}
 
-<h3 class="center-block">№{{ history.num_history }} {{ history.lastname }} {{ history.firstname }} {{ history.middlename }}</h3>
+<h4 class="text-center">№{{ history.num_history }}</br> {{ history.lastname|lower|capfirst }} {{ history.firstname|lower|capfirst }} {{ history.middlename|lower|capfirst }}</h4>
 
 <div class="container-fluid">
-    <p><a href="{% url 'patient_cure' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Лечащий врач</a></p>
-    <p><a href="{% url 'patient_info' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button" >Первичный осмотр</a></p>
+    <p><a href="{% url 'patient_cure' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Лечащий врач</a></p>
+    <p><a href="{% url 'patient_info' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button" >Первичный осмотр</a></p>
 
 
     {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group %}
-        <p><a href="{% url 'list_diary' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Дневники пациента</a></p>
-        <p><a href="{% url 'list_exam' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Обследования</a></p>
-        <p><a href="{% url 'list_lab' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Лаборатория</a></p>
-        <p><a href="{% url 'list_medication' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Назначения</a></p>
-        <p><a href="{% url 'list_proview' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Консультации</a></p>
-        <p><a href="{% url 'list_surgery' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Операции</a></p>
+        <p><a href="{% url 'list_diary' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Дневники пациента</a></p>
+        <p><a href="{% url 'list_exam' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Обследования</a></p>
+        <p><a href="{% url 'list_lab' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Лаборатория</a></p>
+        <p><a href="{% url 'list_medication' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Назначения</a></p>
+        <p><a href="{% url 'list_proview' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Консультации</a></p>
+        <p><a href="{% url 'list_surgery' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Операции</a></p>
     {% endif %}
-    <p><a href="{% url 'list_nurse' idpatient=history.id %}" class="btn btn-primary btn-lg center-block" role="button">Сестринские осмотры</a></p>
+    <p><a href="{% url 'list_nurse' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Сестринские осмотры</a></p>
+
+    <a href="{% url 'departs_patient' iddepart=history.id_depart %}" class="text-center btn btn-default btn-sm center-block">В отделение</a>
+    </br>
+    <a href="{% url 'patient_by_depart' %}" class="text-center btn btn-default btn-sm center-block">Список отделений</a>
 </div>
 
 {% endblock %}

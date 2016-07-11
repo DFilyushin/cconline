@@ -8,7 +8,7 @@ from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 from django.db import connection
-from datetime import datetime
+from datetime import datetime, date
 from forms import DiaryForm
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData, \
     ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication, \
@@ -299,7 +299,7 @@ def get_laboratory(request, id):
     except ListAnalysis.DoesNotExist:
         raise Http404
     try:
-        history = ListHistory.objects.get(pk=lab.id_history)
+        history = ListHistory.objects.get(pk=lab.id_history.id)
     except ListHistory.DoesNotExist:
         raise Http404
     lab_result = LaboratoryData.objects.filter(id_assigned_anal=id).order_by('sort_pos')
@@ -340,7 +340,7 @@ def patients_by_depart(request, iddepart):
         raise Http404
     cur_date = datetime.now()
     patients = ListHistory.objects.filter(id_depart=iddepart).\
-        filter(Q(discharge__gt=cur_date) | Q(discharge__isnull=True))
+        filter(Q(discharge__gt=cur_date) | Q(discharge__isnull=True)).order_by('-receipt')
     return render_to_response(
         'cconline/patients.html',
         {
@@ -348,6 +348,7 @@ def patients_by_depart(request, iddepart):
             'current_place': depart.name,
             'current_doc': get_current_doctor(request),
             'from_departs': True,
+            'year': cur_date.year.__str__(),
         }
     )
 
@@ -680,7 +681,7 @@ def get_medication(request, id):
         medication = HistoryMedication.objects.get(pk=id)
     except HistoryMedication.DoesNotExist:
         raise Http404
-
+    cur_date = datetime.now()
     # get history information
     history = ListHistory.objects.get(pk=medication.id_history)
     dataset = Medication.objects.filter(id_key=id)
@@ -691,6 +692,7 @@ def get_medication(request, id):
             'history': history,
             'medicname': medication.medic_name,
             'current_doc': get_current_doctor(request),
+            'year': cur_date.year.__str__(),
         }
     )
 
@@ -941,13 +943,13 @@ def stat(request):
     """
     list_depart = ActiveDepart.objects.all().order_by('name')  # количество пациентов по отделениям
     hospitalization = Hospitalization.objects.all()  # госпитализация по отделениям
-    user_stat = WebUsersStat.objects.all()  # список пользователей ККО по отделениям в сравнении с сист. пользователями
+    # user_stat = WebUsersStat.objects.all()  # список пользователей ККО по отделениям в сравнении с сист. пользователями
     return render_to_response(
         'cconline/stat.html',
         {
             'departs': list_depart,
             'hospit': hospitalization,
-            'users': user_stat,
+            #'users': user_stat,
         },
         context_instance=RequestContext(request)
     )
@@ -1146,3 +1148,33 @@ def save_doctor_view(request):
     )
 
 
+@login_required(login_url='/login')
+def choose_test(request):
+    return render_to_response(
+        'cconline/actual_result.html',{}, context_instance=RequestContext(request)
+    )
+
+
+@login_required(login_url='/login')
+def last_exam(request):
+    examenation_test = ListExamens.objects.filter(date_execute__isnull=False).order_by('-date_execute')[:30]
+    return render_to_response(
+        'cconline/last_examenation.html',
+        {
+            'exams': examenation_test,
+        },
+        context_instance=RequestContext(request)
+    )
+
+
+
+@login_required(login_url='/login')
+def last_lab(request):
+    laboratory_test = ListAnalysis.objects.filter(date_execute__isnull=False).order_by('-date_execute')[:30]
+    return render_to_response(
+        'cconline/last_laboratory.html',
+        {
+            'labs': laboratory_test,
+        },
+        context_instance=RequestContext(request)
+    )

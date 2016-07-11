@@ -2,18 +2,14 @@
 
 {% block body %}
 <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
-    <p>
-        <a href="{% url 'list_exam' idpatient=examen.id_history %}">К списку обследований</a>
-    </p>
-
     <h4 class="text-center">{{ examen.name_exam }} </h4>
-    <p><strong>Пациент:</strong> {{ examen.patient }} </p>
-    <p><strong>Отделение:</strong> {{ examen.depart }}</p>
-    <p><strong>Врач:</strong> {{ examen.doctor }} </p>
-    <p><strong>Назначен:</strong>  {{ examen.date_assign|date:"d.m.Y H:i" }}</p>
-    <p><strong>Назначен на:</strong> {{ examen.date_plan|date:"d.m.Y H:i" }}</p>
-    <p><strong>Принят м/с:</strong> {{ examen.date_nurse|date:"d.m.Y H:i" }}</p>
-    <p><strong>Выполнен:</strong> {{ examen.date_execute|date:"d.m.Y H:i" }}</p>
+    <p><strong>Пациент:</strong> {{ examen.patient }}
+    </br><strong>Отделение:</strong> {{ examen.depart }}
+    </br><strong>Врач:</strong> {{ examen.doctor }}
+    </br><strong>Назначен:</strong>  {{ examen.date_assign|date:"d.m.Y H:i" }}
+    </br><strong>Назначен на:</strong> {{ examen.date_plan|date:"d.m.Y H:i" }}
+    </br><strong>Принят м/с:</strong> {{ examen.date_nurse|date:"d.m.Y H:i" }}
+    </br><strong>Выполнен:</strong> {{ examen.date_execute|date:"d.m.Y H:i" }}</p>
 
     {% if examen.feature_data %}
         <strong>Особенности</strong>
@@ -48,7 +44,8 @@
     </p>
 
     <p>
-        <a href="{% url 'list_exam' idpatient=examen.id_history %}">К списку обследований</a>
+        <a href="{% url 'list_exam' idpatient=examen.id_history.id %}" class="text-center btn btn-default btn-sm center-block">В историю болезни</a>
+        <a href="{% url 'last_examenation' %}" class="text-center btn btn-default btn-sm center-block">К обследованиям</a>
     </p>
 
 </div>

@@ -7,16 +7,11 @@
 
 {% block body %}
 <!-- Begin page content -->
-    <h3><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h3>
-    <h3>Назначение обследования</h3>
+    <h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h4>
+    <h4>Назначение обследования</h4>
 <div class="container">
       <form class="form" action="/new_exam/" method='post'>{% csrf_token %}
           <input type="hidden" name="id_history" value="{{ id }}">
-          <div class="form-group">
-          <label class="control-label" for="dateview">ФИО пациента:</label>
-              <input type="text" class="form-control" name="fio" id="dateview" name="dateview"  value="{{ history.lastname }}" autofocus disabled >
-          </div>
-
           <div class="form-group">
           <label class="control-label" for="examens">Обследование:</label>
               <select class="form-control" name="examens" id="examens" >

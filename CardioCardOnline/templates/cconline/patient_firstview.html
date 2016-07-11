@@ -3,20 +3,26 @@
 
 {% block body %}
 
-    <h2><a href="{% url 'get_patient' idpatient=patient.id %}">№{{ patient.num_history }} {{ patient.lastname }}</a></h2>
+    <h4><a href="{% url 'get_patient' idpatient=patient.id %}">№{{ patient.num_history }} {{ patient.lastname|lower|capfirst }}</a></h4>
 
-    <p><strong>Дата рождения</strong>: {{ patient.dob|date:"d.m.Y" }} ({{ age }})</p>
-    <p><strong>Отделение</strong>: {{ patient.id_depart.name }}</p>
-    <p><strong>Лечащий врач</strong>: {{ patient.id_doctor.name }}</p>
     <p>
-        <strong>Госпитализирован</strong>: {{ patient.receipt|date:"d.m.Y H:i" }} в {% if patient.extreme_type == 0 %} плановом {% else %} <span class="text-danger">экстренном</span>{% endif %} порядке
-    </p>
-    <p><strong>Выписан</strong>: {% if patient.discharge %} {{ patient.discharge|date:"d.m.Y H:i" }} {% else %} находится на лечении {% endif %}</p>
+        <strong>Дата рождения</strong>: {{ patient.dob|date:"d.m.Y" }} ({{ age }})
+        </br><strong>Отделение</strong>: {{ patient.id_depart.name }}
+        </br><strong>Лечащий врач</strong>: {{ patient.id_doctor.name }}
+        </br><strong>Госпитализирован</strong>: {{ patient.receipt|date:"d.m.Y H:i" }} в {% if patient.extreme_type == 0 %} плановом {% else %} <span class="text-danger">экстренном</span>{% endif %} порядке</>
+        {% if patient.discharge %}<br><strong>Выписан</strong>:{{ patient.discharge|date:"d.m.Y H:i" }}{% endif %}
 
+        {% if patient.extreme_type == 1 %}
+        </br><strong>Диганоз приёмного покоя:</strong>: {{ patient.diag_preliminary_rd }}
+        {% endif %}
+    </p>
+
+    <h4>Запись лечащего врача</h4>
+    <a href="{% url 'add_doctor_view' idpatient=patient.id %}" class="btn btn-primary btn-wide center-block" role="button">Добавить</a>
     {% for item in first_view %}
         <p><strong><a href="/patient/editview/{{ item.id_history }}/{{ item.id_param }}">{{ item.param_name }}</a></strong>: {{ item.text }}</p>
     {% endfor %}
 
-    <a href="{% url 'add_doctor_view' idpatient=patient.id %}" class="btn btn-warning" role="button">Добавить</a>
+    <a href="{% url 'add_doctor_view' idpatient=patient.id %}" class="btn btn-primary btn-wide center-block" role="button">Добавить</a>
 
 {% endblock %}

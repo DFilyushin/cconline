@@ -2,10 +2,10 @@
 {% load staticfiles %}
 
 {% block body %}
-<h2>Статистика</h2>
+<h3>Статистика</h3>
 
 <div class="container">
-    <h3>Заполненность отделений</h3>
+    <h4>Заполненность отделений</h4>
     <table class="table table-condensed">
         <thead>
             <tr>
@@ -23,7 +23,7 @@
         </tbody>
     </table>
 
-    <h3>Госпитализация</h3>
+    <h4>Госпитализация</h4>
     <table class="table table-condensed">
         <thead>
             <tr>
@@ -45,26 +45,7 @@
         </tbody>
     </table>
 
-    <h3>Пользователи</h3>
-    <table class="table table-condensed">
-        <thead>
-            <tr>
-                <th>Отделение</th>
-                <th class="text-center">Пользователи</th>
-                <th class="text-center">Подключены к ККО</th>
-            </tr>
-        </thead>
-        <tbody>
-            {%  for item in users %}
-            <tr>
-                <td>{{ item.user_name }}</td>
-                <td class="text-center">{{ item.cnt_system }}</td>
-                <td class="text-center">{{ item.cnt_web }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
+    <a href="/" class="text-center btn btn-default btn-sm center-block">На главную</a>
 </div>
 
 {% endblock %}

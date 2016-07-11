@@ -2,20 +2,19 @@
 
 {% block body %}
 <div class="container-fluid">
+    <h4 class="text-center">Дневник пациента</h4>
     <p>
-        <a href="{% url 'list_diary' idpatient=diary.id_history %}">К списку дневников</a>
+        <strong>Пациент:</strong> № {{ history.num_history }} {{ history.lastname }}
+        </br><strong>Дата:</strong> {{ diary.reg_date|date:"d.m.Y H:i" }}
+        </br><strong>Врач:</strong> {{ diary.doctor }}
+        </br><strong>Отделение:</strong> {{ diary.depart_name }}
     </p>
-    <p><strong>Пациент:</strong> № {{ history.num_history }} {{ history.lastname }}</p>
-    <p><strong>Дата:</strong> {{ diary.reg_date|date:"d.m.Y H:i" }}</p>
-    <p><strong>Врач:</strong> {{ diary.doctor }} </p>
-    <p><strong>Отделение:</strong> {{ diary.depart_name }}</p>
 
     {% if diary.diary_name %}
     <p><strong>Совместный осмотр:</strong> {{ diary.diary_name }}</p>
     {% endif %}
 
-    <h3>Запись осмотра</h3>
-    <p>
+    <p><strong>Запись осмотра:</strong>
         {{ diary.blob_text }}
     </p>
 
@@ -29,7 +28,8 @@
     </div>
 
     <p>
-        <a href="{% url 'list_diary' idpatient=diary.id_history %}">К списку дневников</a>
+        </br>
+        <a href="{% url 'list_diary' idpatient=diary.id_history %}" class="text-center btn btn-default btn-sm center-block">К дневникам</a>
     </p>
 </div>
 

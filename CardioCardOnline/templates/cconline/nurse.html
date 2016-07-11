@@ -9,7 +9,7 @@
 
 {% block body %}
 
-    <h3><a href="{% url 'get_patient' idpatient=idpatient %}">№{{ num }} {{ patient }}</a></h3>
+    <h4><a href="{% url 'get_patient' idpatient=idpatient %}">№{{ num }} {{ patient }}</a></h4>
 
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#evTempList"><span class="glyphicon glyphicon-dashboard"></span>Температурный лист</a></li>
@@ -18,65 +18,61 @@
         <li><a data-toggle="tab" href="#evPainStatus"><span class="glyphicon glyphicon-fire"></span>Оценка боли</a></li>
     </ul>
 
+    <div class="tab-content" id="myTabContent">
+        <div id="evTempList" class="tab-pane fade in active">
+            <table class="table table-condensed">
+                <tbody>
+                    {%  for item in temp_list %}
+                    <tr>
+                        <td><a href="{% url 'get_temperature_list' id=item.id %}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
+                        <td>{{ item.nurse }}</td>
+                        <td>{{ item.depart }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div id="evNurseView" class="tab-pane fade">
+            <table class="table table-condensed">
+                <tbody>
+                    {%  for item in view_list %}
+                    <tr>
+                        <td><a href="{% url 'get_nurse_view' id=item.id %}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
+                        <td>{{ item.nurse }}</td>
+                        <td>{{ item.depart }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-<div class="tab-content" id="myTabContent">
-    <div id="evTempList" class="tab-pane fade in active">
-        <table class="table table-condensed">
-            <tbody>
-                {%  for item in temp_list %}
-                <tr>
-                    <td><a href="{% url 'get_temperature_list' id=item.id %}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
-                    <td>{{ item.nurse }}</td>
-                    <td>{{ item.depart }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        </div>
+        <div id="evRiskDown" class="tab-pane fade">
+            <table class="table table-condensed">
+                <tbody>
+                    {%  for item in down_list %}
+                    <tr>
+                        <td><a href="{% url 'get_risk_down' id=item.id %}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
+                        <td>{{ item.nurse }}</td>
+                        <td>{{ item.depart }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        <div id="evPainStatus" class="tab-pane fade">
+            <table class="table table-condensed">
+                <tbody>
+                    {%  for item in pain_list %}
+                    <tr>
+                        <td><a href="{% url 'get_pain_status' id=item.id %}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
+                        <td>{{ item.nurse }}</td>
+                        <td>{{ item.depart }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
     </div>
-    <div id="evNurseView" class="tab-pane fade">
-        <table class="table table-condensed">
-            <tbody>
-                {%  for item in view_list %}
-                <tr>
-                    <td><a href="{% url 'get_nurse_view' id=item.id %}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
-                    <td>{{ item.nurse }}</td>
-                    <td>{{ item.depart }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-    </div>
-    <div id="evRiskDown" class="tab-pane fade">
-        <table class="table table-condensed">
-            <tbody>
-                {%  for item in down_list %}
-                <tr>
-                    <td><a href="{% url 'get_risk_down' id=item.id %}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
-                    <td>{{ item.nurse }}</td>
-                    <td>{{ item.depart }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-    </div>
-    <div id="evPainStatus" class="tab-pane fade">
-        <table class="table table-condensed">
-            <tbody>
-                {%  for item in pain_list %}
-                <tr>
-                    <td><a href="{% url 'get_pain_status' id=item.id %}"> {{ item.date_view|date:"d.m.Y H:i" }}</a></td>
-                    <td>{{ item.nurse }}</td>
-                    <td>{{ item.depart }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
-    </div>
-</div>
-
-
-
 {% endblock %}

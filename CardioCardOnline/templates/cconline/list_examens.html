@@ -1,31 +1,36 @@
 {% extends "cconline/base.html" %}
 
 {% block body %}
+    <h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname|lower|capfirst }}</a></h4>
+    <h4 class="text-center">Функциональные исследования</h4>
+    <p><a href="{% url 'add_exam' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
+    <div class="container-fluid">
+        <table class="table table-condensed">
+            <thead>
+                    <th>Обследование</th>
+                    <th>Назначен</th>
+                    <th>Выполнен</th>
+            </thead>
+            <tbody>
+                {%  for item in examens %}
+                <tr>
+                    <td>
+                        {% if item.date_execute %}<a href="{% url 'get_exam' id=item.id %}">{% endif %}{{ item.name_exam }}{% if item.date_execute %}</a>{% endif %}
+                    </td>
+                    <td>
+                        {{ item.date_assign|date:"d.m.Y H:i" }}
+                    </td>
 
-    <h3><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h3>
+                    <td>
+                        {% if item.date_execute %}<a href="{% url 'get_exam' id=item.id %}">{{ item.date_execute|date:"d.m.Y H:i" }}</a>{% else %} в процессе {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-<div class="container-fluid">
-    <table class="table table-condensed">
-        <thead>
-                <th>Обследование</th>
-                <th>Выполнен</th>
-        </thead>
-        <tbody>
-            {%  for item in examens %}
-            <tr>
-                <td>
-                    {% if item.date_execute %}<a href="{% url 'get_exam' id=item.id %}">{% endif %}{{ item.name_exam }}{% if item.date_execute %}</a>{% endif %}
-                </td>
-                <td>
-                    {% if item.date_execute %}<a href="{% url 'get_exam' id=item.id %}">{{ item.date_execute|date:"d.m.Y H:i" }}</a>{% else %} в процессе {% endif %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    </div>
 
-</div>
-
-    <p><a href="{% url 'add_exam' idpatient=history.id %}" class="btn btn-primary" role="button">Назначить</a></p>
+    <p><a href="{% url 'add_exam' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
 
 {% endblock %}

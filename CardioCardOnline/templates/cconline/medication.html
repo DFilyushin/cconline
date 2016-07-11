@@ -1,33 +1,30 @@
 {% extends "cconline/base.html" %}
+{% load cconline_extras %}
 {% load staticfiles %}
 
 {% block body %}
 
-    <h3><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h3>
-    <h2>Назначено: {{ medicname }}</h2>
+    <h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h4>
+    <h4>Назначено: {{ medicname }} </h4>
 
-<div class="container-fluid">
-    <table class="table table-condensed">
-        <tbody>
-            {%  for item in dataset %}
-            <tr>
-                <td>{{ item.doctor }}</td>
-                <td>{{ item.appoint|date:"d.m.Y H:i" }}</td>
-                <td>{{ item.composit }}</td>
-                <td>Д:{{ item.dose }}</td>
-                <td>{{ item.count_drug }}</td>
-                <td>{{ item.appl_form }}</td>
-                <td>{% if item.eat_time %} <img src="{% static 'images/tick.png' %}"> {% endif %}</td>
-                <td><a href="/prolong_medication/{{ item.id }}" class="btn btn-primary" role="button">Продлить</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container-fluid">
+        <table class="table table-condensed">
+            <tbody>
+                {%  for item in dataset %}
+                <tr>
+                    <td>{{ item.doctor }}</td>
+                    <td>{% ifequal item.appoint|date:"Y" year %}{{ item.appoint|date:"j b H:i" }}{% else %} {{item.appoint|date:"d.m.Y H:i"}} {% endifequal %} </td>
+                    <td>{{ item.composit }}</td>
+                    <td>Д:{{ item.dose }}</td>
+                    <td>{{ item.count_drug }}</td>
+                    <td>{{ item.appl_form }}</td>
+                    <td>{% if item.eat_time %} <img src="{% static 'images/tick.png' %}"> {% endif %}</td>
+                    <td><a href="/prolong_medication/{{ item.id }}" class="btn btn-primary btn-xs" role="button">Продлить</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-</div>
-
-    <p>
-        <a href="{% url 'list_medication' idpatient=history.id %}">К списку назначений</a>
-    </p>
-
+    </div>
+    <p><a href="{% url 'list_medication' idpatient=history.id  %}" class="btn btn-default btn-wide center-block" role="button">К назначениям</a></p>
 {% endblock %}

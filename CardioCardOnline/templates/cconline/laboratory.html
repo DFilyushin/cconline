@@ -2,20 +2,17 @@
 
 {% block body %}
 <div class="container-fluid">
-    <p>
-        <a href="{% url 'list_lab' idpatient=order.id_history %}">К списку анализов</a>
-    </p>
     <h4 class="text-center">{{ order.name_labanalysis }} </h4>
-    <p><strong>Пациент:</strong> № {{ history.num_history }} {{ history.lastname }}</p>
-    <p><strong>Отделение:</strong> {{ order.depart }}</p>
-    <p><strong>Врач:</strong> {{ order.doctor }} </p>
-    <p><strong>Назначен:</strong> {{ order.date_assign|date:"d.m.Y H:i" }}</p>
-    <p><strong>Принят м/с:</strong> {{ order.nurse_date_execute|date:"d.m.Y H:i" }}</p>
-    <p><strong>Выполнен:</strong> {{ order.date_execute|date:"d.m.Y H:i" }}</p>
+    <p><strong>Пациент:</strong> № {{ history.num_history }} {{ history.lastname }} {{ history.firstname  }}
+    </br><strong>Отделение:</strong> {{ order.depart }}
+    </br><strong>Врач:</strong> {{ order.doctor }}
+    </br><strong>Назначен:</strong> {{ order.date_assign|date:"d.m.Y H:i" }}
+    </br><strong>Принят м/с:</strong> {{ order.nurse_date_execute|date:"d.m.Y H:i" }}
+    </br><strong>Выполнен:</strong> {{ order.date_execute|date:"d.m.Y H:i" }} </p>
 
 
     <div class="panel panel-default">
-        <div class="panel-heading">Данные анализов</div>
+        <div class="panel-heading">Результат</div>
         <div class="panel-body">
             <table class="table table-condensed">
                 <thead>
@@ -36,7 +33,8 @@
         </div>
     </div>
     <p>
-        <a href="{% url 'list_lab' idpatient=order.id_history %}">К списку анализов</a>
+        <a href="{% url 'list_lab' idpatient=order.id_history.id %}" class="text-center btn btn-default btn-sm center-block">В историю болезни</a>
+        <a href="{% url 'last_laboratory' %}" class="text-center btn btn-default btn-sm center-block">К обследованиям</a>
     </p>
 </div>
 

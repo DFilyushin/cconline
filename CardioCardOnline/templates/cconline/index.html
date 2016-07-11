@@ -1,6 +1,10 @@
 {% extends "cconline/base.html" %}
+{% load staticfiles %}
 
 {% block body %}
+
+    <img src="{% static 'images/logo.png'%}" class="center-block">
+
     <div class="col-lg-12"><p></p></div>
 
     {% if "NURSE" in list_group %}
@@ -38,6 +42,11 @@
         </div>
         <div class="col-lg-12">
             <p>
+                <a href="{% url 'choose_test' %}" class="btn btn-primary btn-lg center-block" role="button">Обследования</a>
+            </p>
+        </div>
+        <div class="col-lg-12">
+            <p>
                 <a href="{% url 'stat' %}" class="btn btn-primary btn-lg center-block" role="button">Статистика</a>
             </p>
         </div>
@@ -49,11 +58,11 @@
 
     <div class="row">
         <div class="col-xs-6 text-left">
-            <p>©ПОКЦ, 2015-2016 г.</p>
+            <p class="small">©ПОКЦ, 2015/16 г.</p>
         </div>
         <div class="col-xs-6 text-right">
         {% if current_doc %}
-            <p class="text-muted">Пользователь: <a href="{% url 'user_profile' %}">{{ current_user }}</a> <a href="/logout">[Выход]</a></p>
+            <p class="small"><a href="{% url 'user_profile' %}">{{ current_user }}</a> <a href="/logout">[Выход]</a></p>
         {% endif %}
         </div>
     </div>

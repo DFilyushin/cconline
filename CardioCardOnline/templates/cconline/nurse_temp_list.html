@@ -2,14 +2,13 @@
 
 {% block body %}
 <div class="container-fluid">
+    <h4>Температурный лист пациента</h4>
     <p>
-        <a href="{% url 'list_nurse' idpatient=view.id_history %}">К списку температурных листов</a>
+        <strong>Пациент: </strong>№{{ view.num_card }} {{ view.patient }}
+        </br><strong>Дата: </strong>{{ view.date_view|date:"d.m.Y H:i" }}
+        </br><strong>Отделение: </strong> {{ view.depart }}
+        </br><strong>Мед. сестра: </strong>{{ view.nurse }}
     </p>
-    <h3>Температурный лист пациента</h3>
-    <p><em>Пациент: </em>{{ view.patient }} [{{ view.num_card }}]</p>
-    <p><em>Дата: </em>{{ view.date_view|date:"d.m.Y H:i" }}</p>
-    <p><em>Мед. сестра: </em>{{ view.nurse }} </p>
-    <p><em>Отделение: </em> {{ view.depart }}</p>
     <table class="table table-hover table-responsive table-condensed">
         <thead>
             <tr>
@@ -26,9 +25,12 @@
             {% endfor %}
         </tbody>
     </table>
+
     <p>
-        <a href="{% url 'list_nurse' idpatient=view.id_history %}">К списку температурных листов</a>
+        </br>
+        <a href="{% url 'list_nurse' idpatient=view.id_history %}" class="text-center btn btn-default btn-sm center-block">К температурным листам</a>
     </p>
+
 </div>
 
 {% endblock %}

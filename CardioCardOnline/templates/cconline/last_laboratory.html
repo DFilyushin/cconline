@@ -1,0 +1,31 @@
+{% extends "cconline/base.html" %}
+
+{% block body %}
+
+
+    <h4 class="text-center">Лабораторные анализы</h4>
+
+    <div class="container-fluid">
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Пациент</th>
+                    <th>Вид анализа</th>
+                    <th>Выполнен</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%  for item in labs %}
+                <tr>
+                    <td>{{ item.id_history.num_history }} </br>{{ item.id_history.lastname }}</td>
+                    <td><a href="{% url 'get_lab' id=item.id %}">{{ item.name_labanalysis }}</a></td>
+                    <td>{{ item.date_execute|date:"d.m.Y H:i" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <p><a href="{% url 'choose_test' %}" class="btn btn-default btn-wide center-block" role="button">К выбору</a></p>
+
+{% endblock %}

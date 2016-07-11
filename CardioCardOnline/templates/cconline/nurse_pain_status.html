@@ -2,16 +2,15 @@
 
 {% block body %}
 
+    <h4 class="text-center">Оценка боли</h4>
     <p>
-        <a href="{% url 'list_nurse' idpatient=view.id_history %}">К списку сестринских осмотров</a>
+        <strong>Пациент:</strong> №{{ view.num_history }} {{ view.patient }}
+        </br><strong>Дата:</strong> {{ view.date_view|date:"d.m.Y H:i" }}
+        </br><strong>М/с:</strong> {{ view.nurse }}
+        </br><strong>Отделение:</strong> {{ view.depart }}
     </p>
-    <h3>Оценка боли</h3>
-    <p><em>Пациент:</em> {{ view.patient }} [{{ view.num_history }}]</p>
-    <p><em>Дата:</em> {{ view.date_view|date:"d.m.Y H:i" }}</p>
-    <p><em>М/с:</em> {{ view.nurse }} </p>
-    <p><em>Отделение:</em> {{ view.depart }}</p>
 
-    <p class="bg-primary">Запись осмотра</p>
+    <p class="text-center">Запись осмотра</p>
 <form class="form-horizontal" role="form">
 
     <div class="form-group">
@@ -85,7 +84,8 @@
     </form>
 
     <p>
-        <a href="{% url 'list_nurse' idpatient=view.id_history %}">К списку сестринских осмотров</a>
+        </br>
+        <a href="{% url 'list_nurse' idpatient=view.id_history %}" class="text-center btn btn-default btn-sm center-block">К осмотрам</a>
     </p>
 
 
