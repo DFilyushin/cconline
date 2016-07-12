@@ -46,7 +46,7 @@
                         <i ng-if="item.fields.type_app===4" class="glyphicon icon-doctor"></i>
                     </td>
                     <td>{{ item.fields.dt_appointment| date:"HH:mm" }}</td>
-                    <td>{{ item.fields.appointment }}</td>
+                    <td>{{ item.fields.appointment }} {{ item.fields.appcomment }}</td>
                     <td></td>
                     <td><button type="button" class="btn btn-success" ng-click="executeNurse($index, item.fields.type_app )">Выполнить</button></td>
                 </tr>
