@@ -179,7 +179,8 @@ def get_my_patient(request):
     id_doctor = card_user.id_doctor
     current_doc = card_user.user_fullname
     patients = ListHistory.objects.filter(id_doctor=id_doctor).\
-        filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.today()))
+        filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.today())).\
+        order_by('-receipt')
     return render_to_response(
         'cconline/patients.html',
         {

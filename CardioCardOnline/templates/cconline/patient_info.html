@@ -3,12 +3,14 @@
 {% block body %}
 
     <h4><a href="{% url 'get_patient' idpatient=patient.id %}">№{{ patient.num_history }} {{ patient.lastname|lower|capfirst }}</a></h4>
-    <p><strong>Диагноз приёмного покоя:</strong> {{ patient.diag_preliminary_rd }}
-    </br><strong>Диагноз предварительный:</strong> {{ patient.preliminary_diag }}
-    </br><strong>Диагноз клинический:</strong> {% if patient.clinic_diag %}{{ patient.clinic_diag }}{% endif %}
-    </br><strong>Диагноз заключительный:</strong> {% if patient.main_diag %}{{ patient.main_diag }} {% endif %}
-    </br><strong>Осложнение основного:</strong> {% if patient.main_complication %}{{ patient.main_complication }} {% endif %}
-    </br><strong>Сопутствующий:</strong> {% if patient.related_diagnosis %}{{ patient.related_diagnosis }} {% endif %}
+    <p>
+        <strong>Лечащий врач:</strong> {{ patient.id_doctor.name }}
+        </br><strong>Диагноз приёмного покоя:</strong> {{ patient.diag_preliminary_rd }}
+        </br><strong>Диагноз предварительный:</strong> {{ patient.preliminary_diag }}
+        </br><strong>Диагноз клинический:</strong> {% if patient.clinic_diag %}{{ patient.clinic_diag }}{% endif %}
+        </br><strong>Диагноз заключительный:</strong> {% if patient.main_diag %}{{ patient.main_diag }} {% endif %}
+        </br><strong>Осложнение основного:</strong> {% if patient.main_complication %}{{ patient.main_complication }} {% endif %}
+        </br><strong>Сопутствующий:</strong> {% if patient.related_diagnosis %}{{ patient.related_diagnosis }} {% endif %}
     </p>
     <hr>
     <p><strong>Группа крови:</strong> {{ blood }}</p>

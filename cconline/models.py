@@ -497,6 +497,13 @@ class ListSurgery(models.Model):
     surgery_extreme = models.SmallIntegerField(db_column='EXTREME_TYPE')
     conclusion = models.TextField(db_column='CONCLUSION')
     type_operation = models.IntegerField(db_column='TYPE_OPER')
+    surgeon = models.CharField(max_length=255, db_column='SURGEON')
+    assistent1 = models.CharField(max_length=255, db_column='ASSISTENT')
+    assistent2 = models.CharField(max_length=255, db_column='ASSISTENT2')
+    assistent3 = models.CharField(max_length=255, db_column='ASSISTENT3')
+    perfusiolog = models.CharField(max_length=255, db_column='PERFUS')
+    anestesiolog = models.CharField(max_length=255, db_column='ANESTESIOLOG')
+    opernurse = models.CharField(max_length=255, db_column='NURSE')
 
     class Meta:
         managed = False

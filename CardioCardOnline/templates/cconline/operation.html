@@ -2,17 +2,25 @@
 {% load cconline_extras %}
 
 {% block body %}
-    <h3><a href="{% url 'list_surgery' idpatient=operation.id_history %}">№{{ operation.num_history }} {{ operation.patient }}</a></h3>
-    <h3>Оперативное вмешательство</h3>
-    <p><strong>Наименование операции: </strong> {{ operation.surgery_name }}</p>
-    <p><strong>Тип операции: </strong> {{ operation.surgery_type }}</p>
-    <p><strong>Дата проведения операции: </strong> {{ operation.surgery_date|date:"d.m.Y" }}</p>
-    <p><strong>Наименование операции: </strong> {{ operation.surgery_name }}</p>
-    <p><strong>Протокол операции: </strong><br> {{ operation.conclusion }}</p>
+    <h4>Оперативное вмешательство</h4>
+    <p>
+        <strong>Пациент:</strong> №{{ operation.num_history }} {{ operation.patient }}
+        </br><strong>Наименование операции: </strong> {{ operation.surgery_name }}
+        </br><strong>Тип операции: </strong> {{ operation.surgery_type }}
+        </br><strong>Дата проведения операции: </strong> {{ operation.surgery_date|date:"d.m.Y" }}
+        </br><strong>Наименование операции: </strong> {{ operation.surgery_name }}
+        </br><strong>Хирург/оператор:</strong> {{ operation.surgeon }}
+        </br><strong>Ассистенты:</strong> {{ operation.assistent1 }} {{ operation.assistent2 }} {{ operation.assistent3 }}
+        </br><strong>Оперсестра:</strong> {{ operation.opernurse }}
+        </br><strong>Перфузиолог:</strong> {{ operation.perfusiolog }}
+        </br><strong>Анестезиолог:</strong> {{ operation.anestesiolog }}
+        </br><strong>Протокол операции: </strong><br> {{ operation.conclusion }}
+    </p>
     {% if adv_info %}
         <p><strong>Состояние артерий: </strong><br> {{ adv_info|ccrlf }}</p>
     {% endif %}
     <p>
-        <a href="{% url 'list_surgery' idpatient=operation.id_history %}">Вернуться к списку операций</a>
+        <a href="{% url 'list_surgery' idpatient=operation.id_history %}" class="text-center btn btn-default btn-sm center-block">К списку операций</a>
     </p>
+
 {% endblock %}
