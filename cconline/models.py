@@ -259,6 +259,7 @@ class ListAnalysis(models.Model):
     name_labanalysis = models.CharField(db_column='NAME_LABANALYSIS', max_length=255)
     doctor = models.CharField(max_length=255)
     depart = models.CharField(db_column='DEPARTMENT', max_length=255)
+    lisid = models.CharField(db_column='ILISID', max_length=255)
     #patient = models.ForeignKey('History')
 
     class Meta:

@@ -1,15 +1,19 @@
 {% extends "cconline/base.html" %}
+{% load staticfiles %}
 
 {% block body %}
 
     <h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h4>
     <h4 class="text-center">Лабораторные анализы</h4>
-    <p><a href="/lab/add/{{ history.id }}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
+    {% if "DOCTOR" in list_group  %}
+        <p><a href="/lab/add/{{ history.id }}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
+    {% endif %}
 <div class="container-fluid">
     <table class="table table-condensed">
         <thead>
             <tr>
                 <th>Вид анализа</th>
+                <th>LisId</th>
                 <th>Выполнен</th>
             </tr>
         </thead>
@@ -17,6 +21,7 @@
             {%  for item in labs %}
             <tr>
                 <td>{% if item.date_execute %} <a href="{% url 'get_lab' id=item.id %}"> {% endif %}{{ item.name_labanalysis }}{% if item.date_execute %}</a>{% endif %}</td>
+                <td>{% if item.lisid %}{{ item.lisid }} {% else %} <img src="{% static 'images/dummy-small.png'%}"> {% endif %}</td>
                 <td>{% if item.date_execute %}{{ item.date_execute|date:"d.m.Y H:i" }}{% else %}не выполнен{% endif %}</td>
             </tr>
             {% endfor %}
@@ -24,7 +29,7 @@
     </table>
 </div>
 
-    {% if labs %}
+    {% if labs and "DOCTOR" in list_group %}
     <p><a href="/lab/add/{{ history.id }}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
     {% endif %}
 
