@@ -120,7 +120,7 @@ def get_nurse_patients(request):
 @login_required(login_url='/login')
 def get_nurse_patient(request, id):
     """
-
+    Get patient by Id
     :param request:
     :return:
     """
