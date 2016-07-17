@@ -39,9 +39,11 @@
         </div>
     {% endif %}
 
+    {% if "DOCTOR" in list_group %}
     <p class="text-right">
         <a href="{% url 'delete_exam' id_exam=examen.id %}" class="btn btn-warning" role="button">Удалить</a>
     </p>
+    {% endif %}
 
     <p>
         <a href="{% url 'list_exam' idpatient=examen.id_history.id %}" class="text-center btn btn-default btn-sm center-block">В историю болезни</a>

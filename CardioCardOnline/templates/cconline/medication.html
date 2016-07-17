@@ -19,7 +19,9 @@
                     <td>{{ item.count_drug }}</td>
                     <td>{{ item.appl_form }}</td>
                     <td>{% if item.eat_time %} <img src="{% static 'images/tick.png' %}"> {% endif %}</td>
+                {% if "DOCTOR" in list_group %}
                     <td><a href="/prolong_medication/{{ item.id }}" class="btn btn-primary btn-xs" role="button">Продлить</a></td>
+                {% endif %}
                 </tr>
                 {% endfor %}
             </tbody>

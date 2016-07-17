@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ item.id_history.num_history }} </br>{{ item.id_history.lastname }}</td>
                     <td><a href="{% url 'get_exam' id=item.id %}">{{ item.name_exam }}</a></td>
-                    <td>{{ item.date_execute|date:"d.m.Y H:i" }}</td>
+                    <td>{{ item.date_execute|date:"d.m H:i" }}</td>
                 </tr>
                 {% endfor %}
             </tbody>

@@ -9,6 +9,10 @@
 
     {% if "NURSE" in list_group %}
         <div class="col-lg-12">
+            <p><a href="{% url 'departs_patient' iddepart=id_depart %}" class="btn btn-primary btn-lg center-block" role="button">Пациенты отделения</a></p>
+        </div>
+
+        <div class="col-lg-12">
             <p><a href="{% url 'nurse_work' %}" class="btn btn-primary btn-lg center-block" role="button">Журнал назначений</a></p>
         </div>
         <div class="col-lg-12">
@@ -40,11 +44,14 @@
                 <a href="{% url 'patient_by_depart' %}" class="btn btn-primary btn-lg center-block" role="button">По отделениям</a>
             </p>
         </div>
-        <div class="col-lg-12">
-            <p>
-                <a href="{% url 'choose_test' %}" class="btn btn-primary btn-lg center-block" role="button">Обследования</a>
-            </p>
-        </div>
+    {% endif %}
+    <div class="col-lg-12">
+        <p>
+            <a href="{% url 'choose_test' %}" class="btn btn-primary btn-lg center-block" role="button">Обследования</a>
+        </p>
+    </div>
+
+    {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "FUNCT" in list_group %}
         <div class="col-lg-12">
             <p>
                 <a href="{% url 'stat' %}" class="btn btn-primary btn-lg center-block" role="button">Статистика</a>
@@ -57,12 +64,15 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-6 text-left">
+        <div class="col-xs-4 text-left">
             <p class="small">©ПОКЦ, 2015/16 г.</p>
         </div>
-        <div class="col-xs-6 text-right">
+        <div class="col-xs-4 text-center">
+            <p class="small"><a href="{% url 'user_profile' %}"><img src="{% static 'images/user-medical.png'%}"> {{ current_user }}</a></p>
+        </div>
+        <div class="col-xs-4 text-center">
         {% if current_doc %}
-            <p class="small"><a href="{% url 'user_profile' %}">{{ current_user }}</a> <a href="/logout">[Выход]</a></p>
+            <p class="small"><a href="/logout"><img src="{% static 'images/door-open-out.png'%}"></a></p>
         {% endif %}
         </div>
     </div>

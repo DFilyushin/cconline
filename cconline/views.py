@@ -14,10 +14,11 @@ from models import Departments, ListHistory, ListDiary, ListAnalysis, Laboratory
     ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication, \
     ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization,\
     RefExamens, ExamenDataset, ExamParam, ProfDataset, \
-    SysUsers, UserGroups, Personal, Diary, Hospitalization, WebUsersStat
+    SysUsers, UserGroups, Personal, Diary, Hospitalization, HistoryMove
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login as auth_login
+from django.views.decorators.cache import cache_page
 
 
 def card_login(request, *args, **kwargs):
@@ -121,12 +122,14 @@ def index(request):
     :return:
     """
     current_user = request.user.last_name + ' ' + request.user.first_name
+    id_depart = get_user_depart(request)
     return render_to_response(
         'cconline/index.html',
         {
             'current_doc': get_current_doctor(request),
             'current_user': current_user,
             'list_group': get_user_groups(request),
+            'id_depart': id_depart,
         },
         context_instance=RequestContext(request)
     )
@@ -154,6 +157,7 @@ def search(request):
         )
     else:
         raise Http404
+
 
 @login_required(login_url='/login')
 def profile(request):
@@ -219,11 +223,14 @@ def patient_cure(request, idpatient):
         history = History.objects.get(pk=idpatient)
     except History.DoesNotExist:
         raise Http404
+    movement = HistoryMove.objects.filter(id_history=idpatient).order_by('datemove')
     blood_type = history.get_blood_type(history.id)
+
     return render_to_response(
         'cconline/patient_info.html',
         {
             'patient': history,
+            'movement': movement,
             'blood': blood_type,
             'current_doc': get_current_doctor(request),
         }
@@ -231,6 +238,7 @@ def patient_cure(request, idpatient):
 
 
 @login_required(login_url='/login')
+@cache_page(60 * 5)
 def get_patient(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -316,6 +324,7 @@ def get_laboratory(request, id):
 
 
 @login_required(login_url='/login')
+@cache_page(60 * 15)
 def get_active_departs(request):
     departs = ActiveDepart.objects.all()
     return render_to_response(
@@ -328,6 +337,7 @@ def get_active_departs(request):
 
 
 @login_required(login_url='/login')
+@cache_page(60 * 5)
 def patients_by_depart(request, iddepart):
     """
     Список пациентов по отделениям
@@ -465,6 +475,7 @@ def get_examen(request, id):
         {
             'examen': examen,
             'params': params,
+            'list_group': get_user_groups(request),
             'current_doc': get_current_doctor(request),
         }
     )
@@ -1151,14 +1162,29 @@ def save_doctor_view(request):
 
 @login_required(login_url='/login')
 def choose_test(request):
+    id_depart = get_user_depart(request)
+    try:
+        name_depart = Departments.objects.get(pk=id_depart).name
+    except Departments.DoesNotExist:
+        name_depart = u'не указано отделение'
     return render_to_response(
-        'cconline/actual_result.html',{}, context_instance=RequestContext(request)
+        'cconline/actual_result.html',
+        {
+            'id_depart': id_depart,
+            'depart': name_depart,
+        }, context_instance=RequestContext(request)
     )
 
 
 @login_required(login_url='/login')
-def last_exam(request):
-    examenation_test = ListExamens.objects.filter(date_execute__isnull=False).order_by('-date_execute')[:30]
+@cache_page(60 * 5)
+def last_exam(request, iddepart):
+    """
+    Get last 30 ready examenation by department of doctor
+    :param request:
+    :return:
+    """
+    examenation_test = ListExamens.objects.filter(id_depart=iddepart).filter(date_execute__isnull=False).order_by('-date_execute')[:30]
     return render_to_response(
         'cconline/last_examenation.html',
         {
@@ -1168,10 +1194,15 @@ def last_exam(request):
     )
 
 
-
 @login_required(login_url='/login')
-def last_lab(request):
-    laboratory_test = ListAnalysis.objects.filter(date_execute__isnull=False).order_by('-date_execute')[:30]
+@cache_page(60 * 5)
+def last_lab(request, iddepart):
+    """
+    Get last 30 ready laboratory by department of doctor
+    :param request:
+    :return:
+    """
+    laboratory_test = ListAnalysis.objects.filter(id_depart=iddepart).filter(date_execute__isnull=False).order_by('-date_execute')[:30]
     return render_to_response(
         'cconline/last_laboratory.html',
         {

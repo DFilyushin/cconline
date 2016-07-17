@@ -3,7 +3,9 @@
 {% block body %}
     <h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname|lower|capfirst }}</a></h4>
     <h4 class="text-center">Функциональные исследования</h4>
-    <p><a href="{% url 'add_exam' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
+    {% if "DOCTOR" in list_group  %}
+        <p><a href="{% url 'add_exam' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
+    {% endif %}
     <div class="container-fluid">
         <table class="table table-condensed">
             <thead>
@@ -31,6 +33,8 @@
 
     </div>
 
-    <p><a href="{% url 'add_exam' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
+    {% if "DOCTOR" in list_group  %}
+        <p><a href="{% url 'add_exam' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
+    {% endif %}
 
 {% endblock %}

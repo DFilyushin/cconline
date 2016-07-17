@@ -41,7 +41,16 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 )
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+        'TIMEOUT': 300
+    }
+}
 
 ROOT_URLCONF = 'CardioCardOnline.urls'
 
@@ -68,7 +77,7 @@ DATABASES = {
         'PORT': '3050',
         'USER': 'SYSDBA',
         'PASSWORD': 'masterkey',
-        'CONN_MAX_AGE': 360000,
+        'CONN_MAX_AGE': None,
     }
 }
 

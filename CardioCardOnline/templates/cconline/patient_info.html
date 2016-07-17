@@ -3,22 +3,51 @@
 {% block body %}
 
     <h4><a href="{% url 'get_patient' idpatient=patient.id %}">№{{ patient.num_history }} {{ patient.lastname|lower|capfirst }}</a></h4>
+    <h4 class="text-center">Общие сведения</h4>
     <p>
-        <strong>Лечащий врач:</strong> {{ patient.id_doctor.name }}
-        </br><strong>Диагноз приёмного покоя:</strong> {{ patient.diag_preliminary_rd }}
-        </br><strong>Диагноз предварительный:</strong> {{ patient.preliminary_diag }}
-        </br><strong>Диагноз клинический:</strong> {% if patient.clinic_diag %}{{ patient.clinic_diag }}{% endif %}
-        </br><strong>Диагноз заключительный:</strong> {% if patient.main_diag %}{{ patient.main_diag }} {% endif %}
-        </br><strong>Осложнение основного:</strong> {% if patient.main_complication %}{{ patient.main_complication }} {% endif %}
-        </br><strong>Сопутствующий:</strong> {% if patient.related_diagnosis %}{{ patient.related_diagnosis }} {% endif %}
-    </p>
-    <hr>
-    <p><strong>Группа крови:</strong> {{ blood }}</p>
-    <p>
+        </br><strong>Дата рождения:</strong> {{ patient.dob }}
         </br><strong>ИИН:</strong> {{ patient.iin }}
         </br><strong>Адрес:</strong> {{ patient.live_address }}
         </br><strong>Место работы:</strong> {{ patient.workplace }}
     </p>
+    <h4 class="text-center">Установленные диагнозы</h4>
+    <p>
+        <strong>Диагноз приёмного покоя:</strong> {% if patient.diag_preliminary_rd %} {{ patient.diag_preliminary_rd }} {% else %} не установлен {% endif %}
+        {% if patient.preliminary_diag %} </br><strong>Диагноз предварительный:</strong> {{ patient.preliminary_diag }} {% endif %}
+        {% if patient.clinic_diag %} </br><strong>Диагноз клинический:</strong> {{ patient.clinic_diag }}{% endif %}
+        {% if patient.main_diag %} </br><strong>Диагноз заключительный:</strong> {{ patient.main_diag }}{% endif %}
+        {% if patient.main_complication %} </br><strong>Осложнение основного:</strong> {{ patient.main_complication }} {% endif %}
+        {% if patient.related_diagnosis %} </br><strong>Сопутствующий:</strong> {{ patient.related_diagnosis }} {% endif %}
+    </p>
+    <hr width="80%">
+
+
+    <p>
+        <strong>Лечащий врач:</strong> {{ patient.id_doctor.name }}
+        </br><strong>Группа крови:</strong> {{ blood }}
+    </p>
+
+    {% if movement %}
+        <h4 class="text-center">Переводы между отделениями</h4>
+        <table class="table table-responsive table-bordered">
+            {% for item in movement %}
+
+                    {% if forloop.first %}
+                        <tr>
+                            <td>Поступил в {{ item.old_depart }} {{ patient.receipt }}</td>
+                        </tr>
+                        <tr>
+                            <td>Переведён в {{ item.new_depart }} {{ item.datemove }} ({{ item.doctor }})</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td>Переведён в {{ item.new_depart }} {{ item.datemove }} ({{ item.doctor }})</td>
+                        </tr>
+                    {% endif %}
+
+            {% endfor %}
+        </table>
+    {% endif %}
 
 
 {% endblock %}

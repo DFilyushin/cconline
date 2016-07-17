@@ -3,20 +3,20 @@
 {% block body %}
 <div class="container-fluid">
     <div class="center-block">
-
         <h3 class="text-center">Последние обследования</h3>
+        <p class="text-center">Список последних 30 выполненных обследований и анализов пациентов {{ depart }}</p>
     </div>
         <p>
-            <a href="{% url 'last_laboratory' %}" class="btn btn-primary btn-wide center-block" role="button">
+            <a href="{% url 'last_laboratory' iddepart=id_depart %}" class="btn btn-primary btn-wide center-block" role="button">
                 Лабораторные исследования
             </a>
         </p>
         <p>
-            <a href="{% url 'last_examenation' %}" class="btn btn-primary btn-wide center-block" role="button">
+            <a href="{% url 'last_examenation' iddepart=id_depart %}" class="btn btn-primary btn-wide center-block" role="button">
                 Функциональные обследования
             </a>
         </p>
-    <a href="/" class="text-center btn btn-default btn-sm center-block">Вернуться</a>
+    <a href="/" class="text-center btn btn-default btn-sm center-block">На главную</a>
 </div>
 
 {% endblock %}

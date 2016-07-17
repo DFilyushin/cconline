@@ -1,4 +1,5 @@
 {% extends "cconline/base.html" %}
+{% load staticfiles %}
 
 {% block jscript %}
 {% endblock %}
@@ -18,11 +19,14 @@
                 <td><a href="{% url 'get_patient' idpatient=item.id %}"> {{ item.lastname|lower|capfirst }} </br> {{ item.firstname|lower|capfirst }} </br>{{ item.middlename|lower|capfirst }}</a></td>
                 <td><a href="{% url 'get_patient' idpatient=item.id %}"> {% ifequal item.receipt|date:"Y" year %}{{ item.receipt|date:"j b" }}{% else %} {{item.receipt|date:"d.m.Y"}} {% endifequal %}</a></td>
                 <td><a href="{% url 'get_patient' idpatient=item.id %}"> {{ item.doctor }}</a></td>
+                <td>{% if item.is_extreme %}<img src="{% static 'images/exclamation-small.png'%}">{% endif %} {% if item.is_viewed %} <img src="{% static 'images/system-monitor-network.png'%}"> {% endif %} </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
     <a href="javascript: history.go(-1)" class="text-center btn btn-default btn-sm center-block">Вернуться</a>
+    <br/>
+    <a href="/" class="text-center btn btn-default btn-sm center-block">На главную</a>
 
 {% endblock %}

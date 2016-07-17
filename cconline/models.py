@@ -219,6 +219,8 @@ class ListHistory(models.Model):
     id_doctor = models.IntegerField()
     id_depart = models.IntegerField()
     doctor = models.CharField(max_length=255, db_column='DOCTOR_NAME')
+    is_extreme = models.SmallIntegerField(db_column='EXTREME_TYPE')
+    is_viewed = models.SmallIntegerField(db_column='IS_VIEW')
 
     class Meta:
         managed = False
@@ -260,7 +262,7 @@ class ListAnalysis(models.Model):
     doctor = models.CharField(max_length=255)
     depart = models.CharField(db_column='DEPARTMENT', max_length=255)
     lisid = models.CharField(db_column='ILISID', max_length=255)
-    #patient = models.ForeignKey('History')
+    id_depart = models.IntegerField(db_column='ID_DEPARTMENT')
 
     class Meta:
         managed = False
@@ -296,6 +298,7 @@ class ListExamens(models.Model):
     id_history = models.ForeignKey('History', db_column='id_history')
     id_doctor = models.IntegerField()
     id_executer = models.IntegerField()
+    id_depart = models.IntegerField(db_column='ID_DEPARTMENT')
     date_assign = models.DateTimeField(db_column='APPOINTMENT_DATE')
     date_plan = models.DateTimeField(db_column='PLAN_DATE')
     date_nurse = models.DateTimeField(db_column='NURSE_DATE_EXECUTE')
@@ -824,6 +827,19 @@ class NurseViewData(models.Model):
     class Meta:
         managed = False
         db_table = 'VW_EXTACTED_NURSE_DATA'
+
+
+class HistoryMove(models.Model):
+    id = models.IntegerField(primary_key=True)
+    id_history = models.IntegerField()
+    datemove = models.DateTimeField(db_column='DATE_MOVE')
+    old_depart = models.CharField(db_column='CURRENT_DEPARTMENT', max_length=255)
+    new_depart = models.CharField(db_column='NEW_DEPARTMENT', max_length=255)
+    doctor = models.CharField(db_column='DOCNAME', max_length=255)
+
+    class Meta:
+        managed = False
+        db_table = 'VW_PATIENT_MOVE'
 
 
 def do_on_login(sender, user, request, **kwargs):

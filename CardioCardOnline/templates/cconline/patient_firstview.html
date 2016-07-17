@@ -13,11 +13,11 @@
         {% if patient.discharge %}<br><strong>Выписан</strong>:{{ patient.discharge|date:"d.m.Y H:i" }}{% endif %}
 
         {% if patient.extreme_type == 1 %}
-        </br><strong>Диганоз приёмного покоя:</strong>: {{ patient.diag_preliminary_rd }}
+        </br><strong>Диганоз приёмного покоя:</strong> {% if patient.diag_preliminary_rd %} {{ patient.diag_preliminary_rd }} {% else %} не установлен {% endif %}
         {% endif %}
     </p>
 
-    <h4>Запись лечащего врача</h4>
+    <h4 class="text-center">Запись лечащего врача</h4>
     <a href="{% url 'add_doctor_view' idpatient=patient.id %}" class="btn btn-primary btn-wide center-block" role="button">Добавить</a>
     {% for item in first_view %}
         <p><strong><a href="/patient/editview/{{ item.id_history }}/{{ item.id_param }}">{{ item.param_name }}</a></strong>: {{ item.text }}</p>
