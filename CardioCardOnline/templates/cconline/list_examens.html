@@ -24,7 +24,7 @@
                     </td>
 
                     <td>
-                        {% if item.date_execute %}<a href="{% url 'get_exam' id=item.id %}">{{ item.date_execute|date:"d.m.Y H:i" }}</a>{% else %} в процессе {% endif %}
+                        {% if item.date_execute %}<a href="{% url 'get_exam' id=item.id %}">{{ item.date_execute|date:"d.m H:i" }}</a>{% else %} в процессе {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
