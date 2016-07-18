@@ -947,6 +947,7 @@ def delete_diary(request, id_diary):
 
 
 @login_required(login_url='/login')
+@cache_page(60 * 15)
 def stat(request):
     """
     Статистика
