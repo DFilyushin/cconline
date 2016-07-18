@@ -32,7 +32,7 @@ def card_login(request, *args, **kwargs):
     if request.method == 'POST':
         f = AuthenticationForm(request, data=request.POST)
         if f.is_valid():
-            last_user = request.POST.get('username','')
+            last_user = request.POST.get('username', '')
             auth_login(request, f.get_user())
             response = HttpResponseRedirect('/')
             response.set_cookie('last_user', last_user)
@@ -161,7 +161,6 @@ def search(request):
 
 @login_required(login_url='/login')
 def profile(request):
-    current_user = request.user.username.upper()
     return render_to_response(
         'cconline/profile.html',
         {
@@ -291,6 +290,7 @@ def get_lab_list(request, idpatient):
             'labs': labs,
             'history': history,
             'current_doc': get_current_doctor(request),
+            'list_group': get_user_groups(request),
         }
     )
 
@@ -303,6 +303,7 @@ def get_laboratory(request, id):
     :param id: Код анализа (pk)
     :return:
     """
+    id_depart = get_user_depart(request)
     try:
         lab = ListAnalysis.objects.get(pk=id)
     except ListAnalysis.DoesNotExist:
@@ -319,6 +320,7 @@ def get_laboratory(request, id):
             'order': lab,
             'result': lab_result,
             'current_doc': get_current_doctor(request),
+            'id_depart': id_depart,
         }
     )
 
@@ -453,6 +455,7 @@ def get_examen_list(request, idpatient):
             'examens': examens,
             'history': history,
             'current_doc': get_current_doctor(request),
+            'list_group': get_user_groups(request),
         }
     )
 
@@ -465,6 +468,7 @@ def get_examen(request, id):
     :param id: Код обследования (pk)
     :return:
     """
+    id_depart = get_user_depart(request)
     try:
         examen = ListExamens.objects.get(pk=id)
     except ListExamens.DoesNotExist:
@@ -477,6 +481,7 @@ def get_examen(request, id):
             'params': params,
             'list_group': get_user_groups(request),
             'current_doc': get_current_doctor(request),
+            'id_depart': id_depart,
         }
     )
 
@@ -705,6 +710,8 @@ def get_medication(request, id):
             'medicname': medication.medic_name,
             'current_doc': get_current_doctor(request),
             'year': cur_date.year.__str__(),
+            'list_group': get_user_groups(request),
+
         }
     )
 
@@ -750,7 +757,9 @@ def prolong_med(request):
     list_group = get_user_groups(request)
     if 'DOCTOR' not in list_group:
         raise PermissionDenied
-    id_medication = request.POST['id_medication']
+    id_medication = request.POST.get('id_medication', 0)
+    if id_medication == 0:
+        raise Http404
 
     try:
         medication = Medication.objects.get(pk=id_medication)
@@ -768,13 +777,12 @@ def prolong_med(request):
     date1 = "%d-%d-%d" % (int(year1), int(month1), int(day1))
     date2 = "%d-%d-%d" % (int(year2), int(month2), int(day2))
 
-    id_medication = 0
-
     sql = "EXECUTE PROCEDURE SP_COPY_ASSIGN_MEDIC (%s, '%s', '%s')" % (id_medication, date1, date2)
     cursor = connection.cursor()
 
     try:
         cursor.execute(sql)
+        connection.commit()
         mess = u'Лечение продлено'
     except:
         mess = u'Ошибка продления лечения!'
@@ -848,6 +856,7 @@ def new_diary(request, idpatient):
     """
     Новый дневник пациента
     :param request:
+    :param idpatient: patient code
     :return:
     """
     list_group = get_user_groups(request)
@@ -939,7 +948,7 @@ def delete_diary(request, id_diary):
     diary.delete()
     redirect_url = '/diary/list/' + str(id_history)
     return render(request,  'cconline/redirect.html', {
-        'message': 'Дневник удалён',
+        'message': u'Дневник удалён',
         'redirect_url': redirect_url,
         'request': request,
         'type_message': 'bg-info',
@@ -956,13 +965,11 @@ def stat(request):
     """
     list_depart = ActiveDepart.objects.all().order_by('name')  # количество пациентов по отделениям
     hospitalization = Hospitalization.objects.all()  # госпитализация по отделениям
-    # user_stat = WebUsersStat.objects.all()  # список пользователей ККО по отделениям в сравнении с сист. пользователями
     return render_to_response(
         'cconline/stat.html',
         {
             'departs': list_depart,
             'hospit': hospitalization,
-            #'users': user_stat,
         },
         context_instance=RequestContext(request)
     )
@@ -1185,7 +1192,8 @@ def last_exam(request, iddepart):
     :param request:
     :return:
     """
-    examenation_test = ListExamens.objects.filter(id_depart=iddepart).filter(date_execute__isnull=False).order_by('-date_execute')[:30]
+    examenation_test = ListExamens.objects.filter(id_depart=iddepart).filter(date_execute__isnull=False)\
+                           .order_by('-date_execute')[:30]
     return render_to_response(
         'cconline/last_examenation.html',
         {
@@ -1203,7 +1211,8 @@ def last_lab(request, iddepart):
     :param request:
     :return:
     """
-    laboratory_test = ListAnalysis.objects.filter(id_depart=iddepart).filter(date_execute__isnull=False).order_by('-date_execute')[:30]
+    laboratory_test = ListAnalysis.objects.filter(id_depart=iddepart).filter(date_execute__isnull=False)\
+                          .order_by('-date_execute')[:30]
     return render_to_response(
         'cconline/last_laboratory.html',
         {

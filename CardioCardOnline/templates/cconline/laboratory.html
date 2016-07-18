@@ -34,7 +34,7 @@
     </div>
     <p>
         <a href="{% url 'list_lab' idpatient=order.id_history.id %}" class="text-center btn btn-default btn-sm center-block">В историю болезни</a>
-        <a href="{% url 'last_laboratory' %}" class="text-center btn btn-default btn-sm center-block">К обследованиям</a>
+        <a href="{% url 'last_laboratory' iddepart=id_depart %}" class="text-center btn btn-default btn-sm center-block">К обследованиям</a>
     </p>
 </div>
 

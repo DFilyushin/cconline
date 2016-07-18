@@ -8,10 +8,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
 SECRET_KEY = 'a=bq4gjswb@ppr5q+ouwm+po!%&6!gabc^b&$*sq31-m=^ng1t'
 
 DEBUG = True
@@ -19,7 +15,6 @@ DEBUG = True
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -73,14 +68,13 @@ DATABASES = {
     'default': {
         'ENGINE': 'firebird',
         'HOST': 'localhost',
-        'NAME': 'C://var//db//M6.FDB',
+        'NAME': 'cardiocard',
         'PORT': '3050',
         'USER': 'SYSDBA',
         'PASSWORD': 'masterkey',
         'CONN_MAX_AGE': None,
     }
 }
-
 
 # Internationalization
 

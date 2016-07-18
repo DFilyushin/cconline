@@ -4,7 +4,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.contrib.auth.admin import UserChangeForm
 from cconline.utils import ValidatingPasswordChangeForm
 
 
@@ -86,7 +85,6 @@ urlpatterns = [
 
     # utility for localnet
     url(r'^getpass/$', 'cconline.utils.getpass', name='get_password'),
-    # url(r'^test/$', 'cconline.utils.gethttp'),
     url(r'^json/test/$', 'cconline.utils.json_test', name='get_test'),
     url(r'^json/subtest/$', 'cconline.utils.json_subtest', name='get_subtest'),
     url(r'^json/posttest/$', 'cconline.utils.json_savetest'),
