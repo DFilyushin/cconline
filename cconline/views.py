@@ -14,11 +14,12 @@ from models import Departments, ListHistory, ListDiary, ListAnalysis, Laboratory
     ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication, \
     ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization,\
     RefExamens, ExamenDataset, ExamParam, ProfDataset, \
-    SysUsers, UserGroups, Personal, Diary, Hospitalization, HistoryMove
+    SysUsers, UserGroups, Personal, Diary, Hospitalization, HistoryMove, MedicationDates
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login as auth_login
 from django.views.decorators.cache import cache_page
+import datetime
 
 
 def card_login(request, *args, **kwargs):
@@ -1217,6 +1218,48 @@ def last_lab(request, iddepart):
         'cconline/last_laboratory.html',
         {
             'labs': laboratory_test,
+        },
+        context_instance=RequestContext(request)
+    )
+
+
+@login_required(login_url='/login')
+def get_list_medication_by_date(request, idpatient):
+    """
+    Get list medication by dates, view all date with assigned medication
+    :param request:
+    :param idpatient:
+    :return:
+    """
+    list_dates = MedicationDates.objects.filter(id_history=idpatient)
+    return render_to_response('cconline/list_medication_by_dates.html',
+        {
+            'month': 7,
+            'year': 2016,
+            'event_list': list_dates,
+        },
+        context_instance=RequestContext(request)
+    )
+
+
+
+
+def get_medication_by_date(request, idpatient, date_assign):
+    """
+
+    :param request:
+    :param idpatient:
+    :param date_assign:
+    :return:
+    """
+    date1 = datetime.datetime.strptime(date_assign, '%Y-%m-%d')
+    date2 = datetime.datetime.combine(date1, datetime.time.max)
+
+    medication = Medication.objects.filter(id_history=idpatient).filter(appoint__range=(date1, date2))
+    return render_to_response('cconline/medication_by_date.html',
+        {
+            'medications': medication,
+
         },
         context_instance=RequestContext(request)
     )

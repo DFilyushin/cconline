@@ -1,0 +1,25 @@
+{% extends "cconline/base.html" %}
+{% load cconline_extras %}
+{% load event_tags %}
+
+{% block body %}
+
+<h4 class="text-center">Назначения</h4>
+
+<div class="container-fluid">
+<table class="table table-condensed">
+            <tbody>
+                {%  for item in medications %}
+                <tr>
+                    <td>{{ item.medic_name }}</td>
+                    <td>Д:{{ item.dose }}</td>
+                    <td>{{ item.count_drug }}</td>
+                    <td>{{ item.appl_form }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>
+
+
+{% endblock %}

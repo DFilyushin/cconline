@@ -575,6 +575,25 @@ class Medication(models.Model):
         ordering = ['appoint']
 
 
+class MedicationDates(models.Model):
+    id = models.CharField(max_length=100, primary_key=True, db_column='ID')
+    id_history = models.IntegerField(db_column='ID_HISTORY')
+    dateapp = models.DateField(db_column='DATE_APP')
+    weekday = models.IntegerField(db_column='WEEKDAY_APP')
+    week = models.IntegerField(db_column='WEEK_APP')
+    day = models.IntegerField(db_column='DAY_APP')
+    month = models.IntegerField(db_column='MONTH_APP')
+    year = models.IntegerField(db_column='YEAR_APP')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_APPOINTS_DATE'
+
+    def get_absolute_url(self):
+        return "/medication/bydate/%i/%s" % (self.id_history, self.dateapp)
+
+
+
 class SysUsers(models.Model):
     user_login = models.CharField(primary_key=True, max_length=25)
     id_doctor = models.IntegerField()
