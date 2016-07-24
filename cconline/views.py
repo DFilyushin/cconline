@@ -1245,24 +1245,18 @@ def get_list_medication_by_date(request, idpatient):
         current_month = list_dates[0].month
         list_dates = MedicationDates.objects.filter(id_history=idpatient).filter(year=current_year)\
             .filter(month=current_month)
-        prev_year = 0
-        prev_month = 0
-        next_month = get_next_month(current_month)
-        next_year = get_next_year(current_month, current_year)
+        show_prev = False
+        show_next = True
     else:
-        prev_year = get_prev_year(current_month, current_year)
-        prev_month = get_prev_month(current_month)
-        next_month = get_next_month(current_month)
-        next_year = get_next_year(current_month, current_year)
+        show_next = True
+        show_prev = True
     return render_to_response('cconline/list_medication_by_dates.html',
         {
             'month': current_month,
             'year': current_year,
             'event_list': list_dates,
-            'next_year': next_year,
-            'next_month': next_month,
-            'prev_year': prev_year,
-            'prev_month': prev_month,
+            'show_next': show_next,
+            'show_prev': show_prev,
         },
         context_instance=RequestContext(request)
     )
@@ -1287,31 +1281,3 @@ def get_medication_by_date(request, idpatient, date_assign):
         },
         context_instance=RequestContext(request)
     )
-
-
-def get_prev_month(current_month):
-    if current_month == 1:
-        return 12
-    else:
-        return current_month - 1
-
-
-def get_next_month(current_month):
-    if current_month == 12:
-        return 1
-    else:
-        return current_month + 1
-
-
-def get_prev_year(current_month, current_year):
-    if current_month == 1:
-        return current_year - 1
-    else:
-        return current_year
-
-
-def get_next_year(current_month, current_year):
-    if current_month == 12:
-        return current_year + 1
-    else:
-        return current_year
