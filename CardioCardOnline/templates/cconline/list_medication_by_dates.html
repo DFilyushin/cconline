@@ -6,13 +6,20 @@
 
 <h4 class="text-center">Назначения</h4>
 
-<div class="container-fluid">
 
+
+<div class="row">
+    <div class="col-xs-6 text-center">
+        {% if prev_month != 0 %} {{ prev_month }} {{ prev_year }} {% endif %}
+    </div>
+    <div class="col-xs-6 text-center" >
+        {% if next_month != 0 %} {{ next_month }} {{ next_year }} {% endif %}
+    </div>
 </div>
-
-
-<div id="calendar">
-    {% event_calendar year month event_list %}
+<div class="container-fluid">
+    <div id="calendar">
+        {% event_calendar year month event_list %}
+    </div>
 </div>
 
 {% endblock %}

@@ -352,7 +352,7 @@ def patients_by_depart(request, iddepart):
         depart = Departments.objects.get(pk=iddepart)
     except Departments.DoesNotExist:
         raise Http404
-    cur_date = datetime.now()
+    cur_date = datetime.datetime.now()
     patients = ListHistory.objects.filter(id_depart=iddepart).\
         filter(Q(discharge__gt=cur_date) | Q(discharge__isnull=True)).order_by('-receipt')
     return render_to_response(
@@ -389,14 +389,14 @@ def new_examen(request):
     planday = request.POST['planday']
     planhour = request.POST['planhour']
     planmin = request.POST['planmin']
-    plandate = datetime(int(planyear), int(planmonth), int(planday), int(planhour), int(planmin), 0)
+    plandate = datetime.datetime(int(planyear), int(planmonth), int(planday), int(planhour), int(planmin), 0)
 
     dataset = ExamenDataset()
     dataset.id_history = id_history
     dataset.id_doctor = id_doctor
     dataset.id_department = id_department
     dataset.id_group_examenation = id_group_exam
-    dataset.appointment_date = datetime.now()
+    dataset.appointment_date = datetime.datetime.now()
     dataset.plan_date = plandate
     dataset.id_typepay = 0
     dataset.save()
@@ -420,7 +420,7 @@ def add_new_exam(request, idpatient):
             'history': history,
             'exam_list': examens,
             'id': idpatient,
-            'cur_month': datetime.today().month,
+            'cur_month': datetime.datetime.today().month,
         },
         context_instance=RequestContext(request)
     )
@@ -572,7 +572,7 @@ def add_new_prof(request, idpatient):
         {
             'history': history,
             'spec_list': specs,
-            'cur_month': datetime.today().month,
+            'cur_month': datetime.datetime.today().month,
         },
         context_instance=RequestContext(request)
     )
@@ -600,7 +600,7 @@ def save_prof(request):
     format_dt = '%Y-%m-%d %H:%M'
     date_str = '%s %s' % (plan_year, plan_hour)
     try:
-        plan_date = datetime.strptime(date_str, format_dt)
+        plan_date = datetime.datetime.strptime(date_str, format_dt)
     except:
         redirect_url = '/proview/add/' + id_history
         return render_to_response(
@@ -619,7 +619,7 @@ def save_prof(request):
     dataset.id_doctor = id_doctor
     dataset.id_depart = id_department
     dataset.id_spec = id_spec
-    dataset.assign_date = datetime.now()
+    dataset.assign_date = datetime.datetime.now()
     dataset.plan_date = plan_date
     dataset.save()
     redirect_url = '/proview/list/' + id_history
@@ -699,7 +699,7 @@ def get_medication(request, id):
         medication = HistoryMedication.objects.get(pk=id)
     except HistoryMedication.DoesNotExist:
         raise Http404
-    cur_date = datetime.now()
+    cur_date = datetime.datetime.now()
     # get history information
     history = ListHistory.objects.get(pk=medication.id_history)
     dataset = Medication.objects.filter(id_key=id)
@@ -740,7 +740,7 @@ def prolong_medication(request, id):
             'history': history,
             'id': medication.id,
             'current_doc': get_current_doctor(request),
-            'cur_month': datetime.today().month,
+            'cur_month': datetime.datetime.today().month,
         },
         context_instance=RequestContext(request)
     )
@@ -820,7 +820,7 @@ def add_new_laboratory(request, idpatient):
         'cconline/new_lab.html',
         {
             'history': history,
-            'cur_month': datetime.today().month,
+            'cur_month': datetime.datetime.today().month,
         },
         context_instance=RequestContext(request)
     )
@@ -875,7 +875,7 @@ def new_diary(request, idpatient):
             'id_history': idpatient,
             'id_depart': history.id_depart,
             'id_doctor': get_current_doctor_id(request),
-            'diary_date': datetime.today(),
+            'diary_date': datetime.datetime.today(),
         }
     )
     return render_to_response(
@@ -1086,8 +1086,8 @@ def edit_prof_conclusion(request, id):
             cur_time = dataset.viewdate.strftime('%H:%M')
             doctor = dataset.doctor
         else:
-            cur_date = datetime.now().strftime('%Y-%m-%d')
-            cur_time = datetime.now().strftime('%H:%M')
+            cur_date = datetime.datetime.now().strftime('%Y-%m-%d')
+            cur_time = datetime.datetime.now().strftime('%H:%M')
             doctor = get_current_doctor(request)
 
     except ListProffView.DoesNotExist:
@@ -1231,17 +1231,41 @@ def get_list_medication_by_date(request, idpatient):
     :param idpatient:
     :return:
     """
-    list_dates = MedicationDates.objects.filter(id_history=idpatient)
+    current_year = request.GET.get('year', 0)
+    current_month = request.GET.get('month', 0)
+    if (current_year == 0) or (current_month == 0):
+        current_year = datetime.datetime.now().year
+        current_month = datetime.datetime.now().month
+
+    list_dates = MedicationDates.objects.filter(id_history=idpatient).filter(year=current_year)\
+        .filter(month=current_month)
+    if not list_dates.exists():
+        list_dates = MedicationDates.objects.filter(id_history=idpatient)
+        current_year = list_dates[0].year
+        current_month = list_dates[0].month
+        list_dates = MedicationDates.objects.filter(id_history=idpatient).filter(year=current_year)\
+            .filter(month=current_month)
+        prev_year = 0
+        prev_month = 0
+        next_month = get_next_month(current_month)
+        next_year = get_next_year(current_month, current_year)
+    else:
+        prev_year = get_prev_year(current_month, current_year)
+        prev_month = get_prev_month(current_month)
+        next_month = get_next_month(current_month)
+        next_year = get_next_year(current_month, current_year)
     return render_to_response('cconline/list_medication_by_dates.html',
         {
-            'month': 7,
-            'year': 2016,
+            'month': current_month,
+            'year': current_year,
             'event_list': list_dates,
+            'next_year': next_year,
+            'next_month': next_month,
+            'prev_year': prev_year,
+            'prev_month': prev_month,
         },
         context_instance=RequestContext(request)
     )
-
-
 
 
 def get_medication_by_date(request, idpatient, date_assign):
@@ -1263,3 +1287,31 @@ def get_medication_by_date(request, idpatient, date_assign):
         },
         context_instance=RequestContext(request)
     )
+
+
+def get_prev_month(current_month):
+    if current_month == 1:
+        return 12
+    else:
+        return current_month - 1
+
+
+def get_next_month(current_month):
+    if current_month == 12:
+        return 1
+    else:
+        return current_month + 1
+
+
+def get_prev_year(current_month, current_year):
+    if current_month == 1:
+        return current_year - 1
+    else:
+        return current_year
+
+
+def get_next_year(current_month, current_year):
+    if current_month == 12:
+        return current_year + 1
+    else:
+        return current_year
