@@ -1237,8 +1237,16 @@ def get_list_medication_by_date(request, idpatient):
         current_year = datetime.datetime.now().year
         current_month = datetime.datetime.now().month
 
+    try:
+        history = ListHistory.objects.get(pk=idpatient)
+    except ListHistory.DoesNotExist:
+        raise Http404
+
     list_dates = MedicationDates.objects.filter(id_history=idpatient).filter(year=current_year)\
         .filter(month=current_month)
+    min_month = list_dates[0].month
+    list_dates.last()
+    max_month = list_dates[0].month
     if not list_dates.exists():
         list_dates = MedicationDates.objects.filter(id_history=idpatient)
         current_year = list_dates[0].year
@@ -1248,10 +1256,15 @@ def get_list_medication_by_date(request, idpatient):
         show_prev = False
         show_next = True
     else:
-        show_next = True
-        show_prev = True
+        if min_month == max_month:
+            show_next = False
+            show_prev = False
+        else:
+            show_next = True
+            show_prev = True
     return render_to_response('cconline/list_medication_by_dates.html',
         {
+            'history': history,
             'month': current_month,
             'year': current_year,
             'event_list': list_dates,
@@ -1272,11 +1285,17 @@ def get_medication_by_date(request, idpatient, date_assign):
     """
     date1 = datetime.datetime.strptime(date_assign, '%Y-%m-%d')
     date2 = datetime.datetime.combine(date1, datetime.time.max)
+    try:
+        history = ListHistory.objects.get(pk=idpatient)
+    except ListHistory.DoesNotExist:
+        raise Http404
 
     medication = Medication.objects.filter(id_history=idpatient).filter(appoint__range=(date1, date2))
     return render_to_response('cconline/medication_by_date.html',
         {
+            'history': history,
             'medications': medication,
+            'day': date_assign,
 
         },
         context_instance=RequestContext(request)

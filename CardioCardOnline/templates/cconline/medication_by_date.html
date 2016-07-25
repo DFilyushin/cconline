@@ -1,10 +1,14 @@
 {% extends "cconline/base.html" %}
 {% load cconline_extras %}
 {% load event_tags %}
+{% load staticfiles %}
+
 
 {% block body %}
 
-<h4 class="text-center">Назначения</h4>
+<h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname|lower|capfirst }}</a></h4>
+<h4 class="text-center">Список назначений на {{ day }}</h4>
+
 
 <div class="container-fluid">
 <table class="table table-condensed">
@@ -12,14 +16,16 @@
                 {%  for item in medications %}
                 <tr>
                     <td>{{ item.medic_name }}</td>
+                    <td>{{ item.appoint|date:"H:i" }}</td>
                     <td>Д:{{ item.dose }}</td>
                     <td>{{ item.count_drug }}</td>
                     <td>{{ item.appl_form }}</td>
+                    <td>{% if item.eat_time %} <img src="{% static 'images/tick.png' %}"> {% endif %}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
 </div>
-
+<a href="{% url 'list_medication_by_date' idpatient=history.id %}" class="btn btn-default btn-sm center-block" role="button">Вернуться</a>
 
 {% endblock %}

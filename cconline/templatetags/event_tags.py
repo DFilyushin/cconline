@@ -25,10 +25,10 @@ def do_event_calendar(parser, token):
     """
 
     try:
-        tag_name, year, month, event_list = token.split_contents()
+        tag_name, year, month, event_list, show_next, show_prev, id_history = token.split_contents()
     except ValueError:
         raise template.TemplateSyntaxError, "%r tag requires three arguments" % token.contents.split()[0]
-    return EventCalendarNode(year, month, event_list)
+    return EventCalendarNode(year, month, event_list, show_next, show_prev, id_history)
 
 
 class EventCalendarNode(template.Node):
@@ -36,11 +36,14 @@ class EventCalendarNode(template.Node):
     Process a particular node in the template. Fail silently.
     """
 
-    def __init__(self, year, month, event_list):
+    def __init__(self, year, month, event_list, showNext, showPrev, id_history):
         try:
             self.year = template.Variable(year)
             self.month = template.Variable(month)
             self.event_list = template.Variable(event_list)
+            self.showNext = template.Variable(showNext)
+            self.showPrev = template.Variable(showPrev)
+            self.id_history = template.Variable(id_history)
         except ValueError:
             raise template.TemplateSyntaxError
 
@@ -50,7 +53,10 @@ class EventCalendarNode(template.Node):
             my_event_list = self.event_list.resolve(context)
             my_year = self.year.resolve(context)
             my_month = self.month.resolve(context)
-            cal = EventCalendar(my_event_list)
+            isShowPrevLink = self.showPrev.resolve(context)
+            isShowNextLink = self.showNext.resolve(context)
+            idHistory = self.id_history.resolve(context)
+            cal = EventCalendar(my_event_list, isShowPrevLink, isShowNextLink, idHistory)
             return cal.formatmonth(int(my_year), int(my_month))
         except ValueError:
             return          
@@ -64,9 +70,12 @@ class EventCalendar(HTMLCalendar):
     each day's table cell.
     """
 
-    def __init__(self, events):
+    def __init__(self, events, IsPrev, IsNext, idHistory):
         super(EventCalendar, self).__init__()
         self.events = self.group_by_day(events)
+        self.show_next_month = IsNext
+        self.show_prev_month = IsPrev
+        self.idHistory = idHistory
 
     def formatday(self, day, weekday):
         if day != 0:
@@ -77,19 +86,13 @@ class EventCalendar(HTMLCalendar):
                 cssclass += ' filled'
                 body = []
                 for event in self.events[day]:
-                    # body.append('<li>')
                     body.append('<a href="%s">' % event.get_absolute_url())
                     body.append('<img src="/static/images/dummy-small.png">')
                     body.append('</a>')
-                # body.append()
-                # return self.day_cell(cssclass, '<span class="dayNumber">%d</span> %s' % (day, ''.join(body)))
                 return self.day_cell(cssclass, '<span class="dayNumber"><a href="%s">%d</span>' % (event.get_absolute_url(), day))
             return self.day_cell(cssclass, '<span class="dayNumberNoEvents">%d</span>' % (day))
         return self.day_cell('noday', '&nbsp;')
 
-    #def formatmonth(self, year, month):
-    #    self.year, self.month = year, month
-    #    return super(EventCalendar, self).formatmonth(year, month)
     def formatweekday(self, day):
         """
         Return a weekday name as a table header.
@@ -101,12 +104,35 @@ class EventCalendar(HTMLCalendar):
         Return a formatted month as a table.
         """
         self.year, self.month = year, month
+        if self.month == 1:
+            prev_month = 12
+            prev_year = self.year - 1
+        else:
+            prev_month = self.month - 1
+            prev_year = self.year
+
+        if self.month == 12:
+            next_month = 1
+            next_year = self.year + 1
+        else:
+            next_month = self.month + 1
+            next_year = self.year
         v = []
         a = v.append
         a('<table border="0" cellpadding="0" cellspacing="0" class="table table-condensed">')
-        a('\n')
+        a('<tr>')
+        a('<td colspan="2" align="center">')
+        if self.show_prev_month:
+            a('<a href="/medication/list_by_date/%i/?year=%i&month=%i">%s' % (self.idHistory, prev_year, prev_month, named_month(prev_month)))
+        a('</td>')
+        a('<td colspan="3" align="center">')
         a(named_month(month))
-        a('\n')
+        a('</td>')
+        a('<td colspan="2" align="center">')
+        if self.show_next_month:
+            a('<a href="/medication/list_by_date/%i/?year=%i&month=%i">%s' % (self.idHistory, next_year, next_month, named_month(next_month)))
+        a('</td>')
+        a('</tr>')
         a(super(EventCalendar, self).formatweekheader())
         a('\n')
         for week in super(EventCalendar, self).monthdays2calendar(year, month):
