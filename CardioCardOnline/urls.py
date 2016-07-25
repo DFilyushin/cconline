@@ -58,6 +58,8 @@ urlpatterns = [
     url(r'^operation/(?P<id>\d+)/$', 'cconline.views.get_operation', name='operation'),
 
     url(r'^medication/list/(?P<idpatient>\d+)/$', 'cconline.views.get_list_medication', name='list_medication'),
+    url(r'^medication/list_by_date/(?P<idpatient>\d+)/$', 'cconline.views.get_list_medication_by_date', name='list_medication_by_date'),
+    url(r'^medication/bydate/(?P<idpatient>\d+)/(?P<date_assign>[\w\-]+)/$', 'cconline.views.get_medication_by_date', name='medication_by_date'),
     url(r'^medication/(?P<id>\d+)/$', 'cconline.views.get_medication', name='get_medication'),
     url(r'^prolong_medication/(?P<id>\d+)/$', 'cconline.views.prolong_medication', name='prolong_medication'),
 

@@ -1,0 +1,16 @@
+{% extends "cconline/base.html" %}
+{% load cconline_extras %}
+{% load event_tags %}
+
+{% block body %}
+
+<h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname|lower|capfirst }}</a></h4>
+<h4 class="text-center">Календарь назначений</h4>
+
+<div class="container-fluid">
+    <div id="calendar">
+        {% event_calendar year month event_list show_next show_prev history.id %}
+    </div>
+</div>
+
+{% endblock %}
