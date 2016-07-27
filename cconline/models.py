@@ -593,7 +593,6 @@ class MedicationDates(models.Model):
         return "/medication/bydate/%i/%s" % (self.id_history, self.dateapp)
 
 
-
 class SysUsers(models.Model):
     user_login = models.CharField(primary_key=True, max_length=25)
     id_doctor = models.IntegerField()
