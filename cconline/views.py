@@ -8,12 +8,12 @@ from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 from django.db import connection
-from datetime import datetime, date
+from django.db.models import Sum
 from forms import DiaryForm
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData, \
     ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication, \
     ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization,\
-    RefExamens, ExamenDataset, ExamParam, ProfDataset, \
+    RefExamens, ExamenDataset, ExamParam, ProfDataset, ActiveDepartPatients, \
     SysUsers, UserGroups, Personal, Diary, Hospitalization, HistoryMove, MedicationDates
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
@@ -964,6 +964,7 @@ def stat(request):
     :param request:
     :return:
     """
+    totals = ActiveDepartPatients.objects.all()
     list_depart = ActiveDepart.objects.all().order_by('name')  # количество пациентов по отделениям
     hospitalization = Hospitalization.objects.all()  # госпитализация по отделениям
     return render_to_response(
@@ -971,6 +972,7 @@ def stat(request):
         {
             'departs': list_depart,
             'hospit': hospitalization,
+            'totals': totals,
         },
         context_instance=RequestContext(request)
     )
@@ -1226,7 +1228,7 @@ def last_lab(request, iddepart):
 @login_required(login_url='/login')
 def get_list_medication_by_date(request, idpatient):
     """
-    Get list medication by dates, view all date with assigned medication
+    Get calendar for all medications
     :param request:
     :param idpatient:
     :return:
@@ -1244,17 +1246,23 @@ def get_list_medication_by_date(request, idpatient):
 
     list_dates = MedicationDates.objects.filter(id_history=idpatient).filter(year=current_year)\
         .filter(month=current_month)
-    min_month = list_dates[0].month
-    list_dates.last()
-    max_month = list_dates[0].month
+    if list_dates:
+        min_month = list_dates[0].month
+        list_dates.last()
+        max_month = list_dates[0].month
+
     if not list_dates.exists():
         list_dates = MedicationDates.objects.filter(id_history=idpatient)
         current_year = list_dates[0].year
         current_month = list_dates[0].month
+        list_dates.last()
+        show_prev = False
+        if current_month == list_dates[0].month:
+            show_next = True
+        else:
+            show_next = False
         list_dates = MedicationDates.objects.filter(id_history=idpatient).filter(year=current_year)\
             .filter(month=current_month)
-        show_prev = False
-        show_next = True
     else:
         if min_month == max_month:
             show_next = False
@@ -1275,9 +1283,10 @@ def get_list_medication_by_date(request, idpatient):
     )
 
 
+@login_required(login_url='/login')
 def get_medication_by_date(request, idpatient, date_assign):
     """
-
+    Get all medication by date for patients
     :param request:
     :param idpatient:
     :param date_assign:

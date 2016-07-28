@@ -20,6 +20,17 @@
                 <td class="text-center">{{ item.cnt }}</td>
             </tr>
             {% endfor %}
+            <tr>
+                <td colspan="2" class="text-center"><b>Итого по клиникам</b></td>
+                <td></td>
+            </tr>
+            {%  for item in totals %}
+            <tr>
+                <td>{{ item.clinic }}</td>
+                <td class="text-center">{{ item.patients }}</td>
+            </tr>
+            {% endfor %}
+
         </tbody>
     </table>
 

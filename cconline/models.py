@@ -285,12 +285,23 @@ class LaboratoryData(models.Model):
 
 class ActiveDepart(models.Model):
     id = models.IntegerField(primary_key=True)
+    id_office = models.IntegerField()
     name = models.CharField(max_length=255)
     cnt = models.IntegerField()
 
     class Meta:
         managed = False
         db_table = 'VW_ACTIVE_DEPART'
+
+
+class ActiveDepartPatients(models.Model):
+    id = models.IntegerField(primary_key=True)
+    clinic = models.CharField(db_column='CLINIC', max_length=255)
+    patients = models.IntegerField(db_column='CNT_PATIENTS')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_CLINIC_PATIENTS'
 
 
 class ListExamens(models.Model):
