@@ -181,18 +181,36 @@ def get_my_patient(request):
     current_user = request.user.username.upper()
     card_user = SysUsers.objects.get(pk=current_user)
     id_doctor = card_user.id_doctor
-    current_doc = card_user.user_fullname
     patients = ListHistory.objects.filter(id_doctor=id_doctor).\
         filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.datetime.today())).\
         order_by('-receipt')
     return render_to_response(
         'cconline/patients.html',
         {
-            'current_doc': current_doc,
             'patients': patients,
             'current_place': u'Мои пациенты',
         }
     )
+
+
+@login_required(login_url='/login')
+def get_mon_patients(request):
+    """
+    Patients under observation
+    :param request:
+    :return:
+    """
+    patients = ListHistory.objects.filter(is_viewed=1).\
+        filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.datetime.today())).\
+        order_by('-receipt')
+    return render_to_response(
+        'cconline/patients.html',
+        {
+            'patients': patients,
+            'current_place': u'Пациенты под наблюдением',
+        }
+    )
+
 
 
 @login_required(login_url='/login')
@@ -883,6 +901,7 @@ def new_diary(request, idpatient):
         {
             'form': form,
             'id_history': idpatient,
+            'history': history,
         },
         context_instance=RequestContext(request)
     )
@@ -894,12 +913,16 @@ def edit_diary(request, id_diary):
         diary = Diary.objects.get(pk=id_diary)
     except Diary.DoesNotExist:
         raise Http404
+
+    history = ListHistory.objects.get(pk=diary.id_history)
     diary_form = DiaryForm(instance=diary)
     return render(
         request,
         'cconline/edit_diary.html',
         {
-            'form': diary_form
+            'form': diary_form,
+            'id_history': diary.id_history,
+            'history': history,
         }
     )
 

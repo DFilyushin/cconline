@@ -14,7 +14,8 @@
 </script>
 <script src="{% static 'js/controllers/diaryController.js' %}"></script>
 
-<h3>Ввод дневника</h3>
+<h4>Ввод дневника</h4>
+    <p><strong>Пациент:</strong> № {{ history.num_history }} {{ history.lastname }} {{ history.firstname  }}
 {{ form.id_history }}
 <div class="container">
       <form class="form" action="/diary/save/" method="post">

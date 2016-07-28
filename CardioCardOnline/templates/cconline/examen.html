@@ -1,7 +1,7 @@
 {% extends "cconline/base.html" %}
 
 {% block body %}
-<div class="container-fluid" xmlns="http://www.w3.org/1999/html">
+<div class="container-fluid">
     <h4 class="text-center">{{ examen.name_exam }} </h4>
     <p><strong>Пациент:</strong> {{ examen.patient }}
     </br><strong>Отделение:</strong> {{ examen.depart }}
@@ -31,7 +31,7 @@
                 {%  for item in params %}
                     <tr>
                     <td>{% if item.type == 8 %} <strong> {% endif %}{{ item.param }} {% if item.type == 8 %} </strong> {% endif %}</td>
-                    <td>{% if item.value %}{{ item.value }} {{ item.measure }} {% endif %}</td>
+                    <td>{% if item.value %} {% if item.value == "False" %} нет {% elif item.value == "True" %} да {% else %} {{ item.value }} {{ item.measure }} {% endif %} {% endif %}</td>
                     </tr>
                 {% endfor %}
                 </table>
@@ -51,5 +51,4 @@
     </p>
 
 </div>
-
 {% endblock %}

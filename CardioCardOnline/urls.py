@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^last_lab/(?P<iddepart>\d+)/$', 'cconline.views.last_lab', name='last_laboratory'), # last lab
     url(r'^last_exam/(?P<iddepart>\d+)/$', 'cconline.views.last_exam', name='last_examenation'), # last exam
     url(r'^patients/my/', 'cconline.views.get_my_patient', name='my_patient'),  # my patients
+    url(r'^patients/monpat/', 'cconline.views.get_mon_patients', name='under_observation'),  # patients under_observation
     url(r'^patients/departs/(?P<iddepart>\d+)/$', 'cconline.views.patients_by_depart', name='departs_patient'),
     url(r'^patients/by_depart/', 'cconline.views.get_active_departs', name='patient_by_depart'),
     url(r'^patient/first_view/(?P<idpatient>\d+)/$', 'cconline.views.get_patient_first_view', name='patient_info'),
