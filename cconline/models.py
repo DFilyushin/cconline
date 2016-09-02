@@ -292,6 +292,7 @@ class ActiveDepart(models.Model):
     class Meta:
         managed = False
         db_table = 'VW_ACTIVE_DEPART'
+        ordering = ['name']
 
 
 class ActiveDepartPatients(models.Model):

@@ -11,7 +11,7 @@
 <div class="container-fluid">
     <p><a href="{% url 'patient_cure' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Общие сведения</a></p>
 
-    {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group %}
+    {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "PROF_DOCTOR" in list_group %}
         <p><a href="{% url 'patient_info' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Первичный осмотр</a></p>
         <p><a href="{% url 'list_diary' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Дневники пациента</a></p>
 

@@ -20,7 +20,7 @@
         </div>
     {% endif %}
 
-    {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "FUNCT" in list_group %}
+    {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "FUNCT" in list_group  or "PROF_DOCTOR" in list_group %}
         <div class="col-lg-12">
             <form action="/search/" method="post" role="form">{% csrf_token %}
                 <div class="input-group">
