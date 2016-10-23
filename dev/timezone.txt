@@ -1,0 +1,2 @@
+Replace timezone file for fix Django trouble datetime function now() returning many milleseconds.
+Firebird can execute insert with 4 digit milliseconds

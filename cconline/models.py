@@ -669,7 +669,7 @@ class ListAllAnalysis(models.Model):
 
 
 class ExamParam(models.Model):
-    id = models.IntegerField(primary_key=True, db_column='UN_ID')
+    id = models.IntegerField(primary_key=True, db_column='ID')
     param = models.CharField(max_length=255, db_column='PARAM_NAME')
     type = models.IntegerField(db_column='PARAM_TYPE')
     measure = models.CharField(max_length=40, db_column='PARAM_MEASURE')
