@@ -5,7 +5,7 @@ from django.http import Http404
 from django.shortcuts import render_to_response
 from django.db.models import Q
 from django.core.exceptions import PermissionDenied
-from datetime import datetime
+import datetime
 from models import ListHistory, TemperatureList, NurseViewList, PainStatusList, RiskDownList, \
     TemperatureData, RiskDownData, PainStatus, NurseViewData
 from views import get_current_doctor, get_user_depart, get_user_groups, get_user_depart_name
@@ -107,7 +107,7 @@ def get_nurse_patients(request):
     id_depart = get_user_depart(request)
     depart = get_user_depart_name(request)
     patients = ListHistory.objects.filter(id_depart=id_depart).\
-        filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.today()))
+        filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.date.today()))
     return render_to_response(
         'cconline/nurse_patients.html',
         {

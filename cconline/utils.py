@@ -36,7 +36,7 @@ def getpass(request):
     if salt == '-':
         salt = str(random.randint(1000, 9000))
     password = make_password(user_pass, salt, 'pbkdf2_sha256')
-    return HttpResponse(password, mimetype='text/html')
+    return HttpResponse(password, content_type='text/html')
 
 
 def page_not_found(request):
@@ -106,7 +106,7 @@ def json_subtest(request):
     mtest = request.GET['q']
     tests = ListAllAnalysis.objects.filter(id_parent=mtest).order_by('name')
     data = serializers.serialize('json', tests)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 
 def json_test(request):
@@ -117,7 +117,7 @@ def json_test(request):
     """
     dataset = ListOfAnalysis.objects.all()
     data = serializers.serialize('json', dataset)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 
 def json_savetest(request):
@@ -204,7 +204,7 @@ def json_templates(request):
     elif id != '':
         templates = Templates.objects.filter(id=id_template)
     data = serializers.serialize('json', templates)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 
 def json_nurse_lab(request):
@@ -229,7 +229,7 @@ def json_nurse_lab(request):
         start_date = yesterday
     dataset = NurseLabWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date)
     data = serializers.serialize('json', dataset)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 
 def json_nurse_med(request):
@@ -255,7 +255,7 @@ def json_nurse_med(request):
     dataset = NurseMedWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date).\
         order_by('datetime_plan', 'medic_name')
     data = serializers.serialize('json', dataset)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 
 def json_nurse_exam(request):
@@ -281,7 +281,7 @@ def json_nurse_exam(request):
     dataset = NurseExamWork.objects.filter(id_depart=id_depart).filter(date_plan=start_date).\
         order_by('datetime_plan', 'exam')
     data = serializers.serialize('json', dataset)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 
 def json_nurse_doctor(request):
@@ -306,7 +306,7 @@ def json_nurse_doctor(request):
     dataset = NurseProfViewWork.objects.filter(id_depart=id_depart).\
         filter(date_plan=start_date).order_by('datetime_plan', 'spec')
     data = serializers.serialize('json', dataset)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 
 def nurse_execute(request):
@@ -324,7 +324,7 @@ def nurse_execute(request):
     type_execute = params['t']
     id_record = params['id']
     id_nurse = views.get_current_doctor_id(request)
-    assign_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    assign_date = datetime.date.today().strftime("%Y-%m-%d %H:%M:%S")
 
     sql = "EXECUTE PROCEDURE SP_NURSE_EXECUTE(%s, %s, %s, '%s')" % (type_execute, id_record, id_nurse, assign_date)
     cursor = connection.cursor()
@@ -348,7 +348,7 @@ def nurse_work_by_patient(request):
     dataset = NurseAssign.objects.raw(sql)
 
     data = serializers.serialize('json', dataset)
-    return HttpResponse(data, mimetype='application/json')
+    return HttpResponse(data, content_type='application/json')
 
 
 class ValidatingPasswordChangeForm(auth.forms.PasswordChangeForm):
