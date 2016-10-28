@@ -12,7 +12,7 @@ SECRET_KEY = 'a=bq4gjswb@ppr5q+ouwm+po!%&6!gabc^b&$*sq31-m=^ng1t'
 
 DEBUG = True
 
-#TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -62,7 +62,7 @@ TEMPLATES = [
         'DIRS': [
             # insert your TEMPLATE_DIRS here
             #ROOTDIR + '/CardioCardOnline/templates'
-            '/home/dfilyushin/project/cconline/CardioCardOnline/templates'
+            '/var/www/cconline/CardioCardOnline/templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -91,11 +91,11 @@ WSGI_APPLICATION = 'CardioCardOnline.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'firebird',
-        'HOST': 'localhost',
-        'NAME': '/var/fb-data/mhistory.fdb',
+        'HOST': 'labgsrv',
+        'NAME': 'cardiocard',
         'PORT': '3050',
         'USER': 'SYSDBA',
-        'PASSWORD': 'masterkey',
+        'PASSWORD': 'Monstro13',
         'CONN_MAX_AGE': None,
     }
 }

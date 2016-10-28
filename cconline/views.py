@@ -510,7 +510,7 @@ def get_examen(request, id):
     except ListExamens.DoesNotExist:
         raise Http404
     name_map = {'param_name': 'param', 'param_type': 'type', 'param_measure': 'measure', 'param_value': 'value'}
-    params = ExamParam.objects.raw('select * from SP_EXAM_PARAM(%s)', [id], translations=name_map)
+    params = ExamParam.objects.filter(id_assign=id).order_by('position')
     return render(
         request,
         'cconline/examen.html',

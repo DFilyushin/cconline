@@ -670,10 +670,16 @@ class ListAllAnalysis(models.Model):
 
 class ExamParam(models.Model):
     id = models.IntegerField(primary_key=True, db_column='ID')
-    param = models.CharField(max_length=255, db_column='PARAM_NAME')
+    id_assign = models.IntegerField(db_column='ID_ASSIGNED_EXAM')
+    param = models.CharField(max_length=255, db_column='NAME_PARAM')
     type = models.IntegerField(db_column='PARAM_TYPE')
+    position = models.IntegerField(db_column='POS_IN_LIST')
     measure = models.CharField(max_length=40, db_column='PARAM_MEASURE')
-    value = models.CharField(max_length=7168, db_column='PARAM_VALUE')
+    value = models.CharField(max_length=7168, db_column='RES_STRING')
+
+    class Meta:
+	managed = False
+	db_table = 'VW_EXAMPARAM_RESULTS'
 
 
 class Diary(models.Model):
