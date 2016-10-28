@@ -12,6 +12,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^login/$', 'cconline.views.card_login'),
+    url(r'^robots.txt$', 'cconline.views.robots'),
     url(r'^password_change/$',
         'django.contrib.auth.views.password_change',
         {'post_change_redirect': '/accounts/password_change/done/',

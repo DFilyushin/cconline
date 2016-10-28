@@ -2,7 +2,7 @@
 
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import render_to_response, render
+from django.shortcuts import render_to_response, render, HttpResponse
 from django.template import RequestContext
 from django.db.models import Q
 from django.utils.safestring import mark_safe
@@ -1332,3 +1332,7 @@ def get_medication_by_date(request, idpatient, date_assign):
         },
         context_instance=RequestContext(request)
     )
+
+
+def robots(request):
+    return HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")
