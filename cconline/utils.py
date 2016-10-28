@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.http import HttpResponse, Http404
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import RequestContext
 from django.contrib.auth.hashers import make_password
 import random
@@ -41,30 +41,24 @@ def getpass(request):
 
 def page_not_found(request):
     # обработчик Страница не найден
-    response = render_to_response('404.html',
-                                  {},
-                                  context_instance=RequestContext(request)
-                                  )
+    response = render(request, 
+	'404.html',
+        {},
+     )
     response.status_code = 404
     return response
 
 
 def permission_denied(request):
     # обработчик Доступ запрещён
-    response = render_to_response('403.html',
-                                  {},
-                                  context_instance=RequestContext(request)
-                                  )
+    response = render(request, '403.html', {})
     response.status_code = 403
     return response
 
 
 def server_error(request):
     # обработчик Ошибка сервера
-    response = render_to_response('500.html',
-                                  {},
-                                  context_instance=RequestContext(request)
-                                  )
+    response = render(request, '500.html', {})
     response.status_code = 500
     return response
 
@@ -72,10 +66,10 @@ def server_error(request):
 def change_password(request):
     current_user = request.user.last_name + ' ' + request.user.first_name
     if request.method == 'GET':
-        return render_to_response('registration/password_change_form.html', {
+        return render(request, 'registration/password_change_form.html', {
             'current_user': current_user,
-            },
-            context_instance=RequestContext(request))
+            }
+	)
     else:
         old_pass = request.POST.get('old_password', '')
         pass1 = request.POST.get('new_password1', '')
@@ -85,12 +79,11 @@ def change_password(request):
             user.set_password(pass1)
             user.save()
 
-        response = render_to_response('cconline/redirect.html', {
+        response = render(request, 'cconline/redirect.html', {
             'message': u'Пароль изменён',
             'redirect_url': '/',
             'request': request,
-        },
-            context_instance=RequestContext(request)
+        }
         )
         response.status_code = 200
         return response
@@ -165,12 +158,11 @@ def json_savetest(request):
     connection.commit()
 
     redirect_url = 'laboratory/list/' + id_history
-    response = render_to_response('cconline/redirect.html', {
+    response = render(request, 'cconline/redirect.html', {
         'message': u'Добавлен анализ' + str(id_order),
         'redirect_url': redirect_url,
         'request': request,
-    },
-        context_instance=RequestContext(request)
+        }
     )
     response.status_code = 200
     return response
