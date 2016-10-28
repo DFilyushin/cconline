@@ -115,7 +115,7 @@ def get_user_groups(request):
     return [item.sys_group for item in list_group]
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def index(request):
     """
     Главная страница
@@ -134,7 +134,7 @@ def index(request):
         })
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def search(request):
     """
     Результаты поиска по номеру истории, ФИО пациента
@@ -159,7 +159,7 @@ def search(request):
         raise Http404
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def profile(request):
     return render(
         request,
@@ -170,7 +170,7 @@ def profile(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_my_patient(request):
     """
     Мои пациенты
@@ -193,7 +193,7 @@ def get_my_patient(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_mon_patients(request):
     """
     Patients under observation
@@ -214,7 +214,7 @@ def get_mon_patients(request):
 
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_patient_first_view(request, idpatient):
     """
     Данные первичного осмотра пациента, закладка "Лечащий врач"
@@ -237,7 +237,7 @@ def get_patient_first_view(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def patient_cure(request, idpatient):
     try:
         history = History.objects.get(pk=idpatient)
@@ -258,7 +258,7 @@ def patient_cure(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 @cache_page(60 * 5)
 def get_patient(request, idpatient):
     try:
@@ -277,7 +277,7 @@ def get_patient(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_diary_list(request, idpatient):
     """
     Список дневников пациента
@@ -301,7 +301,7 @@ def get_diary_list(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_lab_list(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -320,7 +320,7 @@ def get_lab_list(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_laboratory(request, id):
     """
     Данные одного лабораторного анализа
@@ -351,7 +351,7 @@ def get_laboratory(request, id):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 @cache_page(60 * 15)
 def get_active_departs(request):
     departs = ActiveDepart.objects.all()
@@ -365,7 +365,7 @@ def get_active_departs(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 @cache_page(60 * 5)
 def patients_by_depart(request, iddepart):
     """
@@ -394,7 +394,7 @@ def patients_by_depart(request, iddepart):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def new_examen(request):
     """
     Добавить назначенное обследование
@@ -440,7 +440,7 @@ def new_examen(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def add_new_exam(request, idpatient):
     history = ListHistory.objects.get(pk=idpatient)
     examens = RefExamens.objects.all()
@@ -456,7 +456,7 @@ def add_new_exam(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def delete_exam(request, id_exam):
     try:
         examen = ListExamens.objects.get(pk=id)
@@ -477,7 +477,7 @@ def delete_exam(request, id_exam):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_examen_list(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -496,7 +496,7 @@ def get_examen_list(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_examen(request, id):
     """
     Данные обследования
@@ -524,7 +524,7 @@ def get_examen(request, id):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_list_surgery(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -542,7 +542,7 @@ def get_list_surgery(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_list_proffview(request, idpatient):
     """
     Список осмотров профильными специалистами
@@ -566,7 +566,7 @@ def get_list_proffview(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_proview(request, id):
     """
     Данные проф. осмотра пациента
@@ -594,7 +594,7 @@ def get_proview(request, id):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def add_new_prof(request, idpatient):
     """
     Добавление нового осмотра профильным специалистом
@@ -618,7 +618,7 @@ def add_new_prof(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def save_prof(request):
     """
     Добавить проф. осмотр
@@ -675,7 +675,7 @@ def save_prof(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_operation(request, id):
     """
     Описание операции
@@ -705,7 +705,7 @@ def get_operation(request, id):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_list_medication(request, idpatient):
     """
     Список назначенных медикаментов
@@ -729,7 +729,7 @@ def get_list_medication(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_medication(request, id):
     """
     Назначение по дням/часам
@@ -760,7 +760,7 @@ def get_medication(request, id):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def prolong_medication(request, id):
     """
     Продлить назначение препарата
@@ -789,7 +789,7 @@ def prolong_medication(request, id):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def prolong_med(request):
     """
     Продлить назначение препарата на период
@@ -843,7 +843,7 @@ def prolong_med(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def add_new_laboratory(request, idpatient):
     """
     Добавление нового анализа
@@ -869,7 +869,7 @@ def add_new_laboratory(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_diary(request, id_diary):
     """
     Дневник на просмотр
@@ -896,7 +896,7 @@ def get_diary(request, id_diary):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def new_diary(request, idpatient):
     """
     Новый дневник пациента
@@ -933,7 +933,7 @@ def new_diary(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def edit_diary(request, id_diary):
     try:
         diary = Diary.objects.get(pk=id_diary)
@@ -953,7 +953,7 @@ def edit_diary(request, id_diary):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def save_diary(request):
     if request.method != 'POST':
         raise Http404
@@ -981,7 +981,7 @@ def save_diary(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def delete_diary(request, id_diary):
     """
     Удаление дневника
@@ -1011,7 +1011,7 @@ def delete_diary(request, id_diary):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 @cache_page(60 * 15)
 def stat(request):
     """
@@ -1033,7 +1033,7 @@ def stat(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def add_doctor_view(request, idpatient):
     """
     Добавление новой записи осмотра с выбором вида осмотра
@@ -1063,7 +1063,7 @@ def add_doctor_view(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_doctor_view(request, idpatient, idparam):
     """
     Изменение записи по первичному осмотру пациента
@@ -1091,7 +1091,7 @@ def get_doctor_view(request, idpatient, idparam):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def save_prof_conclusion(request):
     """
     Сохранить изменения в заключении проф. осмотра
@@ -1126,7 +1126,7 @@ def save_prof_conclusion(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def edit_prof_conclusion(request, id):
     """
     Редактирование проф. осмотра, ввод заключения
@@ -1170,7 +1170,7 @@ def edit_prof_conclusion(request, id):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def save_doctor_view(request):
     """
 
@@ -1226,7 +1226,7 @@ def save_doctor_view(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def choose_test(request):
     id_depart = get_user_depart(request)
     try:
@@ -1243,7 +1243,7 @@ def choose_test(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 @cache_page(60 * 5)
 def last_exam(request, iddepart):
     """
@@ -1262,7 +1262,7 @@ def last_exam(request, iddepart):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 @cache_page(60 * 5)
 def last_lab(request, iddepart):
     """
@@ -1281,7 +1281,7 @@ def last_lab(request, iddepart):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_list_medication_by_date(request, idpatient):
     """
     Get calendar for all medications
@@ -1340,7 +1340,7 @@ def get_list_medication_by_date(request, idpatient):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_medication_by_date(request, idpatient, date_assign):
     """
     Get all medication by date for patients
