@@ -51,11 +51,35 @@ ROOT_URLCONF = 'CardioCardOnline.urls'
 
 ROOTDIR = os.path.abspath(os.path.dirname(__file__))
 
-TEMPLATE_DIRS = (
-    r'D:\PROGRAMMING\BPROJECT\cconline\CardioCardOnline\templates',
-    r'D:\PROJECT\CardioCardOnline\CardioCardOnline\templates',
-    ROOTDIR + 'CardioCardOnline\templates',
-)
+#TEMPLATE_DIRS = (
+#    ROOTDIR + 'CardioCardOnline\templates',
+#)
+
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            # insert your TEMPLATE_DIRS here
+            #ROOTDIR + '/CardioCardOnline/templates'
+            '/var/www/cconline/CardioCardOnline/templates'
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                # Insert your TEMPLATE_CONTEXT_PROCESSORS here or use this
+                # list if you haven't customized them:
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 
 WSGI_APPLICATION = 'CardioCardOnline.wsgi.application'
@@ -67,11 +91,11 @@ WSGI_APPLICATION = 'CardioCardOnline.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'firebird',
-        'HOST': 'localhost',
+        'HOST': 'labgsrv',
         'NAME': 'cardiocard',
         'PORT': '3050',
         'USER': 'SYSDBA',
-        'PASSWORD': 'masterkey',
+        'PASSWORD': 'Monstro13',
         'CONN_MAX_AGE': None,
     }
 }
@@ -86,7 +110,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

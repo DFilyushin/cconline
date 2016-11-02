@@ -5,13 +5,13 @@ from django.http import Http404
 from django.shortcuts import render_to_response
 from django.db.models import Q
 from django.core.exceptions import PermissionDenied
-from datetime import datetime
+import datetime
 from models import ListHistory, TemperatureList, NurseViewList, PainStatusList, RiskDownList, \
     TemperatureData, RiskDownData, PainStatus, NurseViewData
 from views import get_current_doctor, get_user_depart, get_user_groups, get_user_depart_name
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_nurse_list(request, idpatient):
     try:
         history = ListHistory.objects.get(pk=idpatient)
@@ -35,7 +35,7 @@ def get_nurse_list(request, idpatient):
         })
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_tempearature_data(request, id):
     try:
         view = TemperatureList.objects.get(pk=id)
@@ -51,7 +51,7 @@ def get_tempearature_data(request, id):
                        })
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_risk_down(request, id):
     try:
         view = RiskDownData.objects.get(pk=id)
@@ -65,7 +65,7 @@ def get_risk_down(request, id):
                               })
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_pain_status(request, id):
     try:
         view = PainStatus.objects.get(pk=id)
@@ -79,7 +79,7 @@ def get_pain_status(request, id):
                               })
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_nurse_work(request):
     """
     Сестринский журнал выполнения мед. назначений
@@ -97,7 +97,7 @@ def get_nurse_work(request):
         )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_nurse_patients(request):
     """
 
@@ -107,7 +107,7 @@ def get_nurse_patients(request):
     id_depart = get_user_depart(request)
     depart = get_user_depart_name(request)
     patients = ListHistory.objects.filter(id_depart=id_depart).\
-        filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.today()))
+        filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.date.today()))
     return render_to_response(
         'cconline/nurse_patients.html',
         {
@@ -117,7 +117,7 @@ def get_nurse_patients(request):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_nurse_patient(request, id):
     """
     Get patient by Id
@@ -137,7 +137,7 @@ def get_nurse_patient(request, id):
     )
 
 
-@login_required(login_url='/login')
+@login_required(login_url='/login/')
 def get_nurse_view(request, id):
     """
     Данные сестринского осмотра
