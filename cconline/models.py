@@ -831,7 +831,6 @@ class ActiveMonitoringByHospital(models.Model):
         managed = False
         db_table = 'GET_ACTIVE_USER_BY_HOSPITAL'
 
-
 class NurseAssign(models.Model):
     id = models.IntegerField(primary_key=True)
     type_app = models.IntegerField()  # TYPE_APP DMN_INTEGER,

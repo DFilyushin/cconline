@@ -2,15 +2,12 @@
 
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
-from django.template import RequestContext
 from django.contrib.auth.hashers import make_password
 import random
 import views
 from models import ListHistory
 import json
 import string
-from django.template.loader import get_template
-from django.template import Context
 from models import ListAllAnalysis, ListOfAnalysis, Templates, ListTemplates, NurseAssign
 from models import NurseLabWork, NurseMedWork, NurseExamWork, NurseProfViewWork
 from django.core import serializers
@@ -18,7 +15,6 @@ from django.db import connection
 from datetime import datetime
 from collections import namedtuple
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
 from django import forms
 from django.contrib import auth
 
