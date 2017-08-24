@@ -1,20 +1,13 @@
 {% extends "cconline/base.html" %}
 
 {% block body %}
-<div class="container-fluid">
-    <div class="center-block">
-
-        <h3 class="text-center">По отделениям</h3>
-    </div>
+    <h3 class="text-center">По отделениям</h3>
     {%  for item in departs %}
-        <p>
-            <a href="{% url 'departs_patient' iddepart=item.id %}" class="btn btn-primary btn-wide center-block" role="button">
+            <p>
+            <a href="{% url 'departs_patient' iddepart=item.id %}" class="btn btn-primary btn-lg btn-block" role="button">
                 {{ item.name }}
             </a>
-        </p>
+            </p>
     {% endfor %}
-
     <a href="/" class="text-center btn btn-default btn-sm center-block">На главную</a>
-</div>
-
 {% endblock %}

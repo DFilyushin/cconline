@@ -3,25 +3,13 @@
 
 {% block body %}
 
-    <img src="{% static 'images/logo.png'%}" class="center-block">
-
-    <div class="col-lg-12"><p></p></div>
-
     {% if "NURSE" in list_group %}
-        <div class="col-lg-12">
-            <p><a href="{% url 'departs_patient' iddepart=id_depart %}" class="btn btn-primary btn-lg center-block" role="button">Пациенты отделения</a></p>
-        </div>
-
-        <div class="col-lg-12">
-            <p><a href="{% url 'nurse_work' %}" class="btn btn-primary btn-lg center-block" role="button">Журнал назначений</a></p>
-        </div>
-        <div class="col-lg-12">
-            <p><a href="{% url 'nurse_patients' %}" class="btn btn-primary btn-lg center-block" role="button">Назначения по пациентам</a></p>
-        </div>
+            <p><a href="{% url 'departs_patient' iddepart=id_depart %}" class="btn btn-primary btn-lg btn-block" role="button">Пациенты отделения</a></p>
+            <p><a href="{% url 'nurse_work' %}" class="btn btn-primary btn-lg btn-block" role="button">Журнал назначений</a></p>
+            <p><a href="{% url 'nurse_patients' %}" class="btn btn-primary btn-lg btn-block" role="button">Назначения по пациентам</a></p>
     {% endif %}
 
     {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "FUNCT" in list_group  or "PROF_DOCTOR" in list_group %}
-        <div class="col-lg-12">
             <form action="/search/" method="post" role="form">{% csrf_token %}
                 <div class="input-group">
                     <input type="text" class="form-control" name="patient" placeholder="ФИО или № истории" required>
@@ -30,38 +18,29 @@
                     </span>
                 </div>
             </form>
-        </div>
         <div class="col-lg-12"><p></p></div>
         {% if "DOCTOR" in list_group %}
-            <div class="col-lg-12">
-                <p>
-                    <a href="{% url 'my_patient' %}" class="btn btn-primary btn-lg center-block" role="button">Мои пациенты</a>
-                </p>
-            </div>
-            <div class="col-lg-12">
-                <p>
-                    <a href="{% url 'under_observation' %}" class="btn btn-primary btn-lg center-block" role="button">Под наблюдением</a>
-                </p>
-            </div>
-        {% endif %}
-        <div class="col-lg-12">
             <p>
-                <a href="{% url 'patient_by_depart' %}" class="btn btn-primary btn-lg center-block" role="button">По отделениям</a>
+                <a href="{% url 'my_patient' %}" class="btn btn-primary btn-lg btn-block" role="button">Мои пациенты</a>
             </p>
-        </div>
+            {% if cnt_monitored %}
+                <p>
+                    <a href="{% url 'under_observation' %}" class="btn btn-primary btn-lg btn-block" role="button">Под наблюдением</a>
+                </p>
+            {% endif %}
+        {% endif %}
+            <p>
+                <a href="{% url 'patient_by_depart' %}" class="btn btn-primary btn-lg btn-block" role="button">По отделениям</a>
+            </p>
     {% endif %}
-    <div class="col-lg-12">
         <p>
-            <a href="{% url 'choose_test' %}" class="btn btn-primary btn-lg center-block" role="button">Обследования</a>
+            <a href="{% url 'choose_test' %}" class="btn btn-primary btn-lg btn-block" role="button">Обследования</a>
         </p>
-    </div>
 
     {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "FUNCT" in list_group %}
-        <div class="col-lg-12">
             <p>
-                <a href="{% url 'stat' %}" class="btn btn-primary btn-lg center-block" role="button">Статистика</a>
+                <a href="{% url 'stat' %}" class="btn btn-primary btn-lg btn-block" role="button">Статистика</a>
             </p>
-        </div>
     {% endif %}
 
     <div class="col-lg-12">
@@ -69,15 +48,15 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-4 text-left">
-            <p class="small">©ПОКЦ, 2015-16 г.</p>
+        <div class="col">
+            <p class="small">©Сибирь-Проект, 2015-17 г.</p>
         </div>
-        <div class="col-xs-4 text-center">
-            <p class="small"><a href="{% url 'user_profile' %}"><img src="{% static 'images/user-medical.png'%}"> {{ current_user }}</a></p>
+        <div class="col-5">
+            <p class="small text-center"><a href="{% url 'user_profile' %}"><img src="{% static 'images/user-medical.png'%}"> {{ current_user }}</a></p>
         </div>
-        <div class="col-xs-4 text-center">
+        <div class="col">
         {% if current_doc %}
-            <p class="small"><a href="/logout"><img src="{% static 'images/door-open-out.png'%}"></a></p>
+            <p class="small text-center"><a href="/logout"><img src="{% static 'images/door-open-out.png'%}">Выход</a></p>
         {% endif %}
         </div>
     </div>
