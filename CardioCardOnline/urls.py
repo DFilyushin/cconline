@@ -14,7 +14,7 @@ from cconline import utils
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    #url(r'^admin/', include(admin.site.urls)),
     url(r'^robots.txt$', views.robots),
     url(r'^login/$', views.card_login),
     url(r'^password_change/$',
@@ -103,7 +103,6 @@ urlpatterns = [
     url(r'^json/nurse_work_doc/$', utils.json_nurse_doctor, name='get_nurse_doctor_work'),
     url(r'^json/nurse_execute/$', utils.nurse_execute, name='get_nurse_execute'),
     url(r'^json/nurse/$', utils.nurse_work_by_patient, name='get_nurse_json'),
-
 ]
 
 if settings.DEBUG:
