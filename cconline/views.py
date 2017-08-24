@@ -124,6 +124,9 @@ def index(request):
     """
     current_user = request.user.last_name + ' ' + request.user.first_name
     id_depart = get_user_depart(request)
+    cnt_monitored = ListHistory.objects.filter(is_viewed=1).\
+        filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.date.today())).\
+        count()
     return render(request,
         'cconline/index.html',
         {
@@ -131,6 +134,7 @@ def index(request):
             'current_user': current_user,
             'list_group': get_user_groups(request),
             'id_depart': id_depart,
+            'cnt_monitored': cnt_monitored,
         })
 
 
