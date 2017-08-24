@@ -6,28 +6,21 @@
 
     <h4 class="text-center">Лабораторные анализы</h4>
 
-    <div class="container-fluid">
-        <table class="table table-condensed">
-            <thead>
-                <tr>
-                    <th>Пациент</th>
-                    <th>Вид анализа</th>
-                    <th>iLis</th>
-                    <th>Выполнен</th>
-                </tr>
-            </thead>
-            <tbody>
-                {%  for item in labs %}
-                <tr>
-                    <td>{{ item.id_history.num_history }} </br>{{ item.id_history.lastname }}</td>
-                    <td><a href="{% url 'get_lab' id=item.id %}">{{ item.name_labanalysis }}</a></td>
-                    <td>{% if item.lisid %}{{ item.lisid }} {% else %} <img src="{% static 'images/dummy-small.png'%}"> {% endif %}</td>
-                    <td>{{ item.date_execute|date:"d.m H:i" }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="list-group">
+            {% for item in labs %}
+
+                <a href="{% url 'get_lab' id=item.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{ item.id_history.lastname|upper }} {{ item.id_history.firstname|upper }} {{ item.id_history.middlename|upper }}</h5>
+                      <small>{{ item.id_history.num_history }}</small>
+                    </div>
+                    <p class="mb-1"><i class="fa fa-flask" aria-hidden="true"></i> {{ item.name_labanalysis }}</p>
+                    <p class="mb-1"><i class="fa fa-id-badge" aria-hidden="true"></i> {% if item.lisid %}{{ item.lisid }} {% else %} не получен код ЛИС {% endif %}</p>
+                    <p class="mb-1"><i class="fa fa-calendar" aria-hidden="true"></i> {{ item.date_execute|date:"d.m H:i" }}</p>
+                </a>
+            {% endfor %}
     </div>
+
 
     <p><a href="{% url 'choose_test' %}" class="btn btn-default btn-wide center-block" role="button">К выбору</a></p>
 
