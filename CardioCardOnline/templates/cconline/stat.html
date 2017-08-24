@@ -6,8 +6,8 @@
 
 <div class="container">
     <h4>Заполненность отделений</h4>
-    <table class="table table-condensed">
-        <thead>
+    <table class="table table-bordered">
+        <thead class="thead-default">
             <tr>
                 <th>Отделение</th>
                 <th class="text-center">Кол-во пациентов</th>
@@ -22,7 +22,6 @@
             {% endfor %}
             <tr>
                 <td colspan="2" class="text-center"><b>Итого по клиникам</b></td>
-                <td></td>
             </tr>
             {%  for item in totals %}
             <tr>
@@ -35,8 +34,8 @@
     </table>
 
     <h4>Госпитализация</h4>
-    <table class="table table-condensed">
-        <thead>
+    <table class="table table-bordered">
+        <thead class="thead-default">
             <tr>
                 <th>Дата</th>
                 <th class="text-center">Экстренно</th>
