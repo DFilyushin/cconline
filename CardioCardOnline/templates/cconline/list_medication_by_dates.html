@@ -3,14 +3,14 @@
 {% load event_tags %}
 
 {% block body %}
+    <div class="mt-3">
+    <a href="{% url 'get_patient' idpatient=history.id %}">
+            <h4 class="text-center">{{ history.lastname|lower|capfirst }} <i class="fa fa-id-card-o"></i> {{ history.num_history }}</h4>
+    </a>
+    </div>
+    <h4 class="text-center">Календарь назначений</h4>
 
-<h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname|lower|capfirst }}</a></h4>
-<h4 class="text-center">Календарь назначений</h4>
-
-<div class="container-fluid">
     <div id="calendar">
         {% event_calendar year month event_list show_next show_prev history.id %}
     </div>
-</div>
-
 {% endblock %}

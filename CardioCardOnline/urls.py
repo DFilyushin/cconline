@@ -14,7 +14,6 @@ from cconline import utils
 admin.autodiscover()
 
 urlpatterns = [
-    #url(r'^admin/', include(admin.site.urls)),
     url(r'^robots.txt$', views.robots),
     url(r'^login/$', views.card_login),
     url(r'^password_change/$',
@@ -30,6 +29,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),  # index page
     url(r'^stat/$', views.stat, name='stat'),  # stat page
     url(r'^search/', views.search, name='search'),  # search by num history or firstname patient
+    url(r'^about/', views.about, name='about'),  # search by num history or firstname patient
     url(r'^last_test/', views.choose_test, name='choose_test'), # choose test lab or exam
     url(r'^last_lab/(?P<iddepart>\d+)/$', views.last_lab, name='last_laboratory'), # last lab
     url(r'^last_exam/(?P<iddepart>\d+)/$', views.last_exam, name='last_examenation'), # last exam

@@ -8,10 +8,11 @@
 {% endblock %}
 
 {% block body %}
-<!-- Begin page content -->
 
-    <h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h4>
-    <h4>Назначение анализа</h4>
+    <div class="card-body">
+        <h4 class="card-title"><i class="fa fa-flask"></i>Назначение анализа</h4>
+        <p class="card-text"><a href="{% url 'get_patient' idpatient=history.id %}">{{ history.lastname }} {{ history.firstname }} {{ history.middlename }}</a></p>
+    </div>
 
     <div  ng-controller="LabController">
         <div class="container">
@@ -39,38 +40,33 @@
                 </table>
 
                   <div class="form-group">
-                  <label class="control-label" for="dplanyear">Дата проведения:</label>
                       <div class="row">
-                          <div class="col-md-2">
-                              <input type="text" class="form-control" name="planyear" id="dplanyear" value="{{ currentYear }}" placeholder="Год">
-                          </div>
-
-                          <div class="col-md-2">
-                            <select class="form-control" name="monthSelect" id="monthSelect" ng-model="currentMonth" ng-options="item for item in listMonths">
-                            </select>
-                          </div>
-
-                          <div class="col-md-2">
-                              <input type="text" class="form-control" name="planday" id="planday" value="{{ currentDay }}" placeholder="День" pattern="[0-9]{1,2}">
-                          </div>
-                          <div class="col-md-2">
-                              <input type="text" class="form-control" name="planhour" id="planhour" value="{{ currentHour }}" placeholder="Часы" pattern="[0-9]{1,2}">
-                          </div>
-                          <div class="col-md-2">
-                              <input type="text" class="form-control" name="planmin" id="planmin" value="{{ currentMin }}" placeholder="Минуты" pattern="[0-9]{1,2}">
+                          <div class="col-md-4">
+                              <label class="control-label" for="plan_date">Дата проведения:</label>
+                              <input type="date" class="form-control" name="plan_date" id="plan_date" ng-model="plan_date2">
                           </div>
                       </div>
-                  </div>
-                  <div class="form-group">
-                      <input type="checkbox" ng-model="isCito">CITO
-                  </div>
 
+                      <div class="row">
+                          <div class="col-md-4">
+                              <label class="control-label" for="plan_time">Время проведения:</label>
+                              <input type="time" class="form-control" name="plan_time" id="plan_time" placeholder="HH:mm:ss" ng-model="plan_time2" >
+                          </div>
+                      </div>
+
+                  </div>
+                  <div class="form-check">
+                      <label class="form-check-label">
+                        <input class="form-check-input" type="checkbox" ng-model="isCito">CITO
+                      </label>
+                  </div>
         {% endverbatim %}
 
-                  <button type="button" class="btn btn-default" ng-click="sendData()">Назначить</button>
-                  <a href="/laboratory/list/{{ history.id }}" class="btn btn-default" role="button">Вернуться</a>
+                  <button type="button" class="btn btn-primary" ng-click="sendData()">Назначить</button>
+                  <a href="/laboratory/list/{{ history.id }}" class="btn btn-outline-primary" role="button">Вернуться</a>
               </form>
         </div>
 
     </div>
+
 {% endblock %}

@@ -2,21 +2,34 @@
 {% load staticfiles %}
 
 {% block body %}
-    <h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname|lower|capfirst }}</a></h4>
+    <div class="mt-3">
+    <a href="{% url 'get_patient' idpatient=history.id %}">
+            <h4 class="text-center">{{ history.lastname|lower|capfirst }} <i class="fa fa-id-card-o"></i> {{ history.num_history }}</h4>
+    </a>
+    </div>
     <h4 class="text-center">Проведённые операции</h4>
 
-    <div class="container-fluid">
-        <table class="table table-condensed">
-            <tbody>
-                {%  for item in surgery %}
-                <tr>
-                    <td><a href="{% url 'operation' id=item.id %}">{{ item.surgery_date|date:"d.m.Y H:i" }}</a></td>
-                    <td><a href="{% url 'operation' id=item.id %}">{{ item.surgery_name }}</a></td>
-                    <td>{% if item.surgery_extreme == 1 %} <img src="{% static 'images/exclamation.png' %}"> {% endif %}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="list-group">
+        {%  for item in surgery %}
+            <a href="{% url 'operation' id=item.id %}" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>
+                            <span class="d-none d-lg-inline d-md-inline"><i class="fa fa-heartbeat"></i></span> {{ item.surgery_name }}
+                        </h5>
+                        <small>
+                            {% if item.surgery_extreme == 1 %}<font color="#dc143c"><i class="fa fa-warning"></i></font>{% endif %}{{ item.surgery_date|date:"d.m.Y H:i" }}
+                        </small>
+                    </div>
+                    <div class="col">
+                        Хирург/оператор: {{ item.surgeon }}
+                    </div>
+
+
+                  </div>
+            </a>
+        {% endfor %}
     </div>
+
 
 {% endblock %}

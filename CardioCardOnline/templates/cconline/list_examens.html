@@ -1,40 +1,40 @@
 {% extends "cconline/base.html" %}
-
+{% load humanize %}
 {% block body %}
-    <h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname|lower|capfirst }}</a></h4>
+    <div class="mt-3">
+    <a href="{% url 'get_patient' idpatient=history.id %}">
+            <h4 class="text-center">{{ history.lastname|lower|capfirst }} <i class="fa fa-id-card-o"></i> {{ history.num_history }}</h4>
+    </a>
+    </div>
     <h4 class="text-center">Функциональные исследования</h4>
     {% if "DOCTOR" in list_group  %}
-        <p><a href="{% url 'add_exam' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
+        <div class="d-flex justify-content-center mt-3 mb-3">
+            <a href="{% url 'add_exam' idpatient=history.id %}" class="btn text-center btn-primary">Назначить</a>
+        </div>
     {% endif %}
-    <div class="container-fluid">
-        <table class="table table-condensed">
-            <thead>
-                    <th>Обследование</th>
-                    <th>Назначен</th>
-                    <th>Выполнен</th>
-            </thead>
-            <tbody>
-                {%  for item in examens %}
-                <tr>
-                    <td>
-                        {% if item.date_execute %}<a href="{% url 'get_exam' id=item.id %}">{% endif %}{{ item.name_exam }}{% if item.date_execute %}</a>{% endif %}
-                    </td>
-                    <td>
+
+
+    <div class="list-group">
+        {%  for item in examens %}
+            <a href="{% url 'get_exam' id=item.id %}" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>
+                            <span class="d-none d-lg-inline d-md-inline"><i class="fa fa-heartbeat"></i></span> {{ item.name_exam }}
+                        </h5>
+                        <small>
+                            {% if item.date_execute %}<i class="fa fa-check-circle text-info"></i><span class="d-none d-lg-inline">{{ item.date_execute|naturalday }}</span>{% else %}<i class="fa fa-spinner fa-pulse fa-spin align-center"></i>{% endif %}
+                        </small>
+                    </div>
+                    <div class="col-6">
+                        {{ item.doctor }}
+                    </div>
+                    <div class="col-3">
                         {{ item.date_assign|date:"d.m.Y H:i" }}
-                    </td>
-
-                    <td>
-                        {% if item.date_execute %}<a href="{% url 'get_exam' id=item.id %}">{{ item.date_execute|date:"d.m H:i" }}</a>{% else %} в процессе {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-
+                    </div>
+                  </div>
+            </a>
+        {% endfor %}
     </div>
-
-    {% if "DOCTOR" in list_group  %}
-        <p><a href="{% url 'add_exam' idpatient=history.id %}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
-    {% endif %}
 
 {% endblock %}

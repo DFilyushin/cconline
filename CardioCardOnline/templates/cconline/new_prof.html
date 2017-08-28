@@ -30,7 +30,7 @@
               <div class="form-group">
 
                   <div class="row">
-                      <div class="col-md-2">
+                      <div class="col-md-4">
                           <label class="control-label" for="plan_date">Дата проведения:</label>
                           <input type="date" class="form-control" name="plan_date" id="plan_date" value="{% now "Y-m-d" %}" placeholder="Год">
                       </div>
@@ -38,7 +38,7 @@
 
                   <div class="row">
 
-                      <div class="col-md-2">
+                      <div class="col-md-4">
                           <label class="control-label" for="plan_time">Время проведения:</label>
                           <input type="time" class="form-control" name="plan_time" id="plan_time" value="{% now "H:i" %}" placeholder="Часы">
                       </div>
@@ -46,8 +46,8 @@
               </div>
 
 
-              <button type="submit" class="btn btn-default">Назначить</button>
-              <a href="{% url 'list_proview' idpatient=history.id %}" class="btn btn-default" role="button">Вернуться</a>
+              <button type="submit" class="btn btn-primary">Назначить</button>
+              <a href="{% url 'list_proview' idpatient=history.id %}" class="btn btn-outline-primary" role="button">Вернуться</a>
           </form>
     </div>
 {% endblock %}

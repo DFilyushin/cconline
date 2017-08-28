@@ -4,61 +4,59 @@
 {% block body %}
 
     {% if "NURSE" in list_group %}
-            <p><a href="{% url 'departs_patient' iddepart=id_depart %}" class="btn btn-primary btn-lg btn-block" role="button">Пациенты отделения</a></p>
-            <p><a href="{% url 'nurse_work' %}" class="btn btn-primary btn-lg btn-block" role="button">Журнал назначений</a></p>
-            <p><a href="{% url 'nurse_patients' %}" class="btn btn-primary btn-lg btn-block" role="button">Назначения по пациентам</a></p>
+        <div class="mb-1"><a href="{% url 'departs_patient' iddepart=id_depart %}" class="btn btn-primary btn-lg btn-block" role="button">Пациенты отделения</a></div>
+        <div class="mb-1><a href="{% url 'nurse_work' %}" class="btn btn-primary btn-lg btn-block" role="button">Журнал назначений</a></div>
+        <div class="mb-1"><a href="{% url 'nurse_patients' %}" class="btn btn-primary btn-lg btn-block" role="button">Назначения по пациентам</a></div>
     {% endif %}
 
     {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "FUNCT" in list_group  or "PROF_DOCTOR" in list_group %}
-            <form action="/search/" method="post" role="form">{% csrf_token %}
-                <div class="input-group">
-                    <input type="text" class="form-control" name="patient" placeholder="ФИО или № истории" required>
-                    <span class="input-group-btn">
-                        <button type="submit" class="btn btn-primary" type="button">Поиск</button>
-                    </span>
-                </div>
-            </form>
-        <div class="col-lg-12"><p></p></div>
+        <form action="/search/" method="post" role="form">{% csrf_token %}
+            <div class="input-group">
+                <input type="text" class="form-control" name="patient" placeholder="Поиск по ФИО или № истории" required>
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-primary" type="button"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </form>
+        <div class="col-lg-12 mt-3"></div>
         {% if "DOCTOR" in list_group %}
-            <p>
+            <div class="mb-2">
                 <a href="{% url 'my_patient' %}" class="btn btn-primary btn-lg btn-block" role="button">Мои пациенты</a>
-            </p>
+            </div>
             {% if cnt_monitored %}
-                <p>
+                <div class="mb-2">
                     <a href="{% url 'under_observation' %}" class="btn btn-primary btn-lg btn-block" role="button">Под наблюдением</a>
-                </p>
+                </div>
             {% endif %}
         {% endif %}
-            <p>
+            <div class="mb-2">
                 <a href="{% url 'patient_by_depart' %}" class="btn btn-primary btn-lg btn-block" role="button">По отделениям</a>
-            </p>
-    {% endif %}
-        <p>
-            <a href="{% url 'choose_test' %}" class="btn btn-primary btn-lg btn-block" role="button">Обследования</a>
-        </p>
-
-    {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "FUNCT" in list_group %}
-            <p>
-                <a href="{% url 'stat' %}" class="btn btn-primary btn-lg btn-block" role="button">Статистика</a>
-            </p>
+            </div>
     {% endif %}
 
-    <div class="col-lg-12">
-        <p><hr width="50%"></p>
+    <div class="mb-2">
+        <a href="{% url 'choose_test' %}" class="btn btn-primary btn-lg btn-block" role="button">Обследования</a>
     </div>
 
+    {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "FUNCT" in list_group %}
+        <div class="mb-2">
+            <a href="{% url 'stat' %}" class="btn btn-primary btn-lg btn-block" role="button">Статистика</a>
+        </div>
+    {% endif %}
+
+    <hr width="50%">
+
     <div class="row">
-        <div class="col">
-            <p class="small">©Сибирь-Проект, 2015-17 г.</p>
+        <div class="col text-center">
+            <a href="{% url 'about' %}" title="О приложении"><i class="fa fa-question-circle-o fa-2x"></i></a>
         </div>
-        <div class="col-5">
-            <p class="small text-center"><a href="{% url 'user_profile' %}"><img src="{% static 'images/user-medical.png'%}"> {{ current_user }}</a></p>
+        <div class="col text-center">
+            <a href="{% url 'user_profile' %}" class="small"><i class="fa fa-user-md"></i> {{ current_user }}</a>
         </div>
-        <div class="col">
+        <div class="col text-center">
         {% if current_doc %}
-            <p class="small text-center"><a href="/logout"><img src="{% static 'images/door-open-out.png'%}">Выход</a></p>
+            <a href="/logout" title="Выход"><i class="fa fa-sign-out fa-2x"></i></a>
         {% endif %}
         </div>
     </div>
-
 {% endblock %}
