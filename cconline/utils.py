@@ -17,6 +17,7 @@ from collections import namedtuple
 from django.contrib.auth.models import User
 from django import forms
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 
 
 def getpass(request):
@@ -37,10 +38,7 @@ def getpass(request):
 
 def page_not_found(request):
     # обработчик Страница не найден
-    response = render(request, 
-	'404.html',
-        {},
-     )
+    response = render(request, '404.html', {},)
     response.status_code = 404
     return response
 
@@ -85,7 +83,7 @@ def change_password(request):
         return response
 
 
-
+@login_required(login_url='/login/')
 def json_subtest(request):
     """
     Список саб-тестов для теста
@@ -98,6 +96,7 @@ def json_subtest(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_test(request):
     """
     Список основных тестов
@@ -109,6 +108,7 @@ def json_test(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_savetest(request):
     """
     Сохранить назначение анализа
@@ -175,6 +175,7 @@ def named_tuple_fetch_all(cursor):
     return [nt_result(*row) for row in cursor.fetchall()]
 
 
+@login_required(login_url='/login/')
 def json_templates(request):
     """
     Список шаблонов или шаблон
@@ -195,6 +196,7 @@ def json_templates(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_nurse_lab(request):
     import datetime
     """
@@ -220,6 +222,7 @@ def json_nurse_lab(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_nurse_med(request):
     """
     Список назначений препаратов пациенту для м/с
@@ -246,6 +249,7 @@ def json_nurse_med(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_nurse_exam(request):
     """
     Список назначений обследований пациента для м/с
@@ -272,6 +276,7 @@ def json_nurse_exam(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_nurse_doctor(request):
     """
     Список назначений проф. осмотров пациента для м/с
@@ -297,6 +302,7 @@ def json_nurse_doctor(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def nurse_execute(request):
     """
     Выполнение мед. назначений мед. сестрой
@@ -322,6 +328,7 @@ def nurse_execute(request):
     return HttpResponse('200 Ok')
 
 
+@login_required(login_url='/login/')
 def nurse_work_by_patient(request):
     """
     Список работ по истории болезни
