@@ -65,7 +65,7 @@ def change_password(request):
         return render(request, 'registration/password_change_form.html', {
             'current_user': current_user,
             }
-	)
+                      )
     else:
         old_pass = request.POST.get('old_password', '')
         pass1 = request.POST.get('new_password1', '')
@@ -312,7 +312,7 @@ def nurse_execute(request):
     type_execute = params['t']
     id_record = params['id']
     id_nurse = views.get_current_doctor_id(request)
-    assign_date = datetime.date.today().strftime("%Y-%m-%d %H:%M:%S")
+    assign_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     sql = "EXECUTE PROCEDURE SP_NURSE_EXECUTE(%s, %s, %s, '%s')" % (type_execute, id_record, id_nurse, assign_date)
     cursor = connection.cursor()

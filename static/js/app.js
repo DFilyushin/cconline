@@ -55,6 +55,4 @@ nurseApp.controller('HelperCtrl', function($rootScope) {
         $rootScope.setDateValue = function(val){
           $rootScope.datavalue.mode = val;
         }
-
-
     });
