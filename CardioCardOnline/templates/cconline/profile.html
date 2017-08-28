@@ -2,48 +2,16 @@
 {% load staticfiles %}
 
 {% block body %}
-
-<div class="container">
-
-<h2>Профиль пользователя</h2>
-
-      <form class="form-horizontal">{% csrf_token %}
-
-        <div class="form-group">
-          <label class="control-label col-xs-2" for="id_login">Логин:</label>
-          <div class="col-xs-9">
-            <input type="text" class="form-control" name="fio" id="id_login" value="{{ user.username }}" autofocus disabled >
+  <div class="card w-100">
+        <div class="card border-dark">
+          <div class="card-header">Профиль пользователя</div>
+          <div class="card-body text-dark">
+              <h4 class="card-title">{{ user.username }}</h4>
+              <p class="card-text"><i class="fa fa-user-md" aria-hidden="true"></i> {{ user.last_name }} {{ user.first_name }}</p>
+              <p class="card-text"><i class="fa fa-envelope-o" aria-hidden="true"></i> {{ user.email }}</p>
+              <a href="{% url 'password_change' %}" class="btn btn-primary">Сменить пароль</a>
+              <a href="{% url 'index' %}" class="btn btn-primary" >Закрыть</a>
           </div>
         </div>
-        <div class="form-group">
-          <label class="control-label col-xs-2" for="id_last_name">Фамилия:</label>
-          <div class="col-xs-9">
-            <input type="text" class="form-control" name="fio" id="id_last_name" value="{{ user.last_name }}" autofocus disabled >
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label col-xs-2" for="id_first_name">Имя:</label>
-          <div class="col-xs-9">
-            <input type="text" class="form-control" name="fio" id="id_first_name" value="{{ user.first_name }}" autofocus disabled >
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label col-xs-2" for="id_first_name">Почта:</label>
-          <div class="col-xs-9">
-            <input type="text" class="form-control" name="fio" id="id_first_name" value="{{ user.email }}" autofocus disabled >
-          </div>
-        </div>
-      </form>
-    <div class="row">
-        <div class="col-xs-6 text-center">
-            <a class="btn btn-default" href="{% url 'password_change' %}">Сменить пароль</a>
-        </div>
-        <div class="col-xs-6 text-center">
-            <a class="btn btn-default" href="{% url 'index' %}">Закрыть</a>
-        </div>
-    </div>
-
-</div>
-
-
+  </div>
 {% endblock %}
