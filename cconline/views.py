@@ -3,12 +3,11 @@
 from django.http import Http404
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
-from django.template import RequestContext
 from django.db.models import Q
 from django.utils.safestring import mark_safe
 from django.contrib.auth.decorators import login_required
 from django.db import connection
-from django.db.models import Sum
+from django.db.models import Max, Min
 from forms import DiaryForm
 from models import Departments, ListHistory, ListDiary, ListAnalysis, LaboratoryData, \
     ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication, \
@@ -124,6 +123,9 @@ def index(request):
     """
     current_user = request.user.last_name + ' ' + request.user.first_name
     id_depart = get_user_depart(request)
+    cnt_monitored = ListHistory.objects.filter(is_viewed=1).\
+        filter(Q(discharge__isnull=True) | Q(discharge__gte=datetime.date.today())).\
+        count()
     return render(request,
         'cconline/index.html',
         {
@@ -131,7 +133,16 @@ def index(request):
             'current_user': current_user,
             'list_group': get_user_groups(request),
             'id_depart': id_depart,
+            'cnt_monitored': cnt_monitored,
         })
+
+
+def about(request):
+    """
+    About web-app
+    """
+    return render(request,
+        'cconline/about.html')
 
 
 @login_required(login_url='/login/')
@@ -408,22 +419,20 @@ def new_examen(request):
         history = ListHistory.objects.get(pk=id_history)
     except ListHistory.DoesNotExist:
         raise Http404
+    plandate2 = request.POST['plan_date2']
+    plantime2 = request.POST['plan_time2']
+    pl_test_date = plandate2 + ' ' + plantime2
+    plandate = datetime.datetime.strptime(pl_test_date, '%Y-%m-%d %H:%M')
     id_doctor = get_current_doctor_id(request)
     id_department = history.id_depart
     id_group_exam = request.POST['examens']
-    planyear = request.POST['planyear']
-    planmonth = request.POST['planmonth']
-    planday = request.POST['planday']
-    planhour = request.POST['planhour']
-    planmin = request.POST['planmin']
-    plandate = datetime.datetime(int(planyear), int(planmonth), int(planday), int(planhour), int(planmin), 0)
 
     dataset = ExamenDataset()
     dataset.id_history = id_history
     dataset.id_doctor = id_doctor
     dataset.id_department = id_department
     dataset.id_group_examenation = id_group_exam
-    dataset.appointment_date = datetime.datetime.now()
+    dataset.appointment_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     dataset.plan_date = plandate
     dataset.id_typepay = 0
     dataset.save()
@@ -459,10 +468,10 @@ def add_new_exam(request, idpatient):
 @login_required(login_url='/login/')
 def delete_exam(request, id_exam):
     try:
-        examen = ListExamens.objects.get(pk=id)
+        examen = ListExamens.objects.get(pk=id_exam)
     except ListExamens.DoesNotExist:
         raise Http404
-    id_history = examen.id_history
+    id_history = examen.id_history.id
     examen.delete()
     redirect_url = '/examens/list/' + str(id_history)
     return render(
@@ -659,7 +668,7 @@ def save_prof(request):
     dataset.id_doctor = id_doctor
     dataset.id_depart = id_department
     dataset.id_spec = id_spec
-    dataset.assign_date = datetime.datetime.now()
+    dataset.assign_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     dataset.plan_date = plan_date
     dataset.save()
     redirect_url = '/proview/list/' + id_history
@@ -1291,41 +1300,35 @@ def get_list_medication_by_date(request, idpatient):
     """
     current_year = request.GET.get('year', 0)
     current_month = request.GET.get('month', 0)
-    if (current_year == 0) or (current_month == 0):
-        current_year = datetime.datetime.now().year
-        current_month = datetime.datetime.now().month
 
     try:
         history = ListHistory.objects.get(pk=idpatient)
     except ListHistory.DoesNotExist:
         raise Http404
 
-    list_dates = MedicationDates.objects.filter(id_history=idpatient).filter(year=current_year)\
-        .filter(month=current_month)
-    if list_dates:
-        min_month = list_dates[0].month
-        list_dates.last()
-        max_month = list_dates[0].month
+    min_list_dates = MedicationDates.objects.filter(id_history=idpatient).aggregate(Min('dateapp'))
+    max_list_dates = MedicationDates.objects.filter(id_history=idpatient).aggregate(Max('dateapp'))
 
-    if not list_dates.exists():
-        list_dates = MedicationDates.objects.filter(id_history=idpatient)
-        current_year = list_dates[0].year
-        current_month = list_dates[0].month
-        list_dates.last()
-        show_prev = False
-        if current_month == list_dates[0].month:
-            show_next = True
-        else:
-            show_next = False
-        list_dates = MedicationDates.objects.filter(id_history=idpatient).filter(year=current_year)\
-            .filter(month=current_month)
-    else:
-        if min_month == max_month:
-            show_next = False
-            show_prev = False
-        else:
-            show_next = True
-            show_prev = True
+    min_month = min_list_dates['dateapp__min'].month
+    min_year = min_list_dates['dateapp__min'].year
+
+    max_month = max_list_dates['dateapp__max'].month
+    max_year = max_list_dates['dateapp__max'].year
+
+    if (current_year == 0) or (current_month == 0):
+        current_year = max_year
+        current_month = max_month
+
+    list_dates = MedicationDates.objects.filter(id_history=idpatient).filter(year=current_year) \
+        .filter(month=current_month)
+
+    show_next = False
+    show_prev = False
+    if int(current_year) == min_year and int(current_month) > min_month:
+        show_prev = True
+    if int(current_year) == max_year and int(current_month) < max_month:
+        show_next = True
+
     return render(
         request,
         'cconline/list_medication_by_dates.html',
@@ -1363,7 +1366,7 @@ def get_medication_by_date(request, idpatient, date_assign):
         {
             'history': history,
             'medications': medication,
-            'day': date_assign,
+            'day': date1,
         }
     )
 

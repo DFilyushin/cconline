@@ -1,27 +1,35 @@
 {% extends "cconline/base.html" %}
 {% block body %}
-<h4>
-    <a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname|lower|capfirst }}</a>
-</h4>
+    <div class="mt-3">
+    <a href="{% url 'get_patient' idpatient=history.id %}">
+        <h4 class="text-center">{{ history.lastname|lower|capfirst }} <i class="fa fa-id-card-o"></i> {{ history.num_history }}</h4>
+    </a>
+    </div>
+    <h4 class="text-center">Дневники</h4>
+    <div class="d-flex justify-content-center mt-3 mb-3">
+        <a href="{% url 'add_diary' idpatient=history.id  %}" class="btn text-center btn-primary">Добавить</a>
+    </div>
 
-<h4 class="text-center">Дневники</h4>
-
-    <p><a href="{% url 'add_diary' idpatient=history.id  %}" class="btn btn-primary btn-wide center-block" role="button">Добавить</a></p>
-
-<div class="container-fluid">
-    <table class="table table-condensed">
-        <tbody>
-            {%  for item in diarys %}
-            <tr>
-                <td><a href="{% url 'get_diary' id_diary=item.id %}">{{ item.reg_date|date:"d.m.Y H:i" }}</a></td>
-                <td><a href="{% url 'get_diary' id_diary=item.id %}">{{ item.doctor }}</a></td>
-                <td><a href="{% url 'get_diary' id_diary=item.id %}">{{ item.depart_name }}</a></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-    {% if diarys %}
-    <p><a href="{% url 'add_diary' idpatient=history.id  %}" class="btn btn-primary btn-wide center-block" role="button">Добавить</a></p>
-    {% endif %}
+    <div class="list-group">
+        {%  for item in diarys %}
+            <a href="{% url 'get_diary' id_diary=item.id %}" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>
+                            <span class="d-none d-lg-inline d-md-inline"><i class="fa fa-calendar"></i></span> {{ item.reg_date|date:"d.m.Y H:i" }}
+                        </h5>
+                        <small>
+                            <i class="fa fa-check-circle text-info"></i>
+                        </small>
+                    </div>
+                    <div class="col">
+                      {{ item.doctor }}
+                    </div>
+                    <div class="col">
+                      {{ item.depart_name }}
+                    </div>
+                  </div>
+            </a>
+        {% endfor %}
+    </div>
 {% endblock %}

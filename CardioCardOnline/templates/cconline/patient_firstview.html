@@ -3,26 +3,28 @@
 
 {% block body %}
 
-    <h4><a href="{% url 'get_patient' idpatient=patient.id %}">№{{ patient.num_history }} {{ patient.lastname|lower|capfirst }}</a></h4>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">
+                <i class="fa fa-user-md" aria-hidden="true"></i>Запись лечащего врача
+            </h4>
+            <h6 class="card-subtitle mb-2 text-muted">
+                <a href="{% url 'get_patient' idpatient=patient.id %}">{{ patient.lastname }} {{ patient.firstname }} {{ patient.middlename }}</a>
+            </h6>
 
-    <p>
-        <strong>Дата рождения</strong>: {{ patient.dob|date:"d.m.Y" }} ({{ age }})
-        </br><strong>Отделение</strong>: {{ patient.id_depart.name }}
-        </br><strong>Лечащий врач</strong>: {{ patient.id_doctor.name }}
-        </br><strong>Госпитализирован</strong>: {{ patient.receipt|date:"d.m.Y H:i" }} в {% if patient.extreme_type == 0 %} плановом {% else %} <span class="text-danger">экстренном</span>{% endif %} порядке</>
-        {% if patient.discharge %}<br><strong>Выписан</strong>:{{ patient.discharge|date:"d.m.Y H:i" }}{% endif %}
-
-        {% if patient.extreme_type == 1 %}
-        </br><strong>Диганоз приёмного покоя:</strong> {% if patient.diag_preliminary_rd %} {{ patient.diag_preliminary_rd }} {% else %} не установлен {% endif %}
-        {% endif %}
-    </p>
-
-    <h4 class="text-center">Запись лечащего врача</h4>
-    <a href="{% url 'add_doctor_view' idpatient=patient.id %}" class="btn btn-primary btn-wide center-block" role="button">Добавить</a>
-    {% for item in first_view %}
-        <p><strong><a href="/patient/editview/{{ item.id_history }}/{{ item.id_param }}">{{ item.param_name }}</a></strong>: {{ item.text }}</p>
-    {% endfor %}
-
-    <a href="{% url 'add_doctor_view' idpatient=patient.id %}" class="btn btn-primary btn-wide center-block" role="button">Добавить</a>
+        </div>
+        <ul class="list-group list-group-flush">
+        {% for item in first_view %}
+            <li class="list-group-item">
+                <strong>
+                    <a href="{% url 'get_doctor_view' idpatient=item.id_history idparam=item.id_param %}" >{{ item.param_name }}</a>
+                </strong> {{ item.text }}
+            </li>
+        {% endfor %}
+        </ul>
+        <div class="card-body">
+            <a href="{% url 'add_doctor_view' idpatient=patient.id %}" class="card-link">Добавить запись</a>
+        </div>
+    </div>
 
 {% endblock %}

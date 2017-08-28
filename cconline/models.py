@@ -4,7 +4,6 @@ from _ast import mod
 from django.db import models
 from django.db import connection
 from django.contrib.auth.signals import user_logged_in
-from collections import namedtuple
 # Database model
 
 
@@ -830,7 +829,6 @@ class ActiveMonitoringByHospital(models.Model):
     class Meta:
         managed = False
         db_table = 'GET_ACTIVE_USER_BY_HOSPITAL'
-
 
 class NurseAssign(models.Model):
     id = models.IntegerField(primary_key=True)

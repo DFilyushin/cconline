@@ -9,22 +9,16 @@ var myApp=angular.module('myApp').config(function($httpProvider) {
 
 myApp.controller('LabController',
     function LabController($scope, $http) {
-        var months =
-            ["январь", "февраль", "март", "апрель", "май", "июнь", "июль", "август", "сентябрь", "октябрь", "ноябрь", "декабрь"];
         var curDate = new Date();
-
+        curDate.setMilliseconds(0);
+        curDate.setSeconds(0);
         $scope.id_history = 0;
-        $scope.currentYear=curDate.getFullYear();
-        $scope.currentMonth = months[ curDate.getMonth() ];
-        $scope.currentMonthI = 0;
-        $scope.currentDay=curDate.getDate();
-        $scope.currentHour=curDate.getHours();
-        $scope.currentMin=curDate.getMinutes();
         $scope.selectedPk=null;
         $scope.subTest= {};
-        $scope.listMonths = months;
         $scope.tableVisible = false;
         $scope.isCito = false;
+        $scope.plan_date2 = curDate;
+        $scope.plan_time2 = curDate;
 
         $http(
             {
@@ -59,23 +53,16 @@ myApp.controller('LabController',
                     listTests.push($scope.subTest[i].pk);
                 };
             };
-            for(i=0; i<months.length; i++){
-                if (months[i]==$scope.currentMonth){
-                    $scope.currentMonthI = i+1;
-                    break;
-                };
-            };
-
 
             var dataForSend = new Object();
             dataForSend.pk = $scope.selectedPk;
             dataForSend.selected = listTests;
             dataForSend.id_history = document.getElementsByName('id_history')[0].value;
-            dataForSend.plan_year = $scope.currentYear;
-            dataForSend.plan_month = $scope.currentMonthI;
-            dataForSend.plan_day = $scope.currentDay;
-            dataForSend.plan_hour = $scope.currentHour;
-            dataForSend.plan_min = $scope.currentMin;
+            dataForSend.plan_year = $scope.plan_date2.getFullYear();
+            dataForSend.plan_month = $scope.plan_date2.getMonth();
+            dataForSend.plan_day = $scope.plan_date2.getDate();
+            dataForSend.plan_hour = $scope.plan_time2.getHours();
+            dataForSend.plan_min = $scope.plan_time2.getMinutes();
             if ($scope.isCito == true){
                 dataForSend.is_cito = 1;
             }

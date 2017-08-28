@@ -11,9 +11,6 @@ myApp.controller('DiaryController',
     function DiaryController($scope, $http) {
         $scope.id_history = 0;
         $scope.selectedTemplate=null;
-        $scope.subTest= {};
-        $scope.tableVisible = false;
-        $scope.isCito = false;
         $scope.list_templates = {};
 
         $http.get('/json/templates/?g=11').success(function(data) {
@@ -28,9 +25,7 @@ myApp.controller('DiaryController',
                 params: {id: $scope.selectedTemplate}
             })
                 .success(function(data){
-                    //var target = document.getElementsById('id_diary_text');
-                    str = data[0].fields.text
-                    //alert(str);
+                    str = data[0].fields.text;
                     document.getElementById('id_diary_text').value = str;
 
             }

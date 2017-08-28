@@ -2,23 +2,15 @@
 {% load staticfiles %}
 
 {% block body %}
-<!-- Begin page content -->
-<div class="container">
-<p><a href="{% url 'index' %}" class="btn btn-default btn-wide center-block" role="button">На главную</a></p>
-    <div class="header">
-    <div class="span12 centered-pills">
-        <ul class="nav nav-pills">
-            <li ng-class="labClass"><a href="#/lab" class="glyphicon icon-tubes"></a></li>
-            <li ng-class="examClass"><a href="#/exam" class="glyphicon icon-monitor"></a></li>
-            <li ng-class="drugClass"><a href="#/drug" class="glyphicon icon-pills"></a></li>
-            <li ng-class="doctorClass"><a href="#/doctor" class="glyphicon icon-doctor"></a></li>
+        <ul class="nav justify-content-center">
+            <li class="nav-item" ng-class="labClass"><a href="#/lab" class="btn btn-outline-primary" role="button" title="Анализы"><i class="fa fa-flask"></i> </a></li>
+            <li class="nav-item" ng-class="examClass"><a href="#/exam" class="btn btn-outline-primary" role="button" title="Обследования"><i class="fa fa-desktop"></i> </a></li>
+            <li class="nav-item" ng-class="drugClass"><a href="#/drug" class="btn btn-outline-primary" role="button" title="Лек. препараты и назначения"><i class="fa fa-medkit"></i></a></li>
+            <li class="nav-item" ng-class="doctorClass"><a href="#/doctor" class="btn btn-outline-primary"role="button" title="Проф. осмотры"><i class="fa fa-stethoscope"></i></a></li>
         </ul>
-    </div>
-    </div>
-</div>
+
 <div ng-controller="HelperCtrl">
     <div ng-view>
-
     </div>
 </div>
 

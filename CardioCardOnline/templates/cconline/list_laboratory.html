@@ -1,36 +1,39 @@
 {% extends "cconline/base.html" %}
 {% load staticfiles %}
-
+{% load humanize %}
 {% block body %}
 
-    <h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname }}</a></h4>
+    <div class="mt-3">
+    <a href="{% url 'get_patient' idpatient=history.id %}">
+            <h4 class="text-center">{{ history.lastname|lower|capfirst }} <i class="fa fa-id-card-o"></i> {{ history.num_history }}</h4>
+    </a>
+    </div>
     <h4 class="text-center">Лабораторные анализы</h4>
-    {% if "DOCTOR" in list_group  %}
-        <p><a href="/lab/add/{{ history.id }}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
-    {% endif %}
-<div class="container-fluid">
-    <table class="table table-condensed">
-        <thead>
-            <tr>
-                <th>Вид анализа</th>
-                <th>LisId</th>
-                <th>Выполнен</th>
-            </tr>
-        </thead>
-        <tbody>
-            {%  for item in labs %}
-            <tr>
-                <td>{% if item.date_execute %} <a href="{% url 'get_lab' id=item.id %}"> {% endif %}{{ item.name_labanalysis }}{% if item.date_execute %}</a>{% endif %}</td>
-                <td>{% if item.lisid %}{{ item.lisid }} {% else %} <img src="{% static 'images/dummy-small.png'%}"> {% endif %}</td>
-                <td>{% if item.date_execute %}{{ item.date_execute|date:"d.m H:i" }}{% else %}не выполнен{% endif %}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+    <div class="d-flex justify-content-center mt-3 mb-3">
+        <a href="{% url 'add_lab' idpatient=history.id %}" class="btn text-center btn-primary">Назначить</a>
+    </div>
 
-    {% if labs and "DOCTOR" in list_group %}
-    <p><a href="/lab/add/{{ history.id }}" class="btn btn-primary btn-wide center-block" role="button">Назначить</a></p>
-    {% endif %}
+    <div class="list-group">
+        {%  for item in labs %}
+            <a href="{% url 'get_lab' id=item.id %}" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5>
+                            <span class="d-none d-lg-inline d-md-inline"><i class="fa fa-flask"></i></span> {{ item.name_labanalysis }}
+                        </h5>
+                        <small>
+                            {% if item.date_execute %}<i class="fa fa-check-circle text-info"></i><span class="d-none d-lg-inline">{{ item.date_execute|naturalday }}</span>{% else %}<i class="fa fa-spinner fa-pulse fa-spin align-center"></i>{% endif %}
+                        </small>
+                    </div>
+                    <div class="col-6">
+                      {{ item.date_assign|date:"d.m.y H:i" }}
+                    </div>
 
+                    <div class="col-3">
+                        {% if item.lisid %}{{ item.lisid }} {% else %} - {% endif %}
+                    </div>
+                  </div>
+            </a>
+        {% endfor %}
+    </div>
 {% endblock %}

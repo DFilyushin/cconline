@@ -2,30 +2,49 @@
 
 {% block body %}
 
-    <h4><a href="{% url 'get_patient' idpatient=patient.id %}">№{{ patient.num_history }} {{ patient.lastname|lower|capfirst }}</a></h4>
-    <h4 class="text-center">Общие сведения</h4>
-    <p>
-        </br><strong>Дата рождения:</strong> {{ patient.dob }}
-        </br><strong>ИИН:</strong> {{ patient.iin }}
-        </br><strong>Адрес:</strong> {{ patient.live_address }}
-        </br><strong>Место работы:</strong> {{ patient.workplace }}
-    </p>
-    <h4 class="text-center">Установленные диагнозы</h4>
-    <p>
-        <strong>Диагноз приёмного покоя:</strong> {% if patient.diag_preliminary_rd %} {{ patient.diag_preliminary_rd }} {% else %} не установлен {% endif %}
-        {% if patient.preliminary_diag %} </br><strong>Диагноз предварительный:</strong> {{ patient.preliminary_diag }} {% endif %}
-        {% if patient.clinic_diag %} </br><strong>Диагноз клинический:</strong> {{ patient.clinic_diag }}{% endif %}
-        {% if patient.main_diag %} </br><strong>Диагноз заключительный:</strong> {{ patient.main_diag }}{% endif %}
-        {% if patient.main_complication %} </br><strong>Осложнение основного:</strong> {{ patient.main_complication }} {% endif %}
-        {% if patient.related_diagnosis %} </br><strong>Сопутствующий:</strong> {{ patient.related_diagnosis }} {% endif %}
-    </p>
-    <hr width="80%">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Общие сведения
+            </h4>
+            <h6 class="card-subtitle mb-2 text-muted">
+                {% if patient.gender == 0 %}
+                    <i class="fa fa-female"></i>
+                {% else %}
+                    <i class="fa fa-male"></i>
+                {% endif %}
+                <a href="{% url 'get_patient' idpatient=patient.id %}">{{ patient.lastname }} {{ patient.firstname }} {{ patient.middlename }}</a>
 
-
-    <p>
-        <strong>Лечащий врач:</strong> {{ patient.id_doctor.name }}
-        </br><strong>Группа крови:</strong> {{ blood }}
-    </p>
+            </h6>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><i class="fa fa-birthday-cake"></i> {{ patient.dob }} ({{ patient.get_age }})</li>
+            <li class="list-group-item"><i class="fa fa-address-card-o"></i> {{ patient.iin }}</li>
+            <li class="list-group-item"><i class="fa fa-home"></i> {{ patient.live_address }}</li>
+            <li class="list-group-item"><i class="fa fa-briefcase"></i> {% if patient.workplace %}{{ patient.workplace }}{% else %} место работы не указано {% endif %}</li>
+            <li class="list-group-item">
+                {% if patient.extreme_type == 1 %}
+                    <span class="text-danger">
+                {% endif %}
+                <i class="fa fa-calendar"></i>
+                {% if patient.extreme_type == 1 %}
+                    </span>
+                {% endif %}
+                {{ patient.receipt|date:"d.m.Y H:i" }}
+            </li>
+            {% if patient.discharge %}
+                <li class="list-group-item"><i class="fa fa-sign-out"></i> {{ patient.discharge|date:"d.m.Y H:i" }}</li>
+            {% endif %}
+            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ patient.id_doctor.name }}</li>
+            <li class="list-group-item"><i class="fa fa-hospital-o"></i> {{ patient.id_depart.name }}</li>
+            <li class="list-group-item"><i class="fa fa-tint"></i> {{ blood }}</li>
+            <li class="list-group-item"><strong>Д. приёмного покоя:</strong> {% if patient.diag_preliminary_rd %} {{ patient.diag_preliminary_rd }} {% else %} не установлен {% endif %}</li>
+            {% if patient.preliminary_diag %} <li class="list-group-item"><strong>Д. предварительный:</strong> {{ patient.preliminary_diag }} </li> {% endif %}
+            {% if patient.clinic_diag %}<li class="list-group-item"><strong>Д. клинический:</strong> {{ patient.clinic_diag }}</li>{% endif %}
+            {% if patient.main_diag %} <li class="list-group-item"><strong>Д. заключительный:</strong> {{ patient.main_diag }}</li>{% endif %}
+            {% if patient.main_complication %}<li class="list-group-item"><strong>Осложнение основного:</strong> {{ patient.main_complication }}</li>{% endif %}
+            {% if patient.related_diagnosis %}<li class="list-group-item"><strong>Сопутствующий:</strong> {{ patient.related_diagnosis }}</li>{% endif %}
+        </ul>
+    </div>
 
     {% if movement %}
         <h4 class="text-center">Переводы между отделениями</h4>
@@ -34,20 +53,25 @@
 
                     {% if forloop.first %}
                         <tr>
-                            <td>Поступил в {{ item.old_depart }} {{ patient.receipt }}</td>
+                            <td>
+                                Поступил в {{ item.old_depart }} {{ patient.receipt }}
+                            </td>
                         </tr>
                         <tr>
-                            <td>Переведён в {{ item.new_depart }} {{ item.datemove }} ({{ item.doctor }})</td>
+                            <td>
+                                Переведён в {{ item.new_depart }} {{ item.datemove }} ({{ item.doctor }})
+                            </td>
                         </tr>
                     {% else %}
                         <tr>
-                            <td>Переведён в {{ item.new_depart }} {{ item.datemove }} ({{ item.doctor }})</td>
+                            <td>
+                                Переведён в {{ item.new_depart }} {{ item.datemove }} ({{ item.doctor }})
+                            </td>
                         </tr>
                     {% endif %}
 
             {% endfor %}
         </table>
     {% endif %}
-
 
 {% endblock %}

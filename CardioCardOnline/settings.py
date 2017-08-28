@@ -25,6 +25,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'cconline.templatetags',
     'cconline',
 )
@@ -39,13 +40,13 @@ MIDDLEWARE_CLASSES = (
 
 )
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': '127.0.0.1:11211',
-        'TIMEOUT': 300
-    }
-}
+#CACHES = {
+#    'default': {
+#        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+#        'LOCATION': '127.0.0.1:11211',
+#        'TIMEOUT': 300
+#    }
+#}
 
 ROOT_URLCONF = 'CardioCardOnline.urls'
 
@@ -62,7 +63,8 @@ TEMPLATES = [
         'DIRS': [
             # insert your TEMPLATE_DIRS here
             #ROOTDIR + '/CardioCardOnline/templates'
-            '/var/www/cconline/CardioCardOnline/templates'
+            #'/var/www/cconline/CardioCardOnline/templates'
+            'D://git//cconline//CardioCardOnline//templates'
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -91,11 +93,11 @@ WSGI_APPLICATION = 'CardioCardOnline.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'firebird',
-        'HOST': 'labgsrv',
+        'HOST': '127.0.0.1',
         'NAME': 'cardiocard',
         'PORT': '3050',
         'USER': 'SYSDBA',
-        'PASSWORD': 'Monstro13',
+        'PASSWORD': 'masterkey',
         'CONN_MAX_AGE': None,
     }
 }

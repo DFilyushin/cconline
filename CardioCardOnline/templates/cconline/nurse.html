@@ -1,25 +1,19 @@
 {% extends "cconline/base.html" %}
 {% load staticfiles %}
 
-{% block jscript %}
-    <script src="{% static 'js/jquery/jquery-1.10.2.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/tab.js' %}"></script>
-{% endblock %}
-
 {% block body %}
 
     <h4><a href="{% url 'get_patient' idpatient=idpatient %}">№{{ num }} {{ patient }}</a></h4>
 
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#evTempList"><span class="glyphicon glyphicon-dashboard"></span>Температурный лист</a></li>
-        <li><a data-toggle="tab" href="#evNurseView"><span class="glyphicon glyphicon-user"></span>Осмотры</a></li>
-        <li><a data-toggle="tab" href="#evRiskDown"><span class="glyphicon glyphicon-tasks"></span>Риск падения</a></li>
-        <li><a data-toggle="tab" href="#evPainStatus"><span class="glyphicon glyphicon-fire"></span>Оценка боли</a></li>
+        <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#evTempList"><i class="fa fa-thermometer-empty"></i>Температурный лист</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#evNurseView"><i class="fa fa-television"></i>Осмотры</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#evRiskDown"><i class="fa fa-wheelchair"></i>Риск падения</a></li>
+        <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#evPainStatus"><i class="fa fa-bell"></i>Оценка боли</a></li>
     </ul>
 
-    <div class="tab-content" id="myTabContent">
-        <div id="evTempList" class="tab-pane fade in active">
+    <div class="tab-content">
+        <div role="tabpanel" id="evTempList" class="tab-pane active">
             <table class="table table-condensed">
                 <tbody>
                     {%  for item in temp_list %}
@@ -32,7 +26,7 @@
                 </tbody>
             </table>
         </div>
-        <div id="evNurseView" class="tab-pane fade">
+        <div role="tabpanel" id="evNurseView" class="tab-pane fade in">
             <table class="table table-condensed">
                 <tbody>
                     {%  for item in view_list %}
@@ -46,7 +40,7 @@
             </table>
 
         </div>
-        <div id="evRiskDown" class="tab-pane fade">
+        <div role="tabpanel" id="evRiskDown" class="tab-pane fade in">
             <table class="table table-condensed">
                 <tbody>
                     {%  for item in down_list %}
@@ -60,7 +54,7 @@
             </table>
 
         </div>
-        <div id="evPainStatus" class="tab-pane fade">
+        <div role="tabpanel" id="evPainStatus" class="tab-pane fade in">
             <table class="table table-condensed">
                 <tbody>
                     {%  for item in pain_list %}
@@ -75,4 +69,10 @@
 
         </div>
     </div>
+
+{% endblock %}
+
+{% block jscript %}
+
+
 {% endblock %}

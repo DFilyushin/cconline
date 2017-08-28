@@ -1,54 +1,82 @@
 {% extends "cconline/base.html" %}
 
 {% block body %}
-<div class="container-fluid">
-    <h4 class="text-center">{{ examen.name_exam }} </h4>
-    <p><strong>Пациент:</strong> {{ examen.patient }}
-    </br><strong>Отделение:</strong> {{ examen.depart }}
-    </br><strong>Врач:</strong> {{ examen.doctor }}
-    </br><strong>Назначен:</strong>  {{ examen.date_assign|date:"d.m.Y H:i" }}
-    </br><strong>Назначен на:</strong> {{ examen.date_plan|date:"d.m.Y H:i" }}
-    </br><strong>Принят м/с:</strong> {{ examen.date_nurse|date:"d.m.Y H:i" }}
-    </br><strong>Выполнен:</strong> {{ examen.date_execute|date:"d.m.Y H:i" }}</p>
 
-    {% if examen.feature_data %}
-        <strong>Особенности</strong>
-        <p>
-            {{ examen.feature_data }}
-        </p>
-    {% endif %}
-    <strong>Заключения</strong>
-    <p>
-        {% if examen.conclusion %}
-        {{ examen.conclusion }}
-        {% endif %}
-    </p>
-    {% if params %}
-        <div class="panel panel-default">
-            <div class="panel-heading">Данные обследования</div>
-            <div class="panel-body">
-                <table class="table table-condensed">
-                {%  for item in params %}
-                    <tr>
-                    <td>{% if item.type == 8 %} <strong> {% endif %}{{ item.param }} {% if item.type == 8 %} </strong> {% endif %}</td>
-                    <td>{% if item.value %} {% if item.value == "False" %} нет {% elif item.value == "True" %} да {% else %} {{ item.value }} {{ item.measure }} {% endif %} {% endif %}</td>
-                    </tr>
-                {% endfor %}
-                </table>
-            </div>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title"><i class="fa fa-calendar-check-o"></i>Функциональное исследование</h4>
+            <p class="card-text">{{ examen.name_exam }}</p>
         </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><i class="fa fa-user-o"></i><a href="{% url 'get_patient' idpatient=examen.id_history.id %}">{{ examen.patient }}</a></li>
+            <li class="list-group-item"><i class="fa fa-hospital-o"></i> {{ examen.depart }}</li>
+            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ examen.doctor }}</li>
+
+            <li class="list-group-item"><strong>Назначен:</strong>  {{ examen.date_assign|date:"d.m.Y H:i" }}</li>
+            <li class="list-group-item"><strong>Назначен на:</strong> {{ examen.date_plan|date:"d.m.Y H:i" }}</li>
+            <li class="list-group-item"><strong>Принят м/с:</strong> {{ examen.date_nurse|date:"d.m.Y H:i" }}</li>
+            <li class="list-group-item"><strong>Выполнен:</strong> {{ examen.date_execute|date:"d.m.Y H:i" }}</li>
+            {% if examen.feature_data %}
+                <li class="list-group-item"><strong>Особенности:</strong> {{ examen.feature_data }}</li>
+            {% endif %}
+            {% if examen.conclusion %}
+                <li class="list-group-item"><strong>Заключение:</strong> {{ examen.conclusion }}</li>
+            {% endif %}
+        </ul>
+    </div>
+    {% if params %}
+        <h4 class="text-center">Данные обследования</h4>
+        <table class="table table-bordered">
+        {%  for item in params %}
+            <tr>
+                <td>{% if item.type == 8 %} <strong> {% endif %}{{ item.param }} {% if item.type == 8 %} </strong> {% endif %}</td>
+                <td>{% if item.value %} {% if item.value == "False" %} нет {% elif item.value == "True" %} да {% else %} {{ item.value }} {{ item.measure }} {% endif %} {% endif %}</td>
+            </tr>
+        {% endfor %}
+        </table>
     {% endif %}
 
     {% if "DOCTOR" in list_group %}
-    <p class="text-right">
-        <a href="{% url 'delete_exam' id_exam=examen.id %}" class="btn btn-warning" role="button">Удалить</a>
+    <p class="text-right mt-3">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">Удалить</button>
+        <a href="{% url 'list_exam' idpatient=examen.id_history.id %}" class="btn text-center btn-primary">Закрыть</a>
     </p>
     {% endif %}
 
-    <p>
-        <a href="{% url 'list_exam' idpatient=examen.id_history.id %}" class="text-center btn btn-default btn-sm center-block">В историю болезни</a>
-        <a href="{% url 'last_examenation' iddepart=id_depart %}" class="text-center btn btn-default btn-sm center-block">К обследованиям</a>
-    </p>
+    <div class="text-center pt-3">
+        <a href="{% url 'list_exam' idpatient=examen.id_history.id %}" class="btn btn-outline-primary">В историю болезни</a>
+        <a href="{% url 'last_examenation' iddepart=id_depart %}" class="btn btn-outline-primary">К обследованиям</a>
+    </div>
 
+<!-- Modal -->
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Подтверждение</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          Удалить выбранное исследование?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-primary" id="btnSave" data-load-url="{% url 'delete_exam' id_exam=examen.id %}">Удалить</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+ <script>
+    $(function () {
+        $('#btnSave').on('click', function (event) {
+            var url = $('#btnSave').data('load-url');
+            alert(url);
+            location.href = url;
+            $('#confirmDelete').modal('hide');
+        });
+    });
+</script>
 {% endblock %}

@@ -2,15 +2,12 @@
 
 from django.http import HttpResponse, Http404
 from django.shortcuts import render
-from django.template import RequestContext
 from django.contrib.auth.hashers import make_password
 import random
 import views
 from models import ListHistory
 import json
 import string
-from django.template.loader import get_template
-from django.template import Context
 from models import ListAllAnalysis, ListOfAnalysis, Templates, ListTemplates, NurseAssign
 from models import NurseLabWork, NurseMedWork, NurseExamWork, NurseProfViewWork
 from django.core import serializers
@@ -18,9 +15,9 @@ from django.db import connection
 from datetime import datetime
 from collections import namedtuple
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
 from django import forms
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 
 
 def getpass(request):
@@ -41,10 +38,7 @@ def getpass(request):
 
 def page_not_found(request):
     # обработчик Страница не найден
-    response = render(request, 
-	'404.html',
-        {},
-     )
+    response = render(request, '404.html', {},)
     response.status_code = 404
     return response
 
@@ -69,7 +63,7 @@ def change_password(request):
         return render(request, 'registration/password_change_form.html', {
             'current_user': current_user,
             }
-	)
+                      )
     else:
         old_pass = request.POST.get('old_password', '')
         pass1 = request.POST.get('new_password1', '')
@@ -89,7 +83,7 @@ def change_password(request):
         return response
 
 
-
+@login_required(login_url='/login/')
 def json_subtest(request):
     """
     Список саб-тестов для теста
@@ -102,6 +96,7 @@ def json_subtest(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_test(request):
     """
     Список основных тестов
@@ -113,6 +108,7 @@ def json_test(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_savetest(request):
     """
     Сохранить назначение анализа
@@ -179,6 +175,7 @@ def named_tuple_fetch_all(cursor):
     return [nt_result(*row) for row in cursor.fetchall()]
 
 
+@login_required(login_url='/login/')
 def json_templates(request):
     """
     Список шаблонов или шаблон
@@ -199,6 +196,7 @@ def json_templates(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_nurse_lab(request):
     import datetime
     """
@@ -224,6 +222,7 @@ def json_nurse_lab(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_nurse_med(request):
     """
     Список назначений препаратов пациенту для м/с
@@ -250,6 +249,7 @@ def json_nurse_med(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_nurse_exam(request):
     """
     Список назначений обследований пациента для м/с
@@ -276,6 +276,7 @@ def json_nurse_exam(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def json_nurse_doctor(request):
     """
     Список назначений проф. осмотров пациента для м/с
@@ -301,6 +302,7 @@ def json_nurse_doctor(request):
     return HttpResponse(data, content_type='application/json')
 
 
+@login_required(login_url='/login/')
 def nurse_execute(request):
     """
     Выполнение мед. назначений мед. сестрой
@@ -316,7 +318,7 @@ def nurse_execute(request):
     type_execute = params['t']
     id_record = params['id']
     id_nurse = views.get_current_doctor_id(request)
-    assign_date = datetime.date.today().strftime("%Y-%m-%d %H:%M:%S")
+    assign_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     sql = "EXECUTE PROCEDURE SP_NURSE_EXECUTE(%s, %s, %s, '%s')" % (type_execute, id_record, id_nurse, assign_date)
     cursor = connection.cursor()
@@ -326,6 +328,7 @@ def nurse_execute(request):
     return HttpResponse('200 Ok')
 
 
+@login_required(login_url='/login/')
 def nurse_work_by_patient(request):
     """
     Список работ по истории болезни

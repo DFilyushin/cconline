@@ -4,7 +4,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/yeti.bootstrap.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
     <link rel="icon" href="{% static 'favicon.ico' %}" type="x-icon" />
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}" />
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{% static 'images/apple-touch-icon-72-precomposed.png' %}" type="image/png">
@@ -19,15 +19,19 @@
     {% block jscript %}
     {% endblock %}
 
-    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <script src="{% static 'js/jquery-3.2.1.slim.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
     <title>КардиоКарта Онлайн</title>
 </head>
 
 <body>
+<h3 class="text-center"><a href="{% url 'index' %}"> КардиоКарта <img src="{% static 'images/reactedhearticon.svg'%}"> Онлайн</a></h3>
 <div class="container">
-        {% block body %}
-        {% endblock %}
+    {% block body %}
+    {% endblock %}
 </div>
 </body>
 

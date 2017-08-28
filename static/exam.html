@@ -1,12 +1,12 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
+    <div class="row mt-3">
+        <div class="col"></div>
+        <div class="col text-center">
             <div class="btn-group" ng-repeat="button in dates">
-              <button type="button" class="btn btn-default" ng-class="{active : datavalue.mode === button.value}" ng-click="setDateValue(button.value);getRefreshData()">{{button.label}}</button>
+              <button type="button" class="btn btn-primary" ng-class="{active : datavalue.mode === button.value}" ng-click="setDateValue(button.value);getRefreshData()">{{button.label}}</button>
             </div>
         </div>
-        <div class="col-md-4"></div>
+        <div class="col"></div>
     </div>
 </div>
 
@@ -25,7 +25,7 @@
                 <td>{{ item.fields.datetime_plan | date:"HH:mm" }}</td>
                 <td>{{ item.fields.exam }}</td>
                 <td>№{{ item.fields.num_history }} {{ item.fields.patient }}</td>
-                <td><button type="button" class="btn btn-success" ng-click="sendData()">Выполнить</button></td>
+                <td><button type="button" class="btn btn-success" ng-click="delete($index)">Выполнить</button></td>
             </tr>
         </tbody>
     </table>

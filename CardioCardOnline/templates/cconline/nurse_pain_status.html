@@ -1,43 +1,51 @@
 {% extends "cconline/base.html" %}
 
 {% block body %}
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title"><i class="fa fa-calendar-check-o"></i>Оценка боли</h4>
+            <p class="card-text"><a href="{% url 'get_patient' idpatient=view.id_history %}">{{ view.num_card }} {{ view.patient }}</a></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><i class="fa fa-calendar"></i> {{ view.date_view|date:"d.m.Y H:i" }}</li>
+            <li class="list-group-item"><i class="fa fa-hospital-o"></i> {{ view.depart }}</li>
+            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ view.nurse }}</li>
+        </ul>
+    </div>
 
-    <h4 class="text-center">Оценка боли</h4>
-    <p>
-        <strong>Пациент:</strong> №{{ view.num_history }} {{ view.patient }}
-        </br><strong>Дата:</strong> {{ view.date_view|date:"d.m.Y H:i" }}
-        </br><strong>М/с:</strong> {{ view.nurse }}
-        </br><strong>Отделение:</strong> {{ view.depart }}
-    </p>
+    <h4 class="text-center">Запись осмотра</h4>
+    <p><strong>Балл по шкале: </strong> {{ view.pain_value }}</p>
+    <p><strong>Характер боли: </strong> {{ view.type_pain_str }}</p>
+    <p><strong>Место где болит: </strong> {% if view.pain_place %}{{ view.pain_place }} {% else %} не указано {% endif %}</p>
+    <p><strong>Оказана помощь: </strong> {{ view.type_care }}</p>
+    <div class="form-check disabled">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" {% if view.is_allergy == 1 %} checked {% endif %} disabled> Аллергия
+        </label>
+    </div>
+    <div class="form-check disabled">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" {% if view.is_adaptation == 1 %} checked {% endif %} disabled> Привыкание
+        </label>
+    </div>
+    <div class="form-check disabled">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" {% if view.is_puke == 1 %} checked {% endif %} disabled>Тошнота/рвота
+        </label>
+    </div>
+    <div class="form-check disabled">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" {% if view.is_pain_inside == 1 %} checked {% endif %} disabled>Боли в желудке
+        </label>
+    </div>
+    <div class="form-check disabled">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" {% if view.is_latch == 1 %} checked {% endif %} disabled>Запор
+        </label>
+    </div>
 
-    <p class="text-center">Запись осмотра</p>
-    <p>
-        <strong>Балл по шкале: </strong> {{ view.pain_value }}
-        </br><strong>Характер боли: </strong> {{ view.type_pain_str }}
-        </br><strong>Место где болит: </strong> {% if view.pain_place %}{{ view.pain_place }} {% else %} не указано {% endif %}
-        </br><strong>Оказана помощь: </strong> {{ view.type_care }}
-        </br>
-        <label>
-            <input type="checkbox" {% if view.is_allergy == 1 %} checked {% endif %} disabled> Аллергия
-        </label>
-        <label>
-            <input type="checkbox" {% if view.is_adaptation == 1 %} checked {% endif %} disabled> Привыкание
-        </label>
-        <label>
-            <input type="checkbox" {% if view.is_puke == 1 %} checked {% endif %} disabled>Тошнота/рвота
-        </label>
-        <label>
-            <input type="checkbox" {% if view.is_pain_inside == 1 %} checked {% endif %} disabled>Боли в желудке
-        </label>
-        <label>
-            <input type="checkbox" {% if view.is_latch == 1 %} checked {% endif %} disabled>Запор
-        </label>
-    </p>
-
-    <p>
-        </br>
-        <a href="{% url 'list_nurse' idpatient=view.id_history %}" class="text-center btn btn-default btn-sm center-block">К осмотрам</a>
-    </p>
-
+    <div class="text-center">
+        <a href="{% url 'list_nurse' idpatient=view.id_history %}" class="btn btn-outline-primary">К осмотрам</a>
+    </div>
 
 {% endblock %}

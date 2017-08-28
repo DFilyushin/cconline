@@ -3,29 +3,32 @@
 {% load event_tags %}
 {% load staticfiles %}
 
-
 {% block body %}
 
-<h4><a href="{% url 'get_patient' idpatient=history.id %}">№{{ history.num_history }} {{ history.lastname|lower|capfirst }}</a></h4>
-<h4 class="text-center">Список назначений на {{ day }}</h4>
+    <div class="mt-3">
+    <a href="{% url 'get_patient' idpatient=history.id %}">
+            <h4 class="text-center">{{ history.lastname|lower|capfirst }} <i class="fa fa-id-card-o"></i> {{ history.num_history }}</h4>
+    </a>
+    </div>
 
+    <h4 class="text-center">Список назначений на {{ day|date:"d.m.y" }}</h4>
 
-<div class="container-fluid">
-<table class="table table-condensed">
-            <tbody>
-                {%  for item in medications %}
-                <tr>
-                    <td>{{ item.medic_name }}</td>
-                    <td>{{ item.appoint|date:"H:i" }}</td>
-                    <td>Д:{{ item.dose }}</td>
-                    <td>{{ item.count_drug }}</td>
-                    <td>{{ item.appl_form }}</td>
-                    <td>{% if item.eat_time %} <img src="{% static 'images/tick.png' %}"> {% endif %}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-</div>
-<a href="{% url 'list_medication_by_date' idpatient=history.id %}" class="btn btn-default btn-sm center-block" role="button">Вернуться</a>
+    <div class="list-group">
+        {%  for item in medications %}
+            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ item.medic_name|upper }}</h5>
+                    <small>{{ item.appoint|date:"H:i" }}{% if item.eat_time %} <i class="fa fa-check-square-o"></i> {% endif %}</small>
+                </div>
+                <p class="mb-1">Д: {{ item.dose }}</p>
+                <p class="mb-1">Кол-во: {{ item.count_drug }}</p>
+                <p class="mb-1">Форма: {{ item.appl_form }}</p>
+                <p class="mb-1">Назначено: {{ item.doctor }}</p>
+            </a>
+        {% endfor %}
+    </div>
 
+    <div class="text-center">
+        <a href="{% url 'list_medication_by_date' idpatient=history.id %}" class="btn btn-outline-primary" role="button">К назначениям</a>
+    </div>
 {% endblock %}

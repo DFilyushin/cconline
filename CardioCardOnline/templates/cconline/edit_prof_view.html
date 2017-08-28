@@ -6,9 +6,8 @@
 {% endblock %}
 
 {% block body %}
-<!-- Begin page content -->
-<h3>№{{ history.num_history }} {{ history.lastname }}</h3>
-<h3>{{ spec_doctor }}</h3>
+    <h4>№{{ history.num_history }} {{ history.lastname }}</h4>
+    <h5>{{ spec_doctor }}</h5>
 
     <form class="form" action="/proview/save_pv/" method="post">
         {% csrf_token %}
@@ -33,12 +32,8 @@
             <textarea class="form-control" rows="10" name="view_text">{% if text %}{{ text }}{% endif %}</textarea>
         </div>
 
-        <div class="row">
-            <div class="col-xs-12 text-left">
-                <a href="{% url 'list_proview' idpatient=history.id %}" type="submit" class="btn btn-warning" role="button">Отменить</a>
-                <button type="submit" class="btn btn-primary">Сохранить</button>
-            </div>
-        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a href="{% url 'list_proview' idpatient=history.id %}" type="submit" class="btn btn-outline-primary" role="button">Отменить</a>
     </form>
 
 {% endblock %}

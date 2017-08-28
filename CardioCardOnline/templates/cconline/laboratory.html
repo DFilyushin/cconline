@@ -1,41 +1,49 @@
 {% extends "cconline/base.html" %}
 
 {% block body %}
-<div class="container-fluid">
-    <h4 class="text-center">{{ order.name_labanalysis }} </h4>
-    <p><strong>Пациент:</strong> № {{ history.num_history }} {{ history.lastname }} {{ history.firstname  }}
-    </br><strong>Отделение:</strong> {{ order.depart }}
-    </br><strong>Врач:</strong> {{ order.doctor }}
-    </br><strong>Назначен:</strong> {{ order.date_assign|date:"d.m.Y H:i" }}
-    </br><strong>Принят м/с:</strong> {{ order.nurse_date_execute|date:"d.m.Y H:i" }}
-    </br><strong>Выполнен:</strong> {{ order.date_execute|date:"d.m.Y H:i" }} </p>
 
-
-    <div class="panel panel-default">
-        <div class="panel-heading">Результат</div>
-        <div class="panel-body">
-            <table class="table table-condensed">
-                <thead>
-                    <th>Параметр</th>
-                    <th>Значение</th>
-                    <th>Норма</th>
-                </thead>
-                <tbody>
-                    {%  for item in result %}
-                    <tr>
-                    <td>{{ item.param_name }}</td>
-                    <td>{% if item.ad_value %}{{ item.ad_value }} {% if item.measure %}{{ item.measure }} {% endif %} {% endif %} </td>
-                    <td>{% if item.norm_value %}{{ item.norm_value }}{% endif %}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title"><i class="fa fa-calendar-check-o"></i>Лабораторный анализ</h4>
+            <p class="card-text">{{ order.name_labanalysis }}</p>
         </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><i class="fa fa-user-o"></i><a href="{% url 'get_patient' idpatient=order.id_history.id %}">{{ history.lastname }} {{ history.firstname  }} {{ history.middlename }}</a></li>
+            <li class="list-group-item"><i class="fa fa-hospital-o"></i> {{ order.depart }}</li>
+            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ order.doctor }}</li>
+
+            <li class="list-group-item"><strong>Назначен:</strong> {{ order.date_assign|date:"d.m.Y H:i" }}</li>
+            <li class="list-group-item"><strong>Назначен на:</strong> {{ order.date_plan|date:"d.m.Y H:i" }}</li>
+            <li class="list-group-item"><strong>Принят м/с:</strong> {{ order.nurse_date_execute|date:"d.m.Y H:i" }}</li>
+            <li class="list-group-item"><strong>Выполнен:</strong> {{ order.date_execute|date:"d.m.Y H:i" }}</li>
+        </ul>
     </div>
-    <p>
-        <a href="{% url 'list_lab' idpatient=order.id_history.id %}" class="text-center btn btn-default btn-sm center-block">В историю болезни</a>
-        <a href="{% url 'last_laboratory' iddepart=id_depart %}" class="text-center btn btn-default btn-sm center-block">К обследованиям</a>
-    </p>
-</div>
+
+    {% if order.date_execute %}
+    <h5 class="text-center">Данные обследования</h5>
+    <table class="table">
+        <thead>
+            <th>Параметр</th>
+            <th>Значение</th>
+            <th>Норма</th>
+        </thead>
+        <tbody>
+            {%  for item in result %}
+            <tr>
+            <td>{{ item.param_name }}</td>
+            <td>{% if item.ad_value %}{{ item.ad_value }} {% if item.measure %}{{ item.measure }} {% endif %} {% endif %} </td>
+            <td>{% if item.norm_value %}{{ item.norm_value }}{% endif %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-center">Результаты не готовы...</p>
+    {% endif %}
+
+    <div class="text-center pt-3">
+        <a href="{% url 'list_lab' idpatient=order.id_history.id %}" class="btn btn-outline-primary">В историю болезни</a>
+        <a href="{% url 'last_laboratory' iddepart=id_depart %}" class="btn btn-outline-primary">К анализам</a>
+    </div>
 
 {% endblock %}
