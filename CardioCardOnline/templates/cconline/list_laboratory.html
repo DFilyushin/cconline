@@ -22,15 +22,17 @@
                             <span class="d-none d-lg-inline d-md-inline"><i class="fa fa-flask"></i></span> {{ item.name_labanalysis }}
                         </h5>
                         <small>
-                            {% if item.date_execute %}<i class="fa fa-check-circle text-info"></i><span class="d-none d-lg-inline">{{ item.date_execute|naturalday }}</span>{% else %}<i class="fa fa-spinner fa-pulse fa-spin align-center"></i>{% endif %}
+                            {% if item.date_execute %}<i class="fa fa-check-circle text-info"></i>{% else %}<i class="fa fa-spinner fa-pulse fa-spin align-center"></i>{% endif %}
                         </small>
                     </div>
                     <div class="col-6">
                       {{ item.date_assign|date:"d.m.y H:i" }}
                     </div>
-
-                    <div class="col-3">
-                        {% if item.lisid %}{{ item.lisid }} {% else %} - {% endif %}
+                    <div class="col-6">
+                      {{ item.date_execute|date:"d.m.y H:i" }}
+                    </div>
+                    <div class="col">
+                        <small>{% if item.lisid %}{{ item.lisid }} {% else %} - {% endif %}</small>
                     </div>
                   </div>
             </a>
