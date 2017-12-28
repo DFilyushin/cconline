@@ -9,21 +9,83 @@
     {% endif %}
 
 
-    <p><a href="{% url 'patient_cure' idpatient=history.id %}" class="btn btn-primary btn-lg btn-block" role="button">Общие сведения</a></p>
+    <ul class="list-group">
+        <a href="{% url 'patient_cure' idpatient=history.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex">
+                <div class="p-0"><span class="fa fa-file-text-o"></span></div>
+                <div class="p-0 ml-3">Общие сведения</div>
+                <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+            </div>
+        </a>
 
-    {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "PROF_DOCTOR" in list_group %}
-        <p><a href="{% url 'patient_info' idpatient=history.id %}" class="btn btn-primary btn-lg btn-block" role="button">Первичный осмотр</a></p>
-        <p><a href="{% url 'list_diary' idpatient=history.id %}" class="btn btn-primary btn-lg btn-block" role="button">Дневники пациента</a></p>
+        {% if "DOCTOR" in list_group  or "MASTER_NURSE" in list_group  or "PROF_DOCTOR" in list_group %}
+            <a href="{% url 'patient_info' idpatient=history.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex">
+                    <div class="p-0"><span class="fa fa-eye"></span></div>
+                    <div class="p-0 ml-3">Первичный осмотр</div>
+                    <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+                </div>
+            </a>
+            <a href="{% url 'list_diary' idpatient=history.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex">
+                    <div class="p-0"><span class="fa fa-calendar-times-o"></span></div>
+                    <div class="p-0 ml-3">Дневники пациента</div>
+                    <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+                </div>
+            </a>
+            <a href="{% url 'list_proview' idpatient=history.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex">
+                    <div class="p-0"><span class="fa fa-stethoscope"></span></div>
+                    <div class="p-0 ml-3">Консультации</div>
+                    <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+                </div>
+            </a>
+            <a href="{% url 'list_surgery' idpatient=history.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="d-flex">
+                    <div class="p-0"><span class="fa fa-bed"></span></div>
+                    <div class="p-0 ml-3">Операции</div>
+                    <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+                </div>
+            </a>
+        {% endif %}
 
-        <p><a href="{% url 'list_proview' idpatient=history.id %}" class="btn btn-primary btn-lg btn-block" role="button">Консультации</a></p>
-        <p><a href="{% url 'list_surgery' idpatient=history.id %}" class="btn btn-primary btn-lg btn-block" role="button">Операции</a></p>
-    {% endif %}
+        <a href="{% url 'list_medication' idpatient=history.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex">
+                <div class="p-0"><span class="fa fa-tasks"></span></div>
+                <div class="p-0 ml-3">Назначения</div>
+                <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+            </div>
+        </a>
 
-    <p><a href="{% url 'list_medication' idpatient=history.id %}" class="btn btn-primary btn-lg btn-block" role="button">Назначения</a></p>
-    <p><a href="{% url 'list_medication_by_date' idpatient=history.id %}" class="btn btn-primary btn-lg btn-block" role="button">Назначения по датам</a></p>
-    <p><a href="{% url 'list_exam' idpatient=history.id %}" class="btn btn-primary btn-lg btn-block" role="button">Обследования</a></p>
-    <p><a href="{% url 'list_lab' idpatient=history.id %}" class="btn btn-primary btn-lg btn-block" role="button">Лаборатория</a></p>
-    <p><a href="{% url 'list_nurse' idpatient=history.id %}" class="btn btn-primary btn-lg btn-block" role="button">Сестринские осмотры</a></p>
+        <a href="{% url 'list_medication_by_date' idpatient=history.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex">
+                <div class="p-0"><span class="fa fa-calendar"></span></div>
+                <div class="p-0 ml-3">Назначения по датам</div>
+                <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+            </div>
+        </a>
+        <a href="{% url 'list_exam' idpatient=history.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex">
+                <div class="p-0"><span class="fa fa-tachometer"></span></div>
+                <div class="p-0 ml-3">Обследования</div>
+                <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+            </div>
+        </a>
+        <a href="{% url 'list_lab' idpatient=history.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex">
+                <div class="p-0"><span class="fa fa-flask"></span></div>
+                <div class="p-0 ml-3">Лаборатория</div>
+                <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+            </div>
+        </a>
+        <a href="{% url 'list_nurse' idpatient=history.id %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex">
+                <div class="p-0"><span class="fa fa-thermometer-half"></span></div>
+                <div class="p-0 ml-3">Сестринские осмотры</div>
+                <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+            </div>
+        </a>
+    </ul>
 
     <div class="d-flex justify-content-center">
         <a href="{% url 'departs_patient' iddepart=history.id_depart %}" class="btn btn-outline-primary">В отделение</a>

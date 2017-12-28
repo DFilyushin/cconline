@@ -5,14 +5,20 @@
         <h3 class="text-center">Последние обследования</h3>
         <p class="text-center">Список последних 30 выполненных обследований и анализов пациентов {{ depart }}</p>
     </div>
-        <p>
-            <a href="{% url 'last_laboratory' iddepart=id_depart %}" class="btn btn-primary btn-lg btn-block" role="button">
-                Лабораторные исследования
-            </a>
-        </p>
-        <p>
-            <a href="{% url 'last_examenation' iddepart=id_depart %}" class="btn btn-primary btn-lg btn-block" role="button">
-                Функциональные обследования
-            </a>
-        </p>
+    <ul class="list-group">
+        <a href="{% url 'last_laboratory' iddepart=id_depart %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex">
+                <div class="p-0"><span class="fa fa-flask"></span></div>
+                <div class="p-0 ml-3">Лабораторные исследования</div>
+                <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+            </div>
+        </a>
+        <a href="{% url 'last_examenation' iddepart=id_depart %}" class="list-group-item list-group-item-action flex-column align-items-start">
+            <div class="d-flex">
+                <div class="p-0"><span class="fa fa-tachometer"></span></div>
+                <div class="p-0 ml-3">Функциональные обследования</div>
+                <div class="ml-auto p-0"><span class="fa fa-angle-double-right"></span></div>
+            </div>
+        </a>
+    </ul>
 {% endblock %}
