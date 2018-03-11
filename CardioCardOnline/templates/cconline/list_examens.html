@@ -27,10 +27,13 @@
                         </small>
                     </div>
                     <div class="col-6">
-                        {{ item.doctor }}
+                        {{ item.date_assign|date:"d.m.Y H:i" }}
                     </div>
-                    <div class="col-3">
+                    <div class="col-6">
                         {{ item.date_plan|date:"d.m.Y H:i" }}
+                    </div>
+                    <div class="col">
+                        <small>{{ item.doctor }}</small>
                     </div>
                   </div>
             </a>
