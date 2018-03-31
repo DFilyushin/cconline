@@ -83,7 +83,6 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'CardioCardOnline.wsgi.application'
 
 # Database
@@ -94,7 +93,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'firebird',
         'HOST': '127.0.0.1',
-        'NAME': 'cardiocard',
+        'NAME': 'C://var//db//CC180302.FDB',
         'PORT': '3050',
         'USER': 'SYSDBA',
         'PASSWORD': 'masterkey',

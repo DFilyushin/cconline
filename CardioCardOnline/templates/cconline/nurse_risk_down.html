@@ -9,8 +9,7 @@
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><i class="fa fa-calendar"></i> {{ view.date_view|date:"d.m.Y H:i" }}</li>
-            <li class="list-group-item"><i class="fa fa-hospital-o"></i> {{ view.depart }}</li>
-            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ view.nurse }}</li>
+            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ view.nurse }} ({{ view.depart }})</li>
         </ul>
     </div>
 

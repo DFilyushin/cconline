@@ -3,22 +3,32 @@
 
 {% block body %}
 
-    <p><a href="/proview/list/{{ idpatient }}">К списку осмотров</a></p>
-    <h4 class="text-center">{{ proview.specname }}</h4>
-    <p><strong>Пациент:</strong> {{ patient }} </p>
-    <p><strong>Врач</strong>: {{ proview.doctor }}</p>
-    <p><strong>Дата осмотра</strong>: {{ proview.viewdate|date:"d.m.Y H:i"}} </p>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ proview.specname }}</h4>
+            <p class="card-text"></p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><i class="fa fa-user-o"></i> <a href="{% url 'get_patient' idpatient=proview.id_history %}">{{ proview.patient }} </a></li>
+            <li class="list-group-item"><i class="fa fa-calendar"></i> {{ proview.viewdate|date:"d.m.Y H:i"}}</li>
+            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ proview.doctor }}</li>
+            {% if proview.conclusion %}
+                <li class="list-group-item"><i class="fa fa-file-text-o"></i> {{ proview.conclusion|ccrlf }}</li>
+            {% endif %}
+        </ul>
+    </div>
 
     {% for item in pages %}
         <p><strong>{{ item.param_name }}</strong>: {{ item.text }}</p>
     {% endfor %}
 
-    <p><strong>Заключение</strong>: {% if proview.conclusion %} {{ proview.conclusion|ccrlf }} {% endif %} </p>
     {% if not proview.conclusion %}
         <p><a href="/proview/edit/{{ proview.id }}" class="btn btn-primary" role="button">Добавить заключение</a></p>
     {% else %}
         <p><a href="/proview/edit/{{ proview.id }}" class="btn btn-primary" role="button">Изменить</a></p>
     {% endif %}
-    <p><a href="{% url 'list_proview' idpatient=idpatient %}">К списку осмотров</a></p>
 
+    <div class="text-center pt-3">
+        <a href="{% url 'list_proview' idpatient=idpatient %}" class="btn btn-outline-primary">К списку</a>
+    </div>
 {% endblock %}

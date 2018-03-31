@@ -3,7 +3,6 @@
 
 {% block body %}
 
-
     <div class="card">
         <div class="card-body">
             <h4 class="card-title">{% if patient.gender == 0 %}<i class="fa fa-female"></i> {% else %} <i class="fa fa-male"></i> {% endif %}<a href="{% url 'get_patient' idpatient=operation.id_history %}">{{ operation.patient }} </a></h4>
@@ -23,8 +22,6 @@
             {% endif %}
         </ul>
     </div>
-
-    </p>
 
     <div class="text-center">
         <a href="{% url 'list_surgery' idpatient=operation.id_history %}" class="btn btn-outline-primary">К списку операций</a>

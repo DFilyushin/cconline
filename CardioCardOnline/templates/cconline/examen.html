@@ -4,13 +4,11 @@
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title"><i class="fa fa-calendar-check-o"></i>Функциональное исследование</h4>
-            <p class="card-text">{{ examen.name_exam }}</p>
+            <h4 class="card-title"><i class="fa fa-calendar-check-o"></i>{{ examen.name_exam }}</h4>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><i class="fa fa-user-o"></i><a href="{% url 'get_patient' idpatient=examen.id_history.id %}">{{ examen.patient }}</a></li>
-            <li class="list-group-item"><i class="fa fa-hospital-o"></i> {{ examen.depart }}</li>
-            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ examen.doctor }}</li>
+            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ examen.doctor }} ({{ examen.depart }})</li>
 
             <li class="list-group-item"><strong>Назначен:</strong>  {{ examen.date_assign|date:"d.m.Y H:i" }}</li>
             <li class="list-group-item"><strong>Назначен на:</strong> {{ examen.date_plan|date:"d.m.Y H:i" }}</li>
@@ -26,7 +24,7 @@
     </div>
     {% if params %}
         <h4 class="text-center">Данные обследования</h4>
-        <table class="table table-bordered">
+        <table class="table table-bordered table-sm">
         {%  for item in params %}
             <tr>
                 <td>{% if item.type == 8 %} <strong> {% endif %}{{ item.param }} {% if item.type == 8 %} </strong> {% endif %}</td>

@@ -4,14 +4,11 @@
 
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title"><i class="fa fa-calendar-check-o"></i>Лабораторный анализ</h4>
-            <p class="card-text">{{ order.name_labanalysis }}</p>
+            <h4 class="card-title"><i class="fa fa-flask"></i>{{ order.name_labanalysis }}</h4>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><i class="fa fa-user-o"></i><a href="{% url 'get_patient' idpatient=order.id_history.id %}">{{ history.lastname }} {{ history.firstname  }} {{ history.middlename }}</a></li>
-            <li class="list-group-item"><i class="fa fa-hospital-o"></i> {{ order.depart }}</li>
-            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ order.doctor }}</li>
-
+            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ order.doctor }} ({{ order.depart }})</li>
             <li class="list-group-item"><strong>Назначен:</strong> {{ order.date_assign|date:"d.m.Y H:i" }}</li>
             <li class="list-group-item"><strong>Назначен на:</strong> {{ order.date_plan|date:"d.m.Y H:i" }}</li>
             <li class="list-group-item"><strong>Принят м/с:</strong> {{ order.nurse_date_execute|date:"d.m.Y H:i" }}</li>
@@ -20,8 +17,8 @@
     </div>
 
     {% if order.date_execute %}
-    <h5 class="text-center">Данные обследования</h5>
-    <table class="table">
+    <h5 class="text-center">Результат</h5>
+    <table class="table table-sm table-bordered">
         <thead>
             <th>Параметр</th>
             <th>Значение</th>

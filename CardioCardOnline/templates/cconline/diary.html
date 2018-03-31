@@ -8,8 +8,7 @@
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item"><i class="fa fa-calendar"></i> {{ diary.reg_date|date:"d.m.Y H:i" }}</li>
-            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ diary.doctor }}</li>
-            <li class="list-group-item"><i class="fa fa-hospital-o"></i> {{ diary.depart_name }}</li>
+            <li class="list-group-item"><i class="fa fa-user-md"></i> {{ diary.doctor }} ({{ diary.depart_name }})</li>
             {% if diary.diary_name %}
                 <li class="list-group-item"><i class="fa fa-users"></i> {{ diary.diary_name }}</li>
             {% endif %}
