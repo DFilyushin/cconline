@@ -1,4 +1,6 @@
 ﻿{% load staticfiles %}
+{% load static %}
+{% load cconline_extras %}
 <!DOCTYPE html>
 <html lang="ru"  ng-app="myApp">
 
@@ -38,7 +40,9 @@
 </head>
 
 <body>
-<h3 class="text-center"><a href="{% url 'index' %}"> КардиоКарта <img src="{% static 'images/reactedhearticon.svg'%}"> Онлайн</a></h3>
+{% get_static_prefix as STATIC_PREFIX %}
+
+<h3 class="text-center"><a href="{% url 'index' %}"> КардиоКарта <img width="48px" height="48px" src="{{ STATIC_PREFIX }}images/{% link %}"> Онлайн</a></h3>
 <div class="container">
     {% block body %}
     {% endblock %}
