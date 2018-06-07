@@ -52,9 +52,7 @@ def permission_denied(request):
 
 def server_error(request):
     # обработчик Ошибка сервера
-    response = render(request, '500.html', {})
-    response.status_code = 500
-    return response
+    return render(request, '500.html', status=500)
 
 
 def change_password(request):
@@ -138,8 +136,9 @@ def json_savetest(request):
     except ListHistory.DoesNotExist:
         raise Http404
     id_depart = history.id_depart
-    sql = "SELECT ID FROM SP_REG_LABTEST (%s, %s, %s, '%s', '%s', '%s', %s)" \
-          % (id_history, id_doctor, id_depart, id_test, assign_date, plan_date, is_cito)
+    usr = request.user.username
+    sql = "SELECT ID FROM SP_REG_LABTEST (%s, %s, %s, '%s', '%s', '%s', %s, '%s')" \
+          % (id_history, id_doctor, id_depart, id_test, assign_date, plan_date, is_cito, usr)
     cursor = connection.cursor()
     cursor.execute(sql)
     results = named_tuple_fetch_all(cursor)

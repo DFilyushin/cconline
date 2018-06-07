@@ -435,6 +435,7 @@ def new_examen(request):
     dataset.appointment_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     dataset.plan_date = plandate
     dataset.id_typepay = 0
+    dataset.ru_create = request.user.username
     dataset.save()
     redirect_url = '/examens/list/' + id_history
     return render(
@@ -670,6 +671,7 @@ def save_prof(request):
     dataset.id_spec = id_spec
     dataset.assign_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     dataset.plan_date = plan_date
+    dataset.ru_create = request.user.username
     dataset.save()
     redirect_url = '/proview/list/' + id_history
     return render(
@@ -977,6 +979,9 @@ def save_diary(request):
         diary_form = DiaryForm(request.POST)
         id_history = request.POST.get('id_history', 0)
         if diary_form.is_valid():
+            s = diary_form.save(commit=False)
+            s.ru_create = request.user.username
+            #s.save()
             diary_form.save()
     redirect_url = '/diary/list/' + id_history
     return render(
@@ -1372,3 +1377,7 @@ def get_medication_by_date(request, idpatient, date_assign):
 
 def robots(request):
     return HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")
+
+
+def handler500(request):
+    return render(request, '500.html', status=500)

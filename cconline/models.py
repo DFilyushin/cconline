@@ -642,6 +642,7 @@ class ExamenDataset(models.Model):
     appointment_date = models.DateTimeField(null=False)
     plan_date = models.DateTimeField(null=False)
     id_typepay = models.IntegerField(null=False)
+    ru_create = models.CharField(max_length=255)
 
     class Meta:
         managed = False
@@ -677,8 +678,8 @@ class ExamParam(models.Model):
     value = models.CharField(max_length=7168, db_column='RES_STRING')
 
     class Meta:
-	managed = False
-	db_table = 'VW_EXAMPARAM_RESULTS'
+        managed = False
+        db_table = 'VW_EXAMPARAM_RESULTS'
 
 
 class Diary(models.Model):
@@ -691,6 +692,7 @@ class Diary(models.Model):
     id_depart = models.IntegerField(db_column='ID_DEPARTMENT')
     depart = models.CharField(max_length=255, db_column='DEPART_NAME')
     diary_text = models.TextField(db_column='BLOB_TEXT')
+    ru_create = models.CharField(max_length=80)
 
     class Meta:
         managed = False
@@ -728,6 +730,7 @@ class ProfDataset(models.Model):
     plan_date = models.DateTimeField(db_column='PLAN_DATE')
     id_doctor = models.IntegerField(db_column='ID_ASSIGN_DOCTOR')
     id_depart = models.IntegerField()
+    ru_create = models.CharField(max_length=80)
 
     class Meta:
         managed = False
