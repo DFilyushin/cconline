@@ -59,7 +59,7 @@ myApp.controller('LabController',
             dataForSend.selected = listTests;
             dataForSend.id_history = document.getElementsByName('id_history')[0].value;
             dataForSend.plan_year = $scope.plan_date2.getFullYear();
-            dataForSend.plan_month = $scope.plan_date2.getMonth();
+            dataForSend.plan_month = $scope.plan_date2.getMonth() + 1;
             dataForSend.plan_day = $scope.plan_date2.getDate();
             dataForSend.plan_hour = $scope.plan_time2.getHours();
             dataForSend.plan_min = $scope.plan_time2.getMinutes();
