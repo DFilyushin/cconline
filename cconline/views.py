@@ -1314,6 +1314,16 @@ def get_list_medication_by_date(request, idpatient):
     min_list_dates = MedicationDates.objects.filter(id_history=idpatient).aggregate(Min('dateapp'))
     max_list_dates = MedicationDates.objects.filter(id_history=idpatient).aggregate(Max('dateapp'))
 
+    if not min_list_dates['dateapp__min']:
+        return render(
+            request,
+            'cconline/no_data.html',
+            {
+                'id_history': idpatient,
+            }
+        )
+
+
     min_month = min_list_dates['dateapp__min'].month
     min_year = min_list_dates['dateapp__min'].year
 

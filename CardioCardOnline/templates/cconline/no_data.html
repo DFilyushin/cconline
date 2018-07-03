@@ -1,0 +1,17 @@
+{% extends "cconline/base.html" %}
+{% load staticfiles %}
+
+{% block body %}
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <div class="text-center">
+        <img src="{% static 'images/nodata.svg' %}" width="64px" height="64px">
+        <p align ="center">По вашему запросу данных не обнаружено </p>
+        <p><a href="{% url 'get_patient' idpatient=id_history %}">Вернуться в историю</a></p>
+        <p><a href="/">Вернуться на главную страницу</a></p>
+    </div>
+  </div>
+  <div class="col-md-4"></div>
+</div>
+{% endblock %}
