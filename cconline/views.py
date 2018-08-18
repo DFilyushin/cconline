@@ -19,6 +19,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import login as auth_login
 from django.views.decorators.cache import cache_page
 import datetime
+import string
 
 
 def card_login(request, *args, **kwargs):
@@ -1120,9 +1121,17 @@ def save_prof_conclusion(request):
     datetime_exec = date_exec + ' ' + time_exec
     try:
         dataset = ListProffView.objects.get(pk=id)
+        store_assign = str(dataset.assigndate)
+        f = string.find(store_assign, '.')
+        if f:
+            d = store_assign[:f]
+        else:
+            d = store_assign
+
         dataset.conclusion = conclusion
         dataset.id_doctor = id_doctor
-        dataset.viewdate = datetime_exec
+        dataset.viewdate = datetime.datetime.strptime(datetime_exec, "%Y-%m-%d %H:%M")
+        dataset.assigndate = datetime.datetime.strptime(d, '%Y-%m-%d %H:%M:%S')
         dataset.save()
     except ListProffView.DoesNotExist:
         raise Http404
