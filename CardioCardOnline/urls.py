@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^stat/$', views.stat, name='stat'),  # stat page
     url(r'^search/', views.search, name='search'),  # search by num history or firstname patient
     url(r'^about/', views.about, name='about'),  # search by num history or firstname patient
+    url(r'^map/', views.patient_map, name='patient_map'),
     url(r'^last_test/', views.choose_test, name='choose_test'), # choose test lab or exam
     url(r'^last_lab/(?P<iddepart>\d+)/$', views.last_lab, name='last_laboratory'), # last lab
     url(r'^last_exam/(?P<iddepart>\d+)/$', views.last_exam, name='last_examenation'), # last exam
@@ -103,6 +104,7 @@ urlpatterns = [
     url(r'^json/nurse_work_doc/$', utils.json_nurse_doctor, name='get_nurse_doctor_work'),
     url(r'^json/nurse_execute/$', utils.nurse_execute, name='get_nurse_execute'),
     url(r'^json/nurse/$', utils.nurse_work_by_patient, name='get_nurse_json'),
+    url(r'^get_map/$', views.patient_map_json)
 ]
 
 if settings.DEBUG:

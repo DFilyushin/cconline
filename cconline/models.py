@@ -879,6 +879,28 @@ class HistoryMove(models.Model):
         db_table = 'VW_PATIENT_MOVE'
 
 
+class PatientMap(models.Model):
+    id = models.IntegerField(primary_key=True)
+    receipt = models.DateTimeField()
+    longitude = models.FloatField(db_column='longitude')
+    latitude = models.FloatField(db_column='latitude')
+
+    class Meta:
+        managed = False
+        db_table = 'VW_PATIENT_MAP'
+
+    @staticmethod
+    def get_available_years():
+        # Get patient blood type
+        cursor = connection.cursor()
+        sql = 'SELECT YEAR_HISTORY FROM VW_HISTORY_YEARS'
+        cursor.execute(sql)
+        result = []
+        for row in cursor.fetchall():
+            result.append(row[0])
+        return result
+
+
 def do_on_login(sender, user, request, **kwargs):
     """
     Обработка сигнала авторизации пользователя

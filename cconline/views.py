@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.http import Http404
+from django.http import HttpResponse, Http404
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 from django.db.models import Q
@@ -13,13 +13,15 @@ from models import Departments, ListHistory, ListDiary, ListAnalysis, Laboratory
     ActiveDepart, ListExamens, History, PatientInfo, HistoryMedication, \
     ListSurgery, SurgeryAdv, ListProffView, Medication, ListSpecialization,\
     RefExamens, ExamenDataset, ExamParam, ProfDataset, ActiveDepartPatients, \
-    SysUsers, UserGroups, Personal, Diary, Hospitalization, HistoryMove, MedicationDates
+    SysUsers, UserGroups, Personal, Diary, Hospitalization, HistoryMove, MedicationDates, \
+    PatientMap
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth import login as auth_login
 from django.views.decorators.cache import cache_page
 import datetime
 import string
+import json
 
 
 def card_login(request, *args, **kwargs):
@@ -1393,6 +1395,52 @@ def get_medication_by_date(request, idpatient, date_assign):
             'day': date1,
         }
     )
+
+
+def patient_map_json(request):
+    cur_year = request.GET.get('year')
+    if not cur_year:
+        cur_year = datetime.date.today().year
+    geo_json = {
+        "type": "FeatureCollection",
+        "features": []
+    }
+    d1 = datetime.date(int(cur_year), 1, 1)
+    d2 = datetime.date(int(cur_year), 12, 31)
+    map = PatientMap.objects.filter(receipt__range=(d1, d2))
+    for row in map:
+        coord = [row.longitude, row.latitude]
+        feature = {
+            "type": "Feature",
+            "id": 0,
+            "geometry": {
+                "type": "Point",
+                "coordinates": []
+            },
+            "properties": {
+                "hintContent": "",
+                "balloonContent": ""
+            }
+        }
+
+        feature["geometry"]["coordinates"] = coord
+        geo_json["features"].append(feature)
+    json_string = json.dumps(geo_json, ensure_ascii=False, default=str)
+    return HttpResponse(json_string, content_type='application/json')
+
+
+def patient_map(request):
+    cur_year = request.GET.get('year', datetime.date.today().year)
+    years = PatientMap.get_available_years()
+    return render(
+        request,
+        'cconline/patient_map.html',
+        {
+            'years': years,
+            'current_year': int(cur_year),
+        }
+    )
+
 
 def robots(request):
     return HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")
