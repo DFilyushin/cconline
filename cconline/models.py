@@ -3,9 +3,11 @@ from _ast import mod
 
 from django.db import models
 from django.db import connection
-from django.contrib.auth.signals import user_logged_in
+from django.contrib.auth.signals import user_logged_in, user_login_failed
 # Database model
 
+LOGIN_OK = 3
+LOGIN_ERR = 4
 
 class Departments(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -912,6 +914,19 @@ class PatientMap(models.Model):
         return result
 
 
+class SysLogins(models.Model):
+    id = models.IntegerField(primary_key=True)
+    user = models.CharField(max_length=80, db_column='USR')
+    group = models.CharField(max_length=80, db_column='GRP')
+    logged = models.DateTimeField(auto_now=True, db_column='DATE_LOGIN')
+    ip = models.CharField(max_length=16, db_column='MACHINEIP')
+    status = models.SmallIntegerField(db_column='OPER')
+
+    class Meta:
+        managed = False
+        db_table = 'USER_LOGINS'
+
+
 def do_on_login(sender, user, request, **kwargs):
     """
     Обработка сигнала авторизации пользователя
@@ -921,13 +936,43 @@ def do_on_login(sender, user, request, **kwargs):
     :param kwargs:
     :return:
     """
-    remote_address = request.META['REMOTE_ADDR']
-    sql = "INSERT INTO USER_LOGINS (USR, DATE_LOGIN, MACHINEIP, OPER) VALUES('%s', 'now', '%s', 3)" \
-          % (user, remote_address)
-    cursor = connection.cursor()
-    cursor.execute(sql)
-    connection.commit()
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    log = SysLogins()
+    log.user = user
+    log.group = ''
+    log.status = LOGIN_OK
+    log.ip = ip
+    log.save()
+
+
+def do_failed_login(sender, credentials, **kwargs):
+    """
+    Регистрация ошибки входа в систему
+    :param sender: Идентификатор сигнала, auth-система Django
+    :param credentials: логин и *-пароль
+    :param request: request
+    :param kwargs:
+    :return:
+    """
+    """
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    """
+    log = SysLogins()
+    log.ip = '000.000.000.000'
+    log.user = credentials['username']
+    log.group = ''
+    log.status = LOGIN_ERR
+    log.save()
 
 
 # подписка на сигнал
 user_logged_in.connect(do_on_login)
+user_login_failed.connect(do_failed_login)
