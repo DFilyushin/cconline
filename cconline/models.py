@@ -524,6 +524,17 @@ class ListSurgery(models.Model):
         managed = False
         db_table = 'VW_SURGERY'
 
+    def get_recommendation(self):
+        # Получить список рекомендаций по операции
+        result = []
+        with connection.cursor() as cursor:
+            sql = 'SELECT RECOMEND_NAME FROM VW_SURGERY_RECOMEND WHERE ID_SURGERY = %s'
+            cursor.execute(sql,[self.id])
+
+            for row in cursor.fetchall():
+                result.append(row[0])
+        return result
+
 
 class SurgeryAdv(models.Model):
     id = models.IntegerField(primary_key=True)

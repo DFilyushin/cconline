@@ -20,6 +20,14 @@
             {% if adv_info %}
                 <li class="list-group-item"><i class="fa fa-exchange"></i> {{ adv_info|ccrlf }}</li>
             {% endif %}
+            {% if operation.get_recommendation %}
+                <p>Рекомендации:</p>
+                <ul>
+                {% for item in operation.get_recommendation %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
         </ul>
     </div>
 
